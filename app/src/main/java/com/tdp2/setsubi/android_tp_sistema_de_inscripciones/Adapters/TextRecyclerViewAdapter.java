@@ -44,17 +44,21 @@ public class TextRecyclerViewAdapter extends RecyclerView.Adapter<TextRecyclerVi
 
 
     // stores and recycles views as they are scrolled off screen
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView titleTextView;
 
         ViewHolder(View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.recycler_row_text_title);
-        }
-
-        @Override
-        public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            if( mClickListener != null )
+            {
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mClickListener.onItemClick(v, getAdapterPosition());
+                    }
+                });
+            }
         }
     }
 
