@@ -16,11 +16,13 @@ public class CursoTimeBand
     private CursoTime end;
     private CursoTimeType type;
     private boolean obligatory;
+    private int aula;
 
-    public CursoTimeBand(DayOfWeek dayOfWeek, CursoTime start, CursoTime end, CursoTimeType type, boolean obligatory) {
+    public CursoTimeBand(DayOfWeek dayOfWeek, int aula, CursoTime start, CursoTime end, CursoTimeType type, boolean obligatory) {
         this.dayOfWeek = dayOfWeek;
         this.end = end;
         this.start = start;
+        this.aula = aula;
         this.type = type;
         this.obligatory = obligatory;
     }
@@ -43,5 +45,9 @@ public class CursoTimeBand
 
     public boolean isObligatory() {
         return obligatory;
+    }
+
+    public int getAula() {
+        return aula;
     }
 }

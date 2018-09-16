@@ -21,9 +21,9 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
     public CursosPresenter()
     {
         cursos = Arrays.asList(new Curso(1,"Wachenchauzer", Sede.PASEO_COLON,
-                Arrays.asList(new CursoTimeBand(DayOfWeek.MONDAY,new CursoTime(10,30),
+                Arrays.asList(new CursoTimeBand(DayOfWeek.MONDAY, 201, new CursoTime(10,30),
                         new CursoTime(12,30), CursoTimeBand.CursoTimeType.TEORICO, true),
-                        new CursoTimeBand(DayOfWeek.FRIDAY,new CursoTime(10,30),
+                        new CursoTimeBand(DayOfWeek.FRIDAY, 202, new CursoTime(10,30),
                                 new CursoTime(12,30), CursoTimeBand.CursoTimeType.PRACTIO, false))
                 ,10));
     }
@@ -36,6 +36,11 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
             adapter = new CursoAdapter(cursos, canSubscribe,this);
         }
         return adapter;
+    }
+
+    @Override
+    public String getCourseName() {
+        return "75.15 Analisis Numerico";
     }
 
     @Override
