@@ -12,16 +12,14 @@
 
         <activity android:name=".Activities.MainActivity"
             android:screenOrientation="portrait">
-
-
-        </activity>
-
-        <activity android:name=".Activities.CursosActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".Activities.CursosActivity" >
         </activity>
         <activity android:name=".Activities.CareersActivity"
             android:screenOrientation="portrait" />

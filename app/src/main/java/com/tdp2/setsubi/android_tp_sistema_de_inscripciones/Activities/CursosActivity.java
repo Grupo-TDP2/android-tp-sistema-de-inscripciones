@@ -1,5 +1,6 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,5 +40,11 @@ public class CursosActivity extends AppCompatActivity
         RecyclerView view = findViewById(R.id.cursos_list);
         view.setLayoutManager(new LinearLayoutManager(this));
         view.setAdapter(presenter.getAdapter());
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
