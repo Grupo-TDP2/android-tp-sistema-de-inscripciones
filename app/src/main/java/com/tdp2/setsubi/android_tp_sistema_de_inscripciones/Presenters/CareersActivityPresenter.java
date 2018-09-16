@@ -24,9 +24,15 @@ public class CareersActivityPresenter {
         view.updateData();
     }
 
+    public void onSelectedCarreer(int position) {
+        //TODO SELECTION
+        view.navigateToDepartments();
+    }
+
     public interface View {
 
         void updateData();
 
+        void navigateToDepartments();
     }
 }

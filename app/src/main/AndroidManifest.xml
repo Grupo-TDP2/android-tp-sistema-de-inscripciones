@@ -12,22 +12,18 @@
 
         <activity android:name=".Activities.MainActivity"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        </activity>
-
-        <activity android:name=".Activities.CursosActivity" >
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".Activities.CareersActivity"
-            android:screenOrientation="portrait" >
-
-        </activity>
-        <activity android:name=".Activities.ClassesActivity" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-     </activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activities.DepartmentsActivity" />
+        <activity android:name=".Activities.ClassesActivity" />
+        <activity android:name=".Activities.CursosActivity"
+            android:screenOrientation="portrait" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

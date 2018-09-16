@@ -45,18 +45,24 @@ public class CareersActivity extends AppCompatActivity implements CareersActivit
 
     @Override
     public boolean onSupportNavigateUp() {
-        Intent navigationIntent = new Intent(CareersActivity.this, MainActivity.class);
-        startActivity(navigationIntent);
+        onBackPressed();
         return true;
     }
 
     @Override
     public void onItemClick(View view, int position) {
         //Navigate to corresponding view
+        presenter.onSelectedCarreer(position);
     }
 
     @Override
     public void updateData() {
         recyclerViewAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void navigateToDepartments() {
+        Intent navigationIntent = new Intent(CareersActivity.this, DepartmentsActivity.class);
+        startActivity(navigationIntent);
     }
 }

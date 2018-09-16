@@ -41,9 +41,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
             case "academicOffer":
                 navigationIntent = new Intent(MainActivity.this, CareersActivity.class);
                 startActivity(navigationIntent);
+                break;
             case "newCourse":
                 navigationIntent = new Intent(MainActivity.this, CareersActivity.class);
                 startActivity(navigationIntent);
+                break;
         }
     }
 
