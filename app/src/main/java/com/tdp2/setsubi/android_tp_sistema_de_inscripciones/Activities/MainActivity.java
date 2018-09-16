@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         Button academicOfferButton = this.findViewById(R.id.academicOfferButton);
         academicOfferButton.setOnClickListener(new AcademicOfferClickHandler());
 
+        Button newCourseButton = this.findViewById(R.id.newCourseButton);
+        newCourseButton.setOnClickListener(new NewCourseClickHandler());
+
     }
 
     @Override
@@ -38,6 +41,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
             case "academicOffer":
                 navigationIntent = new Intent(MainActivity.this, CareersActivity.class);
                 startActivity(navigationIntent);
+            case "newCourse":
+                navigationIntent = new Intent(MainActivity.this, CareersActivity.class);
+                startActivity(navigationIntent);
         }
     }
 
@@ -45,6 +51,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
 
         public void onClick(View v){
             presenter.navigateTo("academicOffer");
+        }
+    }
+
+    protected class NewCourseClickHandler implements View.OnClickListener {
+
+        public void onClick(View v){
+            presenter.navigateTo("newCourse");
         }
     }
 }
