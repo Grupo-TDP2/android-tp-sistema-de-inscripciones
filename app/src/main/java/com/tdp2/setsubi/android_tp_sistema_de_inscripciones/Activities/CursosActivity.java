@@ -1,12 +1,12 @@
-package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.Views;
+package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.Adapters.CursoAdapter;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.Presenters.CursosPresenter;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.CursoAdapter;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.CursosPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 
 public class CursosActivity extends AppCompatActivity

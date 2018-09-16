@@ -1,4 +1,4 @@
-package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.Adapters;
+package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

@@ -1,7 +1,7 @@
-package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.Presenters;
+package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters;
 
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.Adapters.CursoAdapter;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.Views.CursosActivity;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.CursoAdapter;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.CursosActivity;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Curso;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CursoTime;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CursoTimeBand;
