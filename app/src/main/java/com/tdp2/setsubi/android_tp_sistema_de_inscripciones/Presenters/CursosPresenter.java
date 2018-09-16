@@ -40,7 +40,7 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
 
     @Override
     public String getCourseName() {
-        return "75.15 Analisis Numerico";
+        return "75.15 Analisis Numerico I B";
     }
 
     @Override

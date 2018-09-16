@@ -1,5 +1,6 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -63,8 +64,7 @@ public class ClassesActivity extends AppCompatActivity
 
     public void goToCursos()
     {
-        Toast.makeText(this, "Going to cursos", Toast.LENGTH_SHORT).show();
-        /* Intent intent = new Intent(this, );
-        startActivity(intent);*/
+        Intent intent = new Intent(this, CursosActivity.class);
+        startActivity(intent);
     }
 }

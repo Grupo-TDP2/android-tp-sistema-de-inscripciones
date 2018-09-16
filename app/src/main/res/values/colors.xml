@@ -4,5 +4,5 @@
     <color name="textSecondary">#c7353535</color>
     <color name="colorPrimary">@color/primary_material_light</color>
     <color name="colorPrimaryDark">#e238b76d</color>
-    <color name="colorAccent">#ff4081</color>
+    <color name="colorAccent">#e238b76d</color>
 </resources>
