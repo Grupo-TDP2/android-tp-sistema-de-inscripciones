@@ -5,6 +5,8 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.ClassModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -19,6 +21,7 @@ public class ClassesPresenter implements ClassesActivity.ClassesActivityPresente
         this.view = view;
         classes = Arrays.asList(new ClassModel(1,21,75,"Algoritmos y Programacion III"),
                 new ClassModel(2,17, 75, "Analisis Numerico I"));
+        sortClasses();
     }
 
     @Override
@@ -44,5 +47,20 @@ public class ClassesPresenter implements ClassesActivity.ClassesActivityPresente
     {
         //TODO GET ELEMENT AND PERFORM TASK TO GET THE CURSO DATA, THEN GO TO CURSOS
         view.goToCursos();
+    }
+
+    private void sortClasses()
+    {
+        Collections.sort(classes, new Comparator<ClassModel>() {
+            @Override
+            public int compare(ClassModel o1, ClassModel o2)
+            {
+                int diffDepartment = o1.getDepartment() - o2.getDepartment();
+                if( diffDepartment == 0 ){
+                    return o1.getCode() - o2.getCode();
+                }
+                return diffDepartment;
+            }
+        });
     }
 }
