@@ -16,4 +16,9 @@
     <string name="teorico_practio">Teorico Practico</string>
     <string name="aula_title">Aula :</string>
     <string name="departments_title">Departamentos</string>
+    <string name="proximamente">Proximamente</string>
+    <string name="materias">Materias</string>
+    <string name="carreras">Carreras</string>
+    <string name="cursos">Cursos</string>
+    <string name="fiuba_inscripciones">FIUBA Inscripciones</string>
 </resources>

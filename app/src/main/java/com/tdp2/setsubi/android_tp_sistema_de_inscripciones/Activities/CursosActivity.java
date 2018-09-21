@@ -1,16 +1,15 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.CursoAdapter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.CursosPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.ToolBarHelper;
 
 public class CursosActivity extends AppCompatActivity
 {
@@ -27,15 +26,10 @@ public class CursosActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cursos);
-
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_btn);
-
+        ToolBarHelper.onCreate(this);
         presenter = new CursosPresenter();
-        TextView title = findViewById(R.id.toolbar_title);
+        ToolBarHelper.setTitle(this, R.string.cursos);
+        TextView title = findViewById(R.id.bottomTitle);
         title.setText(presenter.getCourseName());
         RecyclerView view = findViewById(R.id.cursos_list);
         view.setLayoutManager(new LinearLayoutManager(this));
@@ -44,7 +38,6 @@ public class CursosActivity extends AppCompatActivity
 
     @Override
     public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
+        return ToolBarHelper.onClickedHome(this);
     }
 }

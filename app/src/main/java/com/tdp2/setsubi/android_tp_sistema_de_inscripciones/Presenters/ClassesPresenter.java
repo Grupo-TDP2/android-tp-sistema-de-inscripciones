@@ -27,7 +27,7 @@ public class ClassesPresenter implements ClassesActivity.ClassesActivityPresente
     @Override
     public String getDepartmentName()
     {
-        return "75  Departamento de Computacion";
+        return "Departamento de Computacion";
     }
 
     @Override
