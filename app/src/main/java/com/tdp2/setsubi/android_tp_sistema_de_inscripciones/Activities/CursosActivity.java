@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.CursoAdapter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.CursosPresenter;
@@ -20,6 +21,7 @@ public class CursosActivity extends AppCompatActivity
     {
         CursoAdapter getAdapter();
         String getCourseName();
+        void loadData();
     }
 
     @Override
@@ -34,17 +36,22 @@ public class CursosActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_btn);
 
-        presenter = new CursosPresenter();
+        presenter = new CursosPresenter(this);
         TextView title = findViewById(R.id.toolbar_title);
         title.setText(presenter.getCourseName());
         RecyclerView view = findViewById(R.id.cursos_list);
         view.setLayoutManager(new LinearLayoutManager(this));
         view.setAdapter(presenter.getAdapter());
+        presenter.loadData();
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    public void onFailedtoLoadCursos() {
+        Toast.makeText(this, R.string.connectivityFailed, Toast.LENGTH_SHORT).show();
     }
 }

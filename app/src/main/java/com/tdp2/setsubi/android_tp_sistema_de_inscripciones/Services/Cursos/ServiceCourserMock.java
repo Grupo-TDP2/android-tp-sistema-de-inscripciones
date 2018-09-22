@@ -37,9 +37,9 @@ public class ServiceCourserMock implements ServiceCourses
     private ClassModel analisisNumerico = new ClassModel(1, ANANLISIS_NUMERICO, DEPARTMENT_COMP, "Analisis Numerico I B", 6 );
     private ClassModel analisis3 = new ClassModel(2, ANALISIS_2, DEPARTMENT_MATH, "Analisis Matematico III", 6 );
     private ClassModel analisis2 = new ClassModel(3, ANALISIS_3, DEPARTMENT_MATH, "Analisis Matematico II", 6 );
-    private ClassModel fisica1 = new ClassModel(4, FISICA_1, DEPARTMENT_PHYSICS, "FISICA I", 6 );
-    private ClassModel fisica2 = new ClassModel(5, FISICA_2, DEPARTMENT_PHYSICS, "FISICA II A", 6 );
-    private ClassModel fisica3 = new ClassModel(6, FISICA_3, DEPARTMENT_PHYSICS, "FISICA III D", 6 );
+    private ClassModel fisica1 = new ClassModel(4, FISICA_1, DEPARTMENT_PHYSICS, "Fisica I", 6 );
+    private ClassModel fisica2 = new ClassModel(5, FISICA_2, DEPARTMENT_PHYSICS, "Fisica II A", 6 );
+    private ClassModel fisica3 = new ClassModel(6, FISICA_3, DEPARTMENT_PHYSICS, "Fisica III D", 6 );
     private ClassModel algoritmosYProgramacion2 = new ClassModel(7, ALG_Y_PROG_2, DEPARTMENT_COMP, "Algoritmos y Programacion III", 6 );
 
     private List<ClassModel> compClasses = Arrays.asList(analisisNumerico, algoritmosYProgramacion2);
