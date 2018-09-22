@@ -1,6 +1,7 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Career;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.ClassModel;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Department;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Student;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.Cursos.ServiceCourserMock;
@@ -8,19 +9,20 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResp
 
 import java.util.List;
 
-public class GetDepartmentsAsyncTask extends ServiceAsyncTask<Object,Void,List<Department>>
+public class GetMateriasAsyncTask extends ServiceAsyncTask<Object, Void, List<ClassModel>>
 {
-    public GetDepartmentsAsyncTask(ForeGroundListener<List<Department>> listener) {
+
+    public GetMateriasAsyncTask(ForeGroundListener<List<ClassModel>> listener) {
         super(listener);
     }
 
     @Override
-    protected ServiceResponse<List<Department>> doRun(Object[] ts)
+    protected ServiceResponse<List<ClassModel>> doRun(Object[] ts)
     {
-        if( !(ts.length == 2 && ts[0] instanceof Student && ts[1] instanceof Career) )
+        if( !(ts.length == 3 && ts[0] instanceof Student && ts[1] instanceof Career && ts[2] instanceof Department) )
         {
             return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.ERROR);
         }
-        return new ServiceCourserMock().getDepartments((Student)ts[0], (Career)ts[1]);
+        return new ServiceCourserMock().getClasses((Student) ts[0],(Career) ts[1],(Department) ts[2]);
     }
 }

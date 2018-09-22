@@ -1,6 +1,7 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Career;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.ClassModel;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Department;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Student;
 
@@ -13,6 +14,7 @@ public class AppModel
     private List<Career> studentCareers = null;
     private Career selectedCareer = null;
     private Department selectedDepartment = null;
+    private ClassModel selecteClass;
 
     public static AppModel getInstance()
     {
@@ -23,7 +25,9 @@ public class AppModel
         return instance;
     }
 
-    private AppModel() {}
+    private AppModel() {
+        student = new Student(1,"Juan","Perez");
+    }
 
     public void login(Student student)
     {
@@ -68,5 +72,14 @@ public class AppModel
 
     public Department getSelectedDepartment() {
         return selectedDepartment;
+    }
+
+    public void setSelecteClass(ClassModel selecteClass) {
+        this.selecteClass = selecteClass;
+    }
+
+    public ClassModel getSelecteClass()
+    {
+        return selecteClass;
     }
 }

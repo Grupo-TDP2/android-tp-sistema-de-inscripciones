@@ -24,6 +24,7 @@ public class ClassesActivity extends AppCompatActivity
         String getDepartmentName();
         ArrayList<String> getClasses();
         void onClicked(int position);
+        void loadData();
     }
 
     private ClassesActivityPresenter presenter;
@@ -48,6 +49,7 @@ public class ClassesActivity extends AppCompatActivity
         adapter = new TextRecyclerViewAdapter(this, presenter.getClasses());
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
+        presenter.loadData();
     }
 
     @Override
@@ -66,5 +68,15 @@ public class ClassesActivity extends AppCompatActivity
     {
         Intent intent = new Intent(this, CursosActivity.class);
         startActivity(intent);
+    }
+
+    public void onFailedToLoadClasses()
+    {
+        Toast.makeText(this, R.string.connectivityFailed, Toast.LENGTH_SHORT).show();
+    }
+
+    public void updatedList()
+    {
+        adapter.notifyDataSetChanged();
     }
 }
