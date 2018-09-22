@@ -33,6 +33,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         Button newCourseButton = this.findViewById(R.id.newCourseButton);
         newCourseButton.setOnClickListener(new NewCourseClickHandler());
 
+        findViewById(R.id.newFinalExamButton).setOnClickListener(new SoonClickHandler());
+        findViewById(R.id.myCoursesButton).setOnClickListener(new SoonClickHandler());
+        findViewById(R.id.myExamsButton).setOnClickListener(new SoonClickHandler());
+        findViewById(R.id.priorityButton).setOnClickListener(new SoonClickHandler());
+        findViewById(R.id.myDataButton).setOnClickListener(new SoonClickHandler());
     }
 
     @Override
@@ -59,9 +64,15 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
     }
 
     protected class NewCourseClickHandler implements View.OnClickListener {
-
         public void onClick(View v){
             presenter.navigateTo("newCourse");
+        }
+    }
+
+    protected class SoonClickHandler implements View.OnClickListener
+    {
+        public void onClick(View v){
+            SoonToast.show(MainActivity.this);
         }
     }
 

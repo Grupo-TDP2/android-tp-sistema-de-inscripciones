@@ -3,6 +3,7 @@ package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -37,6 +38,8 @@ public class DepartmentsActivity extends AppCompatActivity
 
         RecyclerView recyclerView = findViewById(R.id.departments_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),
+                DividerItemDecoration.VERTICAL));
         adapter = new TextRecyclerViewAdapter(this, presenter.getDepartments());
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
