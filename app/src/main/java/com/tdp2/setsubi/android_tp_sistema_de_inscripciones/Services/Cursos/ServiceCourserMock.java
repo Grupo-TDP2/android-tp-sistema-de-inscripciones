@@ -24,7 +24,7 @@ public class ServiceCourserMock implements ServiceCourses
     private List<Career> studentCareers = Arrays.asList(
             new Career(CAREER_INFO, "Ingenieria en Informatica"),
             new Career(CAREER_ELEC, "Ingenieria Electronica"),
-            new Career(CAREER_ALIM, "Ingenieria en Alimentos"));
+            new Career(CAREER_ALIM, "Ingenieria Industrial"));
 
     private Department Computacion = new Department(75, "Departamento de Computacion");
     private Department Fisica = new Department(72, "Departamento de Fisica");
