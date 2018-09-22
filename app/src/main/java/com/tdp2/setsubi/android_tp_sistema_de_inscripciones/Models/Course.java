@@ -2,7 +2,7 @@ package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models;
 
 import java.util.List;
 
-public class Curso
+public class Course
 {
     private int id;
     private String catedra;
@@ -10,7 +10,7 @@ public class Curso
     private List<CursoTimeBand> cursoTimeBands;
     private int cupos;
 
-    public Curso(int id, String catedra, Sede sede, List<CursoTimeBand> schedules, int cupo)
+    public Course(int id, String catedra, Sede sede, List<CursoTimeBand> schedules, int cupo)
     {
         this.id = id;
         this.catedra = catedra;

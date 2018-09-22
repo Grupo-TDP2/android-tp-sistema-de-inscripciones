@@ -6,13 +6,15 @@ public class ClassModel
     private int code;
     private int department;
     private String name;
+    private int credits;
 
-    public ClassModel(int id, int code, int department, String name)
+    public ClassModel(int id, int code, int department, String name, int credits)
     {
         this.id = id;
         this.code = code;
         this.department = department;
         this.name = name;
+        this.credits = credits;
     }
 
     public int getId() {
@@ -29,5 +31,10 @@ public class ClassModel
 
     public String getName() {
         return name;
+    }
+
+    public int getCredits()
+    {
+        return credits;
     }
 }
