@@ -26,9 +26,9 @@ public class ServiceCourserMock implements ServiceCourses
             new Career(CAREER_ELEC, "Ingenieria Electronica"),
             new Career(CAREER_ALIM, "Ingenieria Industrial"));
 
-    private Department Computacion = new Department(75, "Departamento de Computacion");
-    private Department Fisica = new Department(72, "Departamento de Fisica");
-    private Department Matematica = new Department(71, "Departamento de Matematica");
+    private Department Computacion = new Department(DEPARTMENT_COMP, "Departamento de Computacion");
+    private Department Fisica = new Department(DEPARTMENT_PHYSICS, "Departamento de Fisica");
+    private Department Matematica = new Department(DEPARTMENT_MATH, "Departamento de Matematica");
 
     private List<Department> infoDepartments = Arrays.asList(Computacion, Fisica);
     private List<Department> elecDepartments = Arrays.asList(Fisica, Matematica);
