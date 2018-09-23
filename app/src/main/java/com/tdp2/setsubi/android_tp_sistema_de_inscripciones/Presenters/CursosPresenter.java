@@ -2,30 +2,31 @@ package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.CursoAdapter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.CursosActivity;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.ClassModel;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CourseTime;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CursoTimeBand;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Sede;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.GetCoursesAsyncTask;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.DayOfWeek;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
-public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter.SubscribeListener
-{
+public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter.SubscribeListener, ServiceAsyncTask.ForeGroundListener<List<Course>> {
     private CursoAdapter adapter = null;
     private List<Course> courses = new ArrayList<>();
     private boolean canSubscribe = true;
+    private CursosActivity activity;
 
-    public CursosPresenter()
+    public CursosPresenter(CursosActivity activity)
     {
-        courses = Arrays.asList(new Course(1,"Wachenchauzer", Sede.PASEO_COLON,
-                Arrays.asList(new CursoTimeBand(DayOfWeek.MONDAY, 201, new CourseTime(10,30),
-                        new CourseTime(12,30), CursoTimeBand.CursoTimeType.TEORICO, true),
-                        new CursoTimeBand(DayOfWeek.FRIDAY, 202, new CourseTime(10,30),
-                                new CourseTime(12,30), CursoTimeBand.CursoTimeType.PRACTIO, false))
-                ,10));
+        this.activity = activity;
     }
 
     @Override
@@ -40,7 +41,15 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
 
     @Override
     public String getCourseName() {
-        return "75.15 Analisis Numerico I B";
+        ClassModel classModel = AppModel.getInstance().getSelecteClass();
+        return String.format(Locale.getDefault(), "%02d.%02d %s", classModel.getDepartment(), classModel.getCode(), classModel.getName());
+    }
+
+    @Override
+    public void loadData()
+    {
+        AppModel appModel = AppModel.getInstance();
+        new GetCoursesAsyncTask(this).execute(appModel.getStudent(), appModel.getSelecteClass());
     }
 
     @Override
@@ -70,5 +79,23 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
             }
         }
         return -1;
+    }
+
+    @Override
+    public void onError(ServiceResponse.ServiceStatusCode error) {
+        activity.onFailedtoLoadCursos();
+    }
+
+    @Override
+    public void onSuccess(List<Course> data)
+    {
+        courses.clear();
+        courses.addAll(data);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onStartingAsyncTask() {
+
     }
 }

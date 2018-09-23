@@ -3,6 +3,7 @@ package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.ClassesActivity;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.ClassModel;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Department;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.GetMateriasAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
@@ -28,7 +29,8 @@ public class ClassesPresenter implements ClassesActivity.ClassesActivityPresente
     @Override
     public String getDepartmentName()
     {
-        return "75  Departamento de Computacion";
+        Department department = AppModel.getInstance().getSelectedDepartment();
+        return String.format(Locale.getDefault(), "%02d  %s",department.getId(), department.getName());
     }
 
     @Override
