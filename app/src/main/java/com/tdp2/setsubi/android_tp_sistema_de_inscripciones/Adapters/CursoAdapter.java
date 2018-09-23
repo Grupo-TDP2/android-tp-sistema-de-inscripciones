@@ -1,6 +1,5 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,22 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Curso;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CursoTimeBand;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Sede;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.StringTransform;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
 public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHolder>
 {
-    private List<Curso> cursos;
+    private List<Course> courses;
     private boolean canSubscribe;
     private SubscribeListener listener;
 
@@ -33,9 +28,9 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
         void onSubscribe(int cursoId);
     }
 
-    public CursoAdapter(List<Curso> cursos, boolean canSubscribe, SubscribeListener listener)
+    public CursoAdapter(List<Course> courses, boolean canSubscribe, SubscribeListener listener)
     {
-        this.cursos = cursos;
+        this.courses = courses;
         this.canSubscribe = canSubscribe;
         this.listener = listener;
     }
@@ -50,19 +45,19 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
 
     @Override
     public void onBindViewHolder(@NonNull CursoViewHolder holder, int position) {
-        Curso curso = cursos.get(position);
-        holder.setCatedra(curso.getCatedra());
-        holder.setCupo(curso.getCupos());
-        holder.setTimes(curso.getCursoTimeBands());
-        holder.setSede(curso.getSede());
+        Course course = courses.get(position);
+        holder.setCatedra(course.getCatedra());
+        holder.setCupo(course.getCupos());
+        holder.setTimes(course.getCursoTimeBands());
+        holder.setSede(course.getSede());
         holder.enableSubscription(canSubscribe);
-        holder.setSubscribeListener(listener, curso.getId());
+        holder.setSubscribeListener(listener, course.getId());
     }
 
     @Override
     public int getItemCount()
     {
-        return cursos.size();
+        return courses.size();
     }
 
     public static class CursoViewHolder extends RecyclerView.ViewHolder

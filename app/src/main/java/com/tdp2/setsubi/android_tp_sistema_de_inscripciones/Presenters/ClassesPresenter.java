@@ -19,8 +19,8 @@ public class ClassesPresenter implements ClassesActivity.ClassesActivityPresente
     public ClassesPresenter(ClassesActivity view)
     {
         this.view = view;
-        classes = Arrays.asList(new ClassModel(1,21,75,"Algoritmos y Programacion III"),
-                new ClassModel(2,17, 75, "Analisis Numerico I"));
+        classes = Arrays.asList(new ClassModel(1,21,75,"Algoritmos y Programacion III",6),
+                new ClassModel(2,17, 75, "Analisis Numerico I",6));
         sortClasses();
     }
 

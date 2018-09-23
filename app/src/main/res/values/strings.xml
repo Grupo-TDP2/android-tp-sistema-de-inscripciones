@@ -16,4 +16,5 @@
     <string name="teorico_practio">Teorico Practico</string>
     <string name="aula_title">Aula :</string>
     <string name="departments_title">Departamentos</string>
+    <string name="connectivityFailed">No se pudieron cargar los datos por que no hubo conexion</string>
 </resources>

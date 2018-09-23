@@ -12,13 +12,13 @@ public class CursoTimeBand
     }
 
     private DayOfWeek dayOfWeek;
-    private CursoTime start;
-    private CursoTime end;
+    private CourseTime start;
+    private CourseTime end;
     private CursoTimeType type;
     private boolean obligatory;
     private int aula;
 
-    public CursoTimeBand(DayOfWeek dayOfWeek, int aula, CursoTime start, CursoTime end, CursoTimeType type, boolean obligatory) {
+    public CursoTimeBand(DayOfWeek dayOfWeek, int aula, CourseTime start, CourseTime end, CursoTimeType type, boolean obligatory) {
         this.dayOfWeek = dayOfWeek;
         this.end = end;
         this.start = start;
@@ -31,11 +31,11 @@ public class CursoTimeBand
         return dayOfWeek;
     }
 
-    public CursoTime getStarTime() {
+    public CourseTime getStarTime() {
         return start;
     }
 
-    public CursoTime getEndTime() {
+    public CourseTime getEndTime() {
         return end;
     }
 
