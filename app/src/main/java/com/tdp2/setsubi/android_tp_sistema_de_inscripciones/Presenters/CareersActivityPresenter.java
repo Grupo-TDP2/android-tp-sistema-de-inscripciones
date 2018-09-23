@@ -12,6 +12,7 @@ import java.util.List;
 public class CareersActivityPresenter implements ServiceAsyncTask.ForeGroundListener<List<Career>>
 {
     private View view;
+    private List<Career> careers = new ArrayList<>();
     private ArrayList<String> dataset = new ArrayList<>();
 
     public CareersActivityPresenter(View view) {
@@ -29,8 +30,7 @@ public class CareersActivityPresenter implements ServiceAsyncTask.ForeGroundList
 
     public void onSelectedCarreer(int position)
     {
-        List<Career> career = AppModel.getInstance().getStudentCareers();
-        AppModel.getInstance().selectedCareer(career.get(position));
+        AppModel.getInstance().selectedCareer(careers.get(position));
         view.navigateToDepartments();
     }
 
@@ -42,9 +42,10 @@ public class CareersActivityPresenter implements ServiceAsyncTask.ForeGroundList
     @Override
     public void onSuccess(List<Career> data)
     {
+        careers = data;
         dataset.clear();
         AppModel.getInstance().setStudentCareers(data);
-        for( Career career : data)
+        for( Career career : careers)
         {
             dataset.add(career.getName());
         }
