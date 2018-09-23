@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.TextRecyclerViewAdapter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.DepartmentsPresenter;
@@ -22,6 +23,7 @@ public class DepartmentsActivity extends AppCompatActivity
     {
         ArrayList<String> getDepartments();
         void onSelectedDepartment(int position);
+        void loadData();
     }
 
     private TextRecyclerViewAdapter adapter;
@@ -47,6 +49,7 @@ public class DepartmentsActivity extends AppCompatActivity
         adapter = new TextRecyclerViewAdapter(this, presenter.getDepartments());
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
+        presenter.loadData();
     }
 
     @Override
@@ -65,5 +68,13 @@ public class DepartmentsActivity extends AppCompatActivity
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    public void failedToLoadDepartments() {
+        Toast.makeText(this, R.string.connectivityFailed, Toast.LENGTH_SHORT).show();
+    }
+
+    public void updatedList() {
+        adapter.notifyDataSetChanged();
     }
 }
