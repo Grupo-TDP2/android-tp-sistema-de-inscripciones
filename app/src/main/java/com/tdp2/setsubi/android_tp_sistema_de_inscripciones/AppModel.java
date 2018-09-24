@@ -1,10 +1,11 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Career;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.ClassModel;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Department;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Student;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AppModel
@@ -12,9 +13,10 @@ public class AppModel
     private static AppModel instance = null;
     private Student student = null;
     private List<Career> studentCareers = null;
+    private List<Subject> subjects = null;
     private Career selectedCareer = null;
     private Department selectedDepartment = null;
-    private ClassModel selecteClass;
+    private Subject selecteClass;
 
     public static AppModel getInstance()
     {
@@ -74,12 +76,38 @@ public class AppModel
         return selectedDepartment;
     }
 
-    public void setSelecteClass(ClassModel selecteClass) {
+    public void setSelecteClass(Subject selecteClass) {
         this.selecteClass = selecteClass;
     }
 
-    public ClassModel getSelecteClass()
+    public Subject getSelecteSubject()
     {
         return selecteClass;
+    }
+
+    public List<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(List<Subject> subjects) {
+        this.subjects = subjects;
+    }
+
+    public List<Department> getDepartments()
+    {
+        if( subjects != null )
+        {
+            List<Department> departments = new ArrayList<>();
+            for( Subject subject : subjects )
+            {
+                if( !departments.contains(subject.getDepartment()) )
+                {
+                    departments.add(subject.getDepartment());
+                }
+            }
+            return departments;
+        } else {
+            return null;
+        }
     }
 }

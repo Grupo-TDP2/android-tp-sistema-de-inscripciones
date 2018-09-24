@@ -1,7 +1,9 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +19,7 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import java.util.ArrayList;
 
 public class DepartmentsActivity extends AppCompatActivity
-        implements TextRecyclerViewAdapter.ItemClickListener
+        implements TextRecyclerViewAdapter.ItemClickListener, LoadingView
 {
     public interface Presenter
     {
@@ -28,6 +30,7 @@ public class DepartmentsActivity extends AppCompatActivity
 
     private TextRecyclerViewAdapter adapter;
     private Presenter presenter;
+    private Snackbar snackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -60,7 +63,7 @@ public class DepartmentsActivity extends AppCompatActivity
 
     public void goToClassesActivity()
     {
-        Intent intent = new Intent(this, ClassesActivity.class);
+        Intent intent = new Intent(this, SubjectsActivity.class);
         startActivity(intent);
     }
 
@@ -70,11 +73,28 @@ public class DepartmentsActivity extends AppCompatActivity
         return true;
     }
 
-    public void failedToLoadDepartments() {
+    public void failedToLoadDepartments()
+    {
         Toast.makeText(this, R.string.connectivityFailed, Toast.LENGTH_SHORT).show();
     }
 
     public void updatedList() {
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void startLoading() {
+        stopLoading();
+        snackbar = Snackbar.make(findViewById(R.id.classes_recycler_view), R.string.loading, Snackbar.LENGTH_INDEFINITE);
+        snackbar.show();
+    }
+
+    @Override
+    public void stopLoading() {
+        if( snackbar != null )
+        {
+            snackbar.dismiss();
+            snackbar = null;
+        }
     }
 }

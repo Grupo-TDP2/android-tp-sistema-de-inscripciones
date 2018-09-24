@@ -1,5 +1,11 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonTransformer;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -7,7 +13,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public abstract class RequestPerformer<T>
+public class RequestPerformer<T>
 {
     public enum Method
     {
@@ -26,15 +32,18 @@ public abstract class RequestPerformer<T>
 
     private String url;
     private Method method;
+    private JsonTransformer<T> transformer;
 
-    public RequestPerformer(String url, Method method)
+    public RequestPerformer(String url, Method method, JsonTransformer<T> transformer)
     {
         this.url = url;
         this.method = method;
+        this.transformer = transformer;
     }
 
     public ServiceResponse<T> perform()
     {
+        Log.d("REQ"," url: " + url + " " + method);
         HttpURLConnection client = null;
         try {
             URL url = new URL(this.url);
@@ -48,6 +57,7 @@ public abstract class RequestPerformer<T>
             int statusCode = client.getResponseCode();
 
             if (400 <= statusCode && statusCode <= 500){
+                Log.d("REQ"," error: " + statusCode);
                 return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.ERROR);
             }
 
@@ -63,11 +73,27 @@ public abstract class RequestPerformer<T>
                 sb.append(output);
             }
             String result = sb.toString();
-
-            return deserialzie(new JSONObject(result));
-
+            Log.d("REQ"," result: " + result);
+            T transformed;
+            try
+            {
+                transformed = transformer.transform( new Gson().fromJson(result, JsonElement.class));
+                if( transformed == null )
+                {
+                    Log.d("REQ", "Failed deserialization");
+                    return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.ERROR);
+                } else {
+                    Log.d("REQ", "Success request");
+                    return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.SUCCESS, transformed);
+                }
+            } catch (Exception badJson)
+            {
+                Log.d("REQ", badJson.toString());
+                return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.ERROR);
+            }
         } catch(Exception error) {
             //Handles an incorrectly entered URL
+            Log.d("REQ", error.toString());
             return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.ERROR);
         }
         finally {
@@ -76,6 +102,4 @@ public abstract class RequestPerformer<T>
             }
         }
     }
-
-    protected abstract ServiceResponse<T> deserialzie(JSONObject jsonObject);
 }

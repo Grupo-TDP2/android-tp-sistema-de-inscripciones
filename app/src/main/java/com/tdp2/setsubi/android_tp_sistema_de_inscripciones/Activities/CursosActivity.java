@@ -2,6 +2,7 @@ package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,9 +14,10 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.CursoAdapte
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.CursosPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 
-public class CursosActivity extends AppCompatActivity
+public class CursosActivity extends AppCompatActivity implements LoadingView
 {
     private CursosLogic presenter;
+    private Snackbar snackbar;
 
     public interface CursosLogic
     {
@@ -53,5 +55,21 @@ public class CursosActivity extends AppCompatActivity
 
     public void onFailedtoLoadCursos() {
         Toast.makeText(this, R.string.connectivityFailed, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void startLoading() {
+        stopLoading();
+        snackbar = Snackbar.make(findViewById(R.id.cursos_list), R.string.loading, Snackbar.LENGTH_INDEFINITE);
+        snackbar.show();
+    }
+
+    @Override
+    public void stopLoading() {
+        if( snackbar != null )
+        {
+            snackbar.dismiss();
+            snackbar = null;
+        }
     }
 }

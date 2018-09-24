@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tdp2.setsubi.android_tp_sistema_de_inscripciones">
-
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,7 +21,7 @@
         <activity android:name=".Activities.CareersActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".Activities.DepartmentsActivity" />
-        <activity android:name=".Activities.ClassesActivity" />
+        <activity android:name=".Activities.SubjectsActivity" />
         <activity android:name=".Activities.CursosActivity"
             android:screenOrientation="portrait" />
         <meta-data
