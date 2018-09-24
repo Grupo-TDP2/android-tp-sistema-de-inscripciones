@@ -2,30 +2,26 @@ package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.CursoAdapter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.CursosActivity;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Curso;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CursoTime;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CursoTimeBand;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Sede;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.DayOfWeek;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.GetCoursesAsyncTask;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
-public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter.SubscribeListener
-{
+public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter.SubscribeListener, ServiceAsyncTask.ForeGroundListener<List<Course>> {
     private CursoAdapter adapter = null;
-    private List<Curso> cursos = new ArrayList<>();
+    private List<Course> courses = new ArrayList<>();
     private boolean canSubscribe = true;
+    private CursosActivity activity;
 
-    public CursosPresenter()
+    public CursosPresenter(CursosActivity activity)
     {
-        cursos = Arrays.asList(new Curso(1,"Wachenchauzer", Sede.PASEO_COLON,
-                Arrays.asList(new CursoTimeBand(DayOfWeek.MONDAY, 201, new CursoTime(10,30),
-                        new CursoTime(12,30), CursoTimeBand.CursoTimeType.TEORICO, true),
-                        new CursoTimeBand(DayOfWeek.FRIDAY, 202, new CursoTime(10,30),
-                                new CursoTime(12,30), CursoTimeBand.CursoTimeType.PRACTIO, false))
-                ,10));
+        this.activity = activity;
     }
 
     @Override
@@ -33,14 +29,22 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
     {
         if( adapter == null )
         {
-            adapter = new CursoAdapter(cursos, canSubscribe,this);
+            adapter = new CursoAdapter(courses, canSubscribe,this);
         }
         return adapter;
     }
 
     @Override
     public String getCourseName() {
-        return "75.15 Analisis Numerico I B";
+        Subject subject = AppModel.getInstance().getSelecteSubject();
+        return String.format(Locale.getDefault(), "%02d.%02d %s", subject.getDepartmentCode(), subject.getCode(), subject.getName());
+    }
+
+    @Override
+    public void loadData()
+    {
+        AppModel appModel = AppModel.getInstance();
+        new GetCoursesAsyncTask(this).execute(appModel.getStudent(), appModel.getSelectedCareer(), appModel.getSelecteSubject());
     }
 
     @Override
@@ -51,24 +55,45 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
         int index = getCursoIndex(cursoId);
         if( index != -1 )
         {
-            Curso curso = cursos.get(index);
-            if( curso.getCupos() > 0 )
+            Course course = courses.get(index);
+            if( course.getCupos() > 0 )
             {
-                curso.setCupos(curso.getCupos() - 1);
+                course.setCupos(course.getCupos() - 1);
                 adapter.notifyItemChanged(index);
             }
         }
     }
 
     private int getCursoIndex(int cursoId) {
-        for( int i = 0; i < cursos.size(); i++ )
+        for(int i = 0; i < courses.size(); i++ )
         {
-            Curso curso = cursos.get(i);
-            if( curso.getId() == cursoId )
+            Course course = courses.get(i);
+            if( course.getId() == cursoId )
             {
                 return i;
             }
         }
         return -1;
+    }
+
+    @Override
+    public void onError(ServiceResponse.ServiceStatusCode error)
+    {
+        activity.stopLoading();
+        activity.onFailedtoLoadCursos();
+    }
+
+    @Override
+    public void onSuccess(List<Course> data)
+    {
+        activity.stopLoading();
+        courses.clear();
+        courses.addAll(data);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onStartingAsyncTask() {
+        activity.startLoading();
     }
 }

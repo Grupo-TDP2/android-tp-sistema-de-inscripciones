@@ -1,8 +1,8 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models;
 
-public class CursoTime
+public class CourseTime
 {
-    public CursoTime(int hours, int minutes) {
+    public CourseTime(int hours, int minutes) {
         this.hours = hours;
         this.minutes = minutes;
     }

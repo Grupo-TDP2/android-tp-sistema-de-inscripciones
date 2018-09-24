@@ -1,24 +1,26 @@
 <resources>
     <string name="app_name">android-tp-sistema-de-inscripciones</string>
-    <string name="catedra_label">Catedra:</string>
+    <string name="catedra_label">C átedra:</string>
     <string name="cupo_label">Cupo:</string>
     <string name="horarios_label">Horarios:</string>
     <string name="sede_label">Sede:</string>
     <string name="sede_las_heras">Las Heras</string>
     <string name="inscribirse_btn_text">Inscribirse</string>
-    <string name="sede_pc">Paseo Colon</string>
+    <string name="sede_pc">Paseo Colón</string>
     <string name="time_curso">%02d:%02d - %02d:%02d</string>
-    <string name="practio_obligatory">Practica obligatoria</string>
-    <string name="practio">Practica</string>
-    <string name="teorico_obligatory">Teorica Obligatoria</string>
-    <string name="teorico">Teorica</string>
-    <string name="teorico_practio_obligatory">Teorico Practico Obligatorio</string>
-    <string name="teorico_practio">Teorico Practico</string>
+    <string name="practio_obligatory">Práctica obligatoria</string>
+    <string name="practio">Práctica</string>
+    <string name="teorico_obligatory">Teórica Obligatoria</string>
+    <string name="teorico">Teórica</string>
+    <string name="teorico_practio_obligatory">Teorico Práctico Obligatorio</string>
+    <string name="teorico_practio">Teórico Práctico</string>
     <string name="aula_title">Aula :</string>
     <string name="departments_title">Departamentos</string>
-    <string name="proximamente">Proximamente</string>
+    <string name="proximamente">Próximamente</string>
     <string name="materias">Materias</string>
     <string name="carreras">Carreras</string>
     <string name="cursos">Cursos</string>
     <string name="fiuba_inscripciones">FIUBA Inscripciones</string>
+    <string name="connectivityFailed">No se pudieron cargar los datos por que no hubo conexión</string>
+    <string name="loading">Cargando...</string>
 </resources>

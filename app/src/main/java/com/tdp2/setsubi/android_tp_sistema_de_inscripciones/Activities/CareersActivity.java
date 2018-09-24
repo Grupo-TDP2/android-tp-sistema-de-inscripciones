@@ -7,6 +7,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.TextRecyclerViewAdapter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.CareersActivityPresenter;
@@ -37,7 +38,6 @@ public class CareersActivity extends AppCompatActivity implements CareersActivit
         recyclerViewAdapter = new TextRecyclerViewAdapter(this, presenter.getDataset());
         recyclerViewAdapter.setClickListener(this);
         recyclerView.setAdapter(recyclerViewAdapter);
-
         presenter.loadCareers();
     }
 
@@ -61,5 +61,10 @@ public class CareersActivity extends AppCompatActivity implements CareersActivit
     public void navigateToDepartments() {
         Intent navigationIntent = new Intent(CareersActivity.this, DepartmentsActivity.class);
         startActivity(navigationIntent);
+    }
+
+    @Override
+    public void failedToLoadCareers() {
+        Toast.makeText(this, R.string.connectivityFailed, Toast.LENGTH_SHORT).show();
     }
 }

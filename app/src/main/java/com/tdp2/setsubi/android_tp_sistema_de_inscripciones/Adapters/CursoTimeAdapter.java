@@ -3,13 +3,12 @@ package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CursoTime;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CourseTime;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CursoTimeBand;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.DayOfWeek;
@@ -64,7 +63,7 @@ public class CursoTimeAdapter extends RecyclerView.Adapter<CursoTimeAdapter.View
             cursoAula = view.findViewById(R.id.curso_aula);
         }
 
-        public void setTime(CursoTime startTime, CursoTime endTime)
+        public void setTime(CourseTime startTime, CourseTime endTime)
         {
             Context context = cursoTime.getContext();
             cursoTime.setText( context.getString(R.string.time_curso,
