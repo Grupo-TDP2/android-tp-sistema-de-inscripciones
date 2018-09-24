@@ -11,12 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.TextRecyclerViewAdapter;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.ClassesPresenter;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.SubjectsPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 
 import java.util.ArrayList;
 
-public class ClassesActivity extends AppCompatActivity
+public class SubjectsActivity extends AppCompatActivity
         implements TextRecyclerViewAdapter.ItemClickListener
 {
     public interface ClassesActivityPresenter
@@ -34,7 +34,7 @@ public class ClassesActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_classes);
-        presenter = new ClassesPresenter(this);
+        presenter = new SubjectsPresenter(this);
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);

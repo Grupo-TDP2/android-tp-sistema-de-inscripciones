@@ -3,18 +3,13 @@ package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.CursoAdapter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.CursosActivity;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.ClassModel;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CourseTime;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CursoTimeBand;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Sede;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.GetCoursesAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.DayOfWeek;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -41,15 +36,15 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
 
     @Override
     public String getCourseName() {
-        ClassModel classModel = AppModel.getInstance().getSelecteClass();
-        return String.format(Locale.getDefault(), "%02d.%02d %s", classModel.getDepartment(), classModel.getCode(), classModel.getName());
+        Subject subject = AppModel.getInstance().getSelecteSubject();
+        return String.format(Locale.getDefault(), "%02d.%02d %s", subject.getDepartmentCode(), subject.getCode(), subject.getName());
     }
 
     @Override
     public void loadData()
     {
         AppModel appModel = AppModel.getInstance();
-        new GetCoursesAsyncTask(this).execute(appModel.getStudent(), appModel.getSelecteClass());
+        new GetCoursesAsyncTask(this).execute(appModel.getStudent(), appModel.getSelectedCareer(), appModel.getSelecteSubject());
     }
 
     @Override
@@ -82,13 +77,16 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
     }
 
     @Override
-    public void onError(ServiceResponse.ServiceStatusCode error) {
+    public void onError(ServiceResponse.ServiceStatusCode error)
+    {
+        activity.stopLoading();
         activity.onFailedtoLoadCursos();
     }
 
     @Override
     public void onSuccess(List<Course> data)
     {
+        activity.stopLoading();
         courses.clear();
         courses.addAll(data);
         adapter.notifyDataSetChanged();
@@ -96,6 +94,6 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
 
     @Override
     public void onStartingAsyncTask() {
-
+        activity.startLoading();
     }
 }

@@ -6,7 +6,11 @@ public class APIUriBuilder
 {
     public static Uri.Builder getURIBuiled()
     {
+        https://api-sistema-de-inscripciones.herokuapp.com
         return new Uri.Builder()
-                .scheme("https").authority("www.herko.com");
+                .scheme("https")
+                .authority("api-sistema-de-inscripciones.herokuapp.com")
+                .appendPath("api")
+                .appendPath("v1");
     }
 }

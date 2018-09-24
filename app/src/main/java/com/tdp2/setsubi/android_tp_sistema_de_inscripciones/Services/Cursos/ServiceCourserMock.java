@@ -1,7 +1,7 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.Cursos;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Career;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.ClassModel;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CourseTime;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CursoTimeBand;
@@ -26,25 +26,25 @@ public class ServiceCourserMock implements ServiceCourses
             new Career(CAREER_ELEC, "Ingenieria Electronica"),
             new Career(CAREER_ALIM, "Ingenieria Industrial"));
 
-    private Department Computacion = new Department(DEPARTMENT_COMP, "Departamento de Computacion");
-    private Department Fisica = new Department(DEPARTMENT_PHYSICS, "Departamento de Fisica");
-    private Department Matematica = new Department(DEPARTMENT_MATH, "Departamento de Matematica");
+    private Department Computacion = new Department(DEPARTMENT_COMP, "Departamento de Computacion",DEPARTMENT_COMP);
+    private Department Fisica = new Department(DEPARTMENT_PHYSICS, "Departamento de Fisica",DEPARTMENT_COMP);
+    private Department Matematica = new Department(DEPARTMENT_MATH, "Departamento de Matematica",DEPARTMENT_COMP);
 
     private List<Department> infoDepartments = Arrays.asList(Computacion, Fisica);
     private List<Department> elecDepartments = Arrays.asList(Fisica, Matematica);
     private List<Department> alimDepartments = Arrays.asList(Computacion, Matematica);
 
-    private ClassModel analisisNumerico = new ClassModel(1, ANANLISIS_NUMERICO, DEPARTMENT_COMP, "Analisis Numerico I B", 6 );
-    private ClassModel analisis3 = new ClassModel(2, ANALISIS_2, DEPARTMENT_MATH, "Analisis Matematico III", 6 );
-    private ClassModel analisis2 = new ClassModel(3, ANALISIS_3, DEPARTMENT_MATH, "Analisis Matematico II", 6 );
-    private ClassModel fisica1 = new ClassModel(4, FISICA_1, DEPARTMENT_PHYSICS, "Fisica I", 6 );
-    private ClassModel fisica2 = new ClassModel(5, FISICA_2, DEPARTMENT_PHYSICS, "Fisica II A", 6 );
-    private ClassModel fisica3 = new ClassModel(6, FISICA_3, DEPARTMENT_PHYSICS, "Fisica III D", 6 );
-    private ClassModel algoritmosYProgramacion2 = new ClassModel(7, ALG_Y_PROG_2, DEPARTMENT_COMP, "Algoritmos y Programacion III", 6 );
+    private Subject analisisNumerico = new Subject(1, ANANLISIS_NUMERICO,  "Analisis Numerico I B", 6, Computacion );
+    private Subject analisis3 = new Subject(2, ANALISIS_2, "Analisis Matematico III", 6, Matematica );
+    private Subject analisis2 = new Subject(3, ANALISIS_3, "Analisis Matematico II", 6, Matematica );
+    private Subject fisica1 = new Subject(4, FISICA_1,"Fisica I", 6, Fisica );
+    private Subject fisica2 = new Subject(5, FISICA_2,"Fisica II A", 6,Fisica );
+    private Subject fisica3 = new Subject(6, FISICA_3,"Fisica III D", 6,Fisica );
+    private Subject algoritmosYProgramacion2 = new Subject(7, ALG_Y_PROG_2, "Algoritmos y Programacion III", 6, Computacion );
 
-    private List<ClassModel> compClasses = Arrays.asList(analisisNumerico, algoritmosYProgramacion2);
-    private List<ClassModel> physicsClasses = Arrays.asList(fisica1, fisica2, fisica3);
-    private List<ClassModel> mathClasses = Arrays.asList(analisis3, analisis2);
+    private List<Subject> compClasses = Arrays.asList(analisisNumerico, algoritmosYProgramacion2);
+    private List<Subject> physicsClasses = Arrays.asList(fisica1, fisica2, fisica3);
+    private List<Subject> mathClasses = Arrays.asList(analisis3, analisis2);
 
     private List<CursoTimeBand> times = Arrays.asList(new CursoTimeBand(DayOfWeek.MONDAY, 203,
             new CourseTime(17,0),
@@ -83,56 +83,23 @@ public class ServiceCourserMock implements ServiceCourses
         return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.SUCCESS, studentCareers);
     }
 
-    @Override
-    public ServiceResponse<List<Department>> getDepartments(Student student, Career career)
-    {
-        List<Department> departments;
-        switch (career.getId())
-        {
-            case CAREER_INFO:
-                departments = infoDepartments;
-                break;
-            case CAREER_ELEC:
-                departments = elecDepartments;
-                break;
-            case CAREER_ALIM:
-                departments = alimDepartments;
-                break;
-            default:
-                return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.ERROR);
-        }
-        return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.SUCCESS, departments);
-    }
 
     @Override
-    public ServiceResponse<List<ClassModel>> getClasses(Student student, Career career, Department department)
+    public ServiceResponse<List<Subject>> getSubjects(Student student, Career career)
     {
-        List<ClassModel> classes;
-        switch (department.getId())
-        {
-            case DEPARTMENT_COMP:
-                classes = compClasses;
-                break;
-            case DEPARTMENT_MATH:
-                classes = mathClasses;
-                break;
-            case DEPARTMENT_PHYSICS:
-                classes = physicsClasses;
-                break;
-            default:
-                return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.ERROR);
-        }
+        List<Subject> classes = Arrays.asList(analisis2, analisis3, analisisNumerico,
+                fisica3, fisica2, fisica1, algoritmosYProgramacion2);
         return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.SUCCESS, classes);
     }
 
     @Override
-    public ServiceResponse<List<Course>> getCourses(Student student, ClassModel classModel)
+    public ServiceResponse<List<Course>> getCourses(Student student, Career career, Subject subject)
     {
         List<Course> courses = null;
-        switch (classModel.getDepartment())
+        switch (subject.getDepartmentCode())
         {
             case DEPARTMENT_COMP:
-                switch (classModel.getCode())
+                switch (subject.getCode())
                 {
                     case ALG_Y_PROG_2:
                         courses = algoritmosCourses;
@@ -143,7 +110,7 @@ public class ServiceCourserMock implements ServiceCourses
                 }
                 break;
             case DEPARTMENT_MATH:
-                switch (classModel.getCode())
+                switch (subject.getCode())
                 {
                     case ANALISIS_2:
                         courses = analisis1Courses;
@@ -154,7 +121,7 @@ public class ServiceCourserMock implements ServiceCourses
                 }
                 break;
             case DEPARTMENT_PHYSICS:
-                switch (classModel.getCode())
+                switch (subject.getCode())
                 {
                     case FISICA_1:
                         courses = fisica1Courses;
@@ -175,7 +142,7 @@ public class ServiceCourserMock implements ServiceCourses
     }
 
     @Override
-    public ServiceResponse<Boolean> subscribeTo(Student student, Course course)
+    public ServiceResponse<Boolean> subscribeTo(Student student, Career career, Subject subject, Course course)
     {
         return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.SUCCESS, true);
     }

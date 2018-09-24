@@ -1,12 +1,12 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class JsonArrayTransformer<T>
+public class JsonArrayTransformer<T> extends JsonTransformer<List<T>>
 {
     private JsonTransformer<T> transformer;
 
@@ -15,19 +15,25 @@ public class JsonArrayTransformer<T>
         this.transformer = transformer;
     }
 
-    public List<T> transform(JSONArray jsonArray)
+    private List<T> transform(JsonArray jsonArray)
     {
         List<T> list = new ArrayList<>();
-        for( int i = 0; i < jsonArray.length(); i++)
+        for( int i = 0; i < jsonArray.size(); i++)
         {
-            try {
-                T element = transformer.transform(jsonArray.getJSONObject(i));
-                if( element != null ) list.add(element);
-                else return null;
-            } catch (JSONException e) {
-                return null;
-            }
+            T element = transformer.transform(jsonArray.get(i));
+            if( element != null ) list.add(element);
+            else return null;
         }
         return list;
+    }
+
+    @Override
+    public List<T> transform(JsonElement object)
+    {
+        if( object.isJsonArray() )
+        {
+            return transform(object.getAsJsonArray());
+        }
+        return null;
     }
 }

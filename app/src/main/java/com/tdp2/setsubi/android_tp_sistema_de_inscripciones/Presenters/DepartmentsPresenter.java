@@ -1,10 +1,13 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters;
 
+import android.util.Log;
+
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.DepartmentsActivity;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Career;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Department;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Student;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.GetDepartmentsAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
@@ -15,7 +18,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-public class DepartmentsPresenter implements DepartmentsActivity.Presenter, ServiceAsyncTask.ForeGroundListener<List<Department>> {
+public class DepartmentsPresenter implements DepartmentsActivity.Presenter, ServiceAsyncTask.ForeGroundListener<List<Subject>> {
     private DepartmentsActivity activity;
     private List<Department> departmentList = new ArrayList<>();
     private ArrayList<String> viewList = new ArrayList<>();
@@ -39,7 +42,7 @@ public class DepartmentsPresenter implements DepartmentsActivity.Presenter, Serv
         viewList.clear();
         for( Department department : departmentList )
         {
-            viewList.add(String.format(Locale.getDefault(), "%02d  %s", department.getId(), department.getName()));
+            viewList.add(String.format(Locale.getDefault(), "%02d  %s", department.getCode(), department.getName()));
         }
     }
 
@@ -68,19 +71,25 @@ public class DepartmentsPresenter implements DepartmentsActivity.Presenter, Serv
     }
 
     @Override
-    public void onError(ServiceResponse.ServiceStatusCode error) {
+    public void onError(ServiceResponse.ServiceStatusCode error)
+    {
+        activity.stopLoading();
         activity.failedToLoadDepartments();
     }
 
     @Override
-    public void onSuccess(List<Department> data) {
-        departmentList = data;
+    public void onSuccess(List<Subject> data)
+    {
+        activity.stopLoading();
+        Log.d("DEP","Received " + data.size());
+        AppModel.getInstance().setSubjects(data);
+        departmentList = AppModel.getInstance().getDepartments();
         transformDepartments();
         activity.updatedList();
     }
 
     @Override
     public void onStartingAsyncTask() {
-
+        activity.startLoading();
     }
 }

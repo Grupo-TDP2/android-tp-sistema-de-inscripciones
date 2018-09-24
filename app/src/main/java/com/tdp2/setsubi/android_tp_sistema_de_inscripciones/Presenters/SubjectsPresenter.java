@@ -1,27 +1,26 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters;
 
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.ClassesActivity;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.SubjectsActivity;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.ClassModel;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Department;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.GetMateriasAsyncTask;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.GetSubjectsAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-public class ClassesPresenter implements ClassesActivity.ClassesActivityPresenter, ServiceAsyncTask.ForeGroundListener<List<ClassModel>> {
+public class SubjectsPresenter implements SubjectsActivity.ClassesActivityPresenter, ServiceAsyncTask.ForeGroundListener<List<Subject>> {
 
-    private List<ClassModel> classes = new ArrayList<>();
+    private List<Subject> classes = new ArrayList<>();
     private ArrayList<String> viewClases = new ArrayList<>();
-    private ClassesActivity view;
+    private SubjectsActivity view;
 
-    public ClassesPresenter(ClassesActivity view)
+    public SubjectsPresenter(SubjectsActivity view)
     {
         this.view = view;
     }
@@ -51,26 +50,26 @@ public class ClassesPresenter implements ClassesActivity.ClassesActivityPresente
     public void loadData()
     {
         AppModel appModel = AppModel.getInstance();
-        new GetMateriasAsyncTask(this).execute(appModel.getStudent(), appModel.getSelectedCareer(), appModel.getSelectedDepartment());
+        new GetSubjectsAsyncTask(this).execute(appModel.getSelectedDepartment());
     }
 
     private void transformClasses()
     {
         sortClasses();
         viewClases.clear();
-        for( ClassModel model : classes )
+        for( Subject model : classes )
         {
             viewClases.add(String.format(Locale.getDefault(),
-                    "%02d.%02d %s", model.getDepartment(), model.getCode(), model.getName()));
+                    "%02d.%02d %s", model.getDepartmentCode(), model.getCode(), model.getName()));
         }
     }
     private void sortClasses()
     {
-        Collections.sort(classes, new Comparator<ClassModel>() {
+        Collections.sort(classes, new Comparator<Subject>() {
             @Override
-            public int compare(ClassModel o1, ClassModel o2)
+            public int compare(Subject o1, Subject o2)
             {
-                int diffDepartment = o1.getDepartment() - o2.getDepartment();
+                int diffDepartment = o1.getDepartmentCode() - o2.getDepartmentCode();
                 if( diffDepartment == 0 ){
                     return o1.getCode() - o2.getCode();
                 }
@@ -85,7 +84,7 @@ public class ClassesPresenter implements ClassesActivity.ClassesActivityPresente
     }
 
     @Override
-    public void onSuccess(List<ClassModel> data)
+    public void onSuccess(List<Subject> data)
     {
         classes = data;
         transformClasses();
