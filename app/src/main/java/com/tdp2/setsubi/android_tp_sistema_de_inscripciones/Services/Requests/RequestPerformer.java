@@ -1,44 +1,38 @@
-package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services;
+package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.Requests;
 
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonTransformer;
-
-import org.json.JSONObject;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RequestPerformer<T>
 {
-    public enum Method
-    {
-        GET("GET"),
-        PUT("PUT");
-        private String method;
-        Method(String method)
-        {
-            this.method = method;
-        }
-
-        public String getMethod() {
-            return method;
-        }
-    }
-
     private String url;
-    private Method method;
+    private RequestMethod method;
     private JsonTransformer<T> transformer;
+    private Map<String,String> requestProperties;
 
-    public RequestPerformer(String url, Method method, JsonTransformer<T> transformer)
+    public RequestPerformer(String url, RequestMethod method, JsonTransformer<T> transformer)
     {
         this.url = url;
         this.method = method;
         this.transformer = transformer;
+        this.requestProperties = new HashMap<>();
+    }
+
+    public RequestPerformer<T> addRequestProperty(String propertyName, String propertyValue)
+    {
+        requestProperties.put(propertyName, propertyValue);
+        return this;
     }
 
     public ServiceResponse<T> perform()
@@ -49,7 +43,10 @@ public class RequestPerformer<T>
             URL url = new URL(this.url);
             client = (HttpURLConnection) url.openConnection();
             client.setRequestMethod(method.getMethod());
-
+            for(Map.Entry<String,String> property : requestProperties.entrySet() )
+            {
+                client.setRequestProperty(property.getKey(), property.getValue());
+            }
             client.connect();
 
             BufferedReader br;
