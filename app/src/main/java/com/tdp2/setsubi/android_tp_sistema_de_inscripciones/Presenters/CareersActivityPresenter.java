@@ -36,12 +36,14 @@ public class CareersActivityPresenter implements ServiceAsyncTask.ForeGroundList
 
     @Override
     public void onError(ServiceResponse.ServiceStatusCode error) {
+        view.stopLoading();
         view.failedToLoadCareers();
     }
 
     @Override
     public void onSuccess(List<Career> data)
     {
+        view.stopLoading();
         careers = data;
         dataset.clear();
         AppModel.getInstance().setStudentCareers(data);
@@ -55,7 +57,7 @@ public class CareersActivityPresenter implements ServiceAsyncTask.ForeGroundList
     @Override
     public void onStartingAsyncTask()
     {
-
+        view.startLoading();
     }
 
     public interface View {
@@ -65,5 +67,9 @@ public class CareersActivityPresenter implements ServiceAsyncTask.ForeGroundList
         void navigateToDepartments();
 
         void failedToLoadCareers();
+
+        void startLoading();
+
+        void stopLoading();
     }
 }
