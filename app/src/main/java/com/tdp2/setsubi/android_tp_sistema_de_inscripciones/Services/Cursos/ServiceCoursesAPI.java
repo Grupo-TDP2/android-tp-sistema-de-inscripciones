@@ -7,10 +7,12 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Student;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonArrayTransformer;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonCareerTransformer;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonCourseTransformer;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonSubjectTransformer;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.APIUriBuilder;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.RequestPerformer;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.Requests.RequestMethod;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.Requests.RequestPerformer;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
 
 import java.util.List;
@@ -42,14 +44,15 @@ public class ServiceCoursesAPI implements ServiceCourses
     @Override
     public ServiceResponse<List<Career>> getCareers(Student student)
     {
-        return mock.getCareers(student);
+        return new RequestPerformer<>(getCareersPath().toString(), RequestMethod.GET,
+                new JsonArrayTransformer<>(new JsonCareerTransformer())).perform();
     }
 
     @Override
     public ServiceResponse<List<Subject>> getSubjects(Student student, Career career)
     {
         String path = getSubjetsPath(career.getId()).build().toString();
-        return new RequestPerformer<>(path, RequestPerformer.Method.GET,
+        return new RequestPerformer<>(path, RequestMethod.GET,
                 new JsonArrayTransformer<>(new JsonSubjectTransformer()))
                 .perform();
     }
@@ -58,13 +61,20 @@ public class ServiceCoursesAPI implements ServiceCourses
     public ServiceResponse<List<Course>> getCourses(Student student, Career career, Subject subject)
     {
         String path = getCoursesPath(career.getId(), subject.getId()).build().toString();
-        return new RequestPerformer<>(path, RequestPerformer.Method.GET,
+        return new RequestPerformer<>(path, RequestMethod.GET,
                 new JsonArrayTransformer<>(new JsonCourseTransformer()))
                 .perform();
     }
 
     @Override
-    public ServiceResponse<Boolean> subscribeTo(Student student,  Career career, Subject subject, Course course) {
-        return mock.subscribeTo(student, career, subject, course);
+    public ServiceResponse<Boolean> subscribeTo(Student student,  Career career, Subject subject, Course course)
+    {
+        //String path = getEnrolmetsPath(career.getId(), subject.getId(), course.getId()).toString();
+        return mock.subscribeTo(student,career,subject,course);
+        /*return new RequestPerformer<>(path, RequestMethod.POST,
+            new JsonArrayTransformer<>(new JsonCourseTransformer()))
+                .addRequestProperty(RequestProperty.AUTHORIZATION.getKey(), student.getAuthorization())
+                .addRequestProperty(RequestProperty.CONTENT_TYPE.getKey(), ContentType.JSON.getValue())
+                .perform();*/
     }
 }

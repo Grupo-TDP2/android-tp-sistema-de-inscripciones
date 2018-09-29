@@ -5,6 +5,7 @@ public class Student
     private int id;
     private String name;
     private String lastname;
+    private String authorization;
      /*String email;
     String personal_document_number;
     String school_document_number;
@@ -34,5 +35,9 @@ public class Student
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getAuthorization() {
+        return authorization;
     }
 }

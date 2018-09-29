@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.TextRecyclerViewAdapter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.DepartmentsPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.LoadingSnackbar;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.ToolBarHelper;
 
 import java.util.ArrayList;
@@ -79,7 +80,7 @@ public class DepartmentsActivity extends AppCompatActivity
     @Override
     public void startLoading() {
         stopLoading();
-        snackbar = Snackbar.make(findViewById(R.id.departments_recycler_view), R.string.loading, Snackbar.LENGTH_INDEFINITE);
+        snackbar = LoadingSnackbar.createLoadingSnackBar(findViewById(R.id.departments_recycler_view));
         snackbar.show();
     }
 

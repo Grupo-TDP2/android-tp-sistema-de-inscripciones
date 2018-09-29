@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.CursoAdapter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.CursosPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.LoadingSnackbar;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.ToolBarHelper;
 
 public class CursosActivity extends AppCompatActivity implements LoadingView
@@ -55,7 +56,7 @@ public class CursosActivity extends AppCompatActivity implements LoadingView
     @Override
     public void startLoading() {
         stopLoading();
-        snackbar = Snackbar.make(findViewById(R.id.cursos_list), R.string.loading, Snackbar.LENGTH_INDEFINITE);
+        snackbar = LoadingSnackbar.createLoadingSnackBar(findViewById(R.id.cursos_list));
         snackbar.show();
     }
 
