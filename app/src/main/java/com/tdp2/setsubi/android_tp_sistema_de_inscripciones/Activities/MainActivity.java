@@ -9,6 +9,8 @@ import android.widget.Button;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.MainActivityPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.SoonToast;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.ToolBarHelper;
 
 public class MainActivity extends AppCompatActivity implements MainActivityPresenter.View {
 
@@ -19,9 +21,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        ToolBarHelper.onCreate(this);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        ToolBarHelper.setTitle(this, R.string.fiuba_inscripciones);
 
         presenter = new MainActivityPresenter(this);
 
@@ -31,6 +33,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         Button newCourseButton = this.findViewById(R.id.newCourseButton);
         newCourseButton.setOnClickListener(new NewCourseClickHandler());
 
+        findViewById(R.id.newFinalExamButton).setOnClickListener(new SoonClickHandler());
+        findViewById(R.id.myCoursesButton).setOnClickListener(new SoonClickHandler());
+        findViewById(R.id.myExamsButton).setOnClickListener(new SoonClickHandler());
+        findViewById(R.id.priorityButton).setOnClickListener(new SoonClickHandler());
+        findViewById(R.id.myDataButton).setOnClickListener(new SoonClickHandler());
     }
 
     @Override
@@ -57,9 +64,21 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
     }
 
     protected class NewCourseClickHandler implements View.OnClickListener {
-
         public void onClick(View v){
             presenter.navigateTo("newCourse");
         }
+    }
+
+    protected class SoonClickHandler implements View.OnClickListener
+    {
+        public void onClick(View v){
+            SoonToast.show(MainActivity.this);
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        SoonToast.show(this);
+        return true;
     }
 }

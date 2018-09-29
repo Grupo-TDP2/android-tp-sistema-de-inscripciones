@@ -29,7 +29,7 @@ public class SubjectsPresenter implements SubjectsActivity.ClassesActivityPresen
     public String getDepartmentName()
     {
         Department department = AppModel.getInstance().getSelectedDepartment();
-        return String.format(Locale.getDefault(), "%02d  %s",department.getId(), department.getName());
+        return String.format(Locale.getDefault(), "%02d  %s",department.getCode(), department.getName());
     }
 
     @Override

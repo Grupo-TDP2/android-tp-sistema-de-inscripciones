@@ -6,26 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Activities.MainActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorAccent"
-        android:elevation="4dp"
-        android:minHeight="50dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat">
-
-        <TextView
-            android:id="@+id/toolbar_title"
-            style="@style/DefaultTitleStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="FIUBA Inscripciones"
-            android:textColor="@color/textPrimary"
-            android:textSize="25sp" />
-
-    </android.support.v7.widget.Toolbar>
+   <include layout="@layout/tool_bar_main" />
 
     <Button
         android:id="@+id/academicOfferButton"
@@ -36,11 +17,10 @@
         android:fontFamily="@font/raleway"
         android:textSize="15dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/newCourseButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.134" />
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
 
     <Button
         android:id="@+id/newCourseButton"
@@ -51,10 +31,81 @@
         android:fontFamily="@font/raleway"
         android:textSize="15dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/newFinalExamButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/academicOfferButton"
         app:layout_constraintVertical_bias="0.252" />
+
+ <Button
+     android:id="@+id/newFinalExamButton"
+     style="@style/Widget.AppCompat.Button.Colored"
+     android:layout_width="320dp"
+     android:layout_height="wrap_content"
+     android:fontFamily="@font/raleway"
+     android:text="Inscribirse a Examen Final"
+     android:textSize="15dp"
+     android:textStyle="bold"
+     app:layout_constraintBottom_toTopOf="@+id/myCoursesButton"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toBottomOf="@+id/newCourseButton" />
+
+ <Button
+     android:id="@+id/myCoursesButton"
+     style="@style/Widget.AppCompat.Button.Colored"
+     android:layout_width="320dp"
+     android:layout_height="wrap_content"
+     android:fontFamily="@font/raleway"
+     android:text="Mis Cursos"
+     android:textSize="15dp"
+     android:textStyle="bold"
+     app:layout_constraintBottom_toTopOf="@+id/myExamsButton"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toBottomOf="@+id/newFinalExamButton" />
+
+ <Button
+     android:id="@+id/myExamsButton"
+     style="@style/Widget.AppCompat.Button.Colored"
+     android:layout_width="320dp"
+     android:layout_height="wrap_content"
+     android:fontFamily="@font/raleway"
+     android:text="Mis Examenes"
+     android:textSize="15dp"
+     android:textStyle="bold"
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintBottom_toTopOf="@+id/priorityButton"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toBottomOf="@+id/myCoursesButton" />
+
+ <Button
+     android:id="@+id/priorityButton"
+     style="@style/Widget.AppCompat.Button.Colored"
+     android:layout_width="320dp"
+     android:layout_height="wrap_content"
+     android:fontFamily="@font/raleway"
+     android:text="Consultar Prioridad"
+     android:textSize="15dp"
+     android:textStyle="bold"
+     app:layout_constraintBottom_toTopOf="@+id/myDataButton"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toBottomOf="@+id/myExamsButton" />
+
+ <Button
+     android:id="@+id/myDataButton"
+     style="@style/Widget.AppCompat.Button.Colored"
+     android:layout_width="320dp"
+     android:layout_height="wrap_content"
+     android:fontFamily="@font/raleway"
+     android:text="Mis Datos"
+     android:textSize="15dp"
+     android:textStyle="bold"
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toBottomOf="@+id/priorityButton" />
 
 </android.support.constraint.ConstraintLayout>
