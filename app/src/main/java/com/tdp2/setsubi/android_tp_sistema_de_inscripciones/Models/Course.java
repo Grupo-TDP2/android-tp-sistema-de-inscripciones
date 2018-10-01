@@ -9,17 +9,17 @@ public class Course
     private String catedra;
     private Sede sede;
     private List<CursoTimeBand> cursoTimeBands;
-    private List<Integer> subscribedStudents;
+    private boolean isSubscribed;
     private int cupos;
 
-    public Course(int id, String catedra, Sede sede, List<CursoTimeBand> schedules, int cupo)
+    public Course(int id, String catedra, Sede sede, List<CursoTimeBand> schedules, int cupo, boolean isSubscribed)
     {
         this.id = id;
         this.catedra = catedra;
         this.sede = sede;
         this.cursoTimeBands = schedules;
         this.cupos = cupo;
-        this.subscribedStudents = new ArrayList<>();
+        this.isSubscribed = isSubscribed;
     }
 
     public int getId() {
@@ -46,16 +46,13 @@ public class Course
         this.cupos = cupos;
     }
 
-    public boolean isSubscribed(int student)
+    public boolean isSubscribed()
     {
-        return subscribedStudents.contains(student);
+        return isSubscribed;
     }
 
-    public void addSubscribed(int id)
+    public void setSubscribed(boolean isSubscribed)
     {
-        if( !subscribedStudents.contains(id) )
-        {
-            subscribedStudents.add(id);
-        }
+        this.isSubscribed = isSubscribed;
     }
 }
