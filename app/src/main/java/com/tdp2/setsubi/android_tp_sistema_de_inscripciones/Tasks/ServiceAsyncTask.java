@@ -8,9 +8,9 @@ public abstract class ServiceAsyncTask<Params, Progress, T> extends AsyncTask<Pa
 {
     public interface ForeGroundListener<R>
     {
-        void onError(ServiceResponse.ServiceStatusCode error);
-        void onSuccess(R data);
-        void onStartingAsyncTask();
+        void onError(ServiceAsyncTask serviceAsyncTask, ServiceResponse.ServiceStatusCode error);
+        void onSuccess(ServiceAsyncTask serviceAsyncTask, Object data);
+        void onStartingAsyncTask(ServiceAsyncTask serviceAsyncTask);
     }
     private ForeGroundListener<T> listener;
 
@@ -27,17 +27,17 @@ public abstract class ServiceAsyncTask<Params, Progress, T> extends AsyncTask<Pa
 
     protected void onPreExecute()
     {
-        listener.onStartingAsyncTask();
+        listener.onStartingAsyncTask(this);
     }
 
     protected void onPostExecute(ServiceResponse<T> response)
     {
         if( response.getStatusCode() == ServiceResponse.ServiceStatusCode.SUCCESS)
         {
-            listener.onSuccess(response.getServiceResponse());
+            listener.onSuccess(this, response.getServiceResponse());
         } else
         {
-            listener.onError(response.getStatusCode());
+            listener.onError(this, response.getStatusCode());
         }
     }
 

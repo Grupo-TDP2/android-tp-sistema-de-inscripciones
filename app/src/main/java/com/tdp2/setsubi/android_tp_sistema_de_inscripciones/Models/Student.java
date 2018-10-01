@@ -11,10 +11,11 @@ public class Student
     String school_document_number;
     String birthdate, phone_number, address;*/
 
-    public Student(int id, String name, String lastname) {
+    public Student(int id, String name, String lastname, String authorization) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
+        this.authorization = authorization;
     }
 
     public int getId() {

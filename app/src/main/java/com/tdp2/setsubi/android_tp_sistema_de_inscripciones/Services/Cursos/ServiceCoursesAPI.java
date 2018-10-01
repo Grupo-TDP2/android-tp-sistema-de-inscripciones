@@ -3,16 +3,21 @@ package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.Cursos;
 import android.net.Uri;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Career;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.EnrolmentResponse;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Student;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonArrayTransformer;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonCareerTransformer;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonCourseTransformer;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonEnrolmentTransformer;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonSubjectTransformer;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.APIUriBuilder;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.Requests.ContentType;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.Requests.RequestBuilder;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.Requests.RequestMethod;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.Requests.RequestPerformer;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.Requests.RequestProperty;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
 
 import java.util.List;
@@ -41,10 +46,11 @@ public class ServiceCoursesAPI implements ServiceCourses
 
     private ServiceCourses mock = new ServiceCourserMock();
 
+    private RequestBuilder getBuilder =  new RequestBuilder(RequestMethod.GET);
     @Override
     public ServiceResponse<List<Career>> getCareers(Student student)
     {
-        return new RequestPerformer<>(getCareersPath().toString(), RequestMethod.GET,
+        return new RequestPerformer<>(getCareersPath().toString(), getBuilder,
                 new JsonArrayTransformer<>(new JsonCareerTransformer())).perform();
     }
 
@@ -52,7 +58,7 @@ public class ServiceCoursesAPI implements ServiceCourses
     public ServiceResponse<List<Subject>> getSubjects(Student student, Career career)
     {
         String path = getSubjetsPath(career.getId()).build().toString();
-        return new RequestPerformer<>(path, RequestMethod.GET,
+        return new RequestPerformer<>(path, getBuilder,
                 new JsonArrayTransformer<>(new JsonSubjectTransformer()))
                 .perform();
     }
@@ -61,20 +67,20 @@ public class ServiceCoursesAPI implements ServiceCourses
     public ServiceResponse<List<Course>> getCourses(Student student, Career career, Subject subject)
     {
         String path = getCoursesPath(career.getId(), subject.getId()).build().toString();
-        return new RequestPerformer<>(path, RequestMethod.GET,
+        return new RequestPerformer<>(path, getBuilder,
                 new JsonArrayTransformer<>(new JsonCourseTransformer()))
                 .perform();
     }
 
     @Override
-    public ServiceResponse<Boolean> subscribeTo(Student student,  Career career, Subject subject, Course course)
+    public ServiceResponse<EnrolmentResponse> subscribeTo(Student student, Career career, Subject subject, Course course)
     {
-        //String path = getEnrolmetsPath(career.getId(), subject.getId(), course.getId()).toString();
-        return mock.subscribeTo(student,career,subject,course);
-        /*return new RequestPerformer<>(path, RequestMethod.POST,
-            new JsonArrayTransformer<>(new JsonCourseTransformer()))
-                .addRequestProperty(RequestProperty.AUTHORIZATION.getKey(), student.getAuthorization())
-                .addRequestProperty(RequestProperty.CONTENT_TYPE.getKey(), ContentType.JSON.getValue())
-                .perform();*/
+        String path = getEnrolmetsPath(career.getId(), subject.getId(), course.getId()).toString();
+        return new RequestPerformer<>(path,
+                new RequestBuilder(RequestMethod.POST)
+                    .addRequestProperty(RequestProperty.AUTHORIZATION.getKey(), student.getAuthorization())
+                    .addRequestProperty(RequestProperty.CONTENT_TYPE.getKey(), ContentType.JSON.getValue()),
+                     new JsonEnrolmentTransformer())
+                .perform();
     }
 }

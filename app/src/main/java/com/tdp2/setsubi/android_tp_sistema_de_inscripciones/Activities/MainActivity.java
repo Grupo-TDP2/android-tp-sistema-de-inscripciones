@@ -6,13 +6,19 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Student;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.MainActivityPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.SoonToast;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.ToolBarHelper;
 
-public class MainActivity extends AppCompatActivity implements MainActivityPresenter.View {
+public class MainActivity extends AppCompatActivity implements MainActivityPresenter.View
+{
 
     private MainActivityPresenter presenter;
 
@@ -38,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         findViewById(R.id.myExamsButton).setOnClickListener(new SoonClickHandler());
         findViewById(R.id.priorityButton).setOnClickListener(new SoonClickHandler());
         findViewById(R.id.myDataButton).setOnClickListener(new SoonClickHandler());
+        presenter.doLogin();
     }
 
     @Override
@@ -54,6 +61,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
                 startActivity(navigationIntent);
                 break;
         }
+    }
+
+    @Override
+    public void showToast(int stringId) {
+        Toast.makeText(this, stringId, Toast.LENGTH_SHORT).show();
     }
 
     protected class AcademicOfferClickHandler implements View.OnClickListener {

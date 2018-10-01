@@ -71,25 +71,26 @@ public class DepartmentsPresenter implements DepartmentsActivity.Presenter, Serv
     }
 
     @Override
-    public void onError(ServiceResponse.ServiceStatusCode error)
+    public void onError(ServiceAsyncTask serviceAsyncTask, ServiceResponse.ServiceStatusCode error)
     {
         activity.stopLoading();
         activity.failedToLoadDepartments();
     }
 
     @Override
-    public void onSuccess(List<Subject> data)
+    public void onSuccess(ServiceAsyncTask serviceAsyncTask, Object object)
     {
+        List<Subject> subjects = (List<Subject>)object;
         activity.stopLoading();
-        Log.d("DEP","Received " + data.size());
-        AppModel.getInstance().setSubjects(data);
+        Log.d("DEP","Received " + subjects.size());
+        AppModel.getInstance().setSubjects(subjects);
         departmentList = AppModel.getInstance().getDepartments();
         transformDepartments();
         activity.updatedList();
     }
 
     @Override
-    public void onStartingAsyncTask() {
+    public void onStartingAsyncTask(ServiceAsyncTask serviceAsyncTask) {
         activity.startLoading();
     }
 }

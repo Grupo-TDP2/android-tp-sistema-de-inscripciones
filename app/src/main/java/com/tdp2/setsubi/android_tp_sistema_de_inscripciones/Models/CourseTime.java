@@ -25,4 +25,12 @@ public class CourseTime
 
     private int hours;
     private int minutes;
+
+    @Override
+    public boolean equals(Object object)
+    {
+        if( object == null || (object instanceof  CourseTime) ) return false;
+        CourseTime other = (CourseTime) object;
+        return other.hours == hours && other.minutes == minutes;
+    }
 }

@@ -79,20 +79,20 @@ public class SubjectsPresenter implements SubjectsActivity.ClassesActivityPresen
     }
 
     @Override
-    public void onError(ServiceResponse.ServiceStatusCode error) {
+    public void onError(ServiceAsyncTask serviceAsyncTask, ServiceResponse.ServiceStatusCode error) {
         view.onFailedToLoadClasses();
     }
 
     @Override
-    public void onSuccess(List<Subject> data)
+    public void onSuccess(ServiceAsyncTask serviceAsyncTask, Object data)
     {
-        classes = data;
+        classes = (List<Subject>)data;
         transformClasses();
         view.updatedList();
     }
 
     @Override
-    public void onStartingAsyncTask() {
+    public void onStartingAsyncTask(ServiceAsyncTask serviceAsyncTask) {
 
     }
 }
