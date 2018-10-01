@@ -67,7 +67,8 @@ public class ServiceCoursesAPI implements ServiceCourses
     public ServiceResponse<List<Course>> getCourses(Student student, Career career, Subject subject)
     {
         String path = getCoursesPath(career.getId(), subject.getId()).build().toString();
-        return new RequestPerformer<>(path, getBuilder,
+        return new RequestPerformer<>(path, new RequestBuilder(RequestMethod.GET)
+                .addRequestProperty(RequestProperty.AUTHORIZATION.getKey(), student.getAuthorization()),
                 new JsonArrayTransformer<>(new JsonCourseTransformer()))
                 .perform();
     }

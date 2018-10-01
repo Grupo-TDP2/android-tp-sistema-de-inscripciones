@@ -59,7 +59,7 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
         {
             Course course = courses.get(index);
 
-            if( course.isSubscribed(AppModel.getInstance().getStudent().getId()) )
+            if( course.isSubscribed() )
             {
                 activity.showAlreadySubscribed();
             } else if (!isSubscribing)
@@ -128,7 +128,7 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
     private void subscribeTo(int index)
     {
         Course course = courses.get(index);
-        course.addSubscribed(AppModel.getInstance().getStudent().getId());
+        course.setSubscribed(true);
         if( course.getCupos() != 0 )
         {
             course.setCupos(course.getCupos() - 1);

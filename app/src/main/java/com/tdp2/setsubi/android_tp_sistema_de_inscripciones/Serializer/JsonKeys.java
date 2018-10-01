@@ -8,7 +8,8 @@ class JsonKeys
     static final String CREDITS = "credits";
     static final String DEPARTMENT = "department";
     static final String VACANCIES = "vacancies";
-    static final String TEACHERS = "teachers";
+    static final String TEACHER = "teacher";
+    static final String TEACHERS = "teacher_courses";
     static final String STUDENTS = "students";
     static final String SCHOOL_TERM = "school_term";
     static final String YEAR = "year";
@@ -28,4 +29,6 @@ class JsonKeys
     static final String FLOOR = "floor";
     static final String ACCESS_TOKEN = "access_token";
     static final String COURSE = "course";
+    static final String LAST_NAME = "last_name";
+    static final String INSCRIBED = "inscribed";
 }

@@ -3,6 +3,7 @@ package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CourseTime;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CursoTimeBand;
@@ -15,8 +16,12 @@ import java.util.List;
 import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonKeys.BUILDING;
 import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonKeys.CLASSROOM;
 import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonKeys.ID;
+import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonKeys.INSCRIBED;
+import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonKeys.LAST_NAME;
 import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonKeys.LESSON_SCHEDULES;
 import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonKeys.NAME;
+import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonKeys.TEACHER;
+import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonKeys.TEACHERS;
 import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonKeys.VACANCIES;
 
 import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.JsonUtils.getInt;
@@ -45,7 +50,22 @@ public class JsonCourseTransformer extends JsonTransformer<Course>
 
             if( isString(jsonObject, NAME) )
             {
-                name = getString(jsonObject, NAME);
+                String teacherName = null;
+                if( jsonObject.has(TEACHERS) && jsonObject.get(TEACHERS).isJsonArray() )
+                {
+                    JsonArray array = jsonObject.get(TEACHERS).getAsJsonArray();
+
+                    if( array.size() != 0 )
+                    {
+                        teacherName = getTeacherName(array.get(0));
+                    }
+                }
+                if( teacherName != null )
+                {
+                    name = teacherName + " - " + getString(jsonObject, NAME);
+                } else {
+                    name = getString(jsonObject, NAME);
+                }
             } else return null;
 
             if( isInt(jsonObject, VACANCIES) )
@@ -59,8 +79,32 @@ public class JsonCourseTransformer extends JsonTransformer<Course>
                 sede = getSede(jsonObject.get(LESSON_SCHEDULES));
             } else return null;
 
+            boolean isSubscribed = false;
+            if( jsonObject.has(INSCRIBED) && jsonObject.get(INSCRIBED).isJsonPrimitive() )
+            {
+                JsonPrimitive primitive = jsonObject.getAsJsonPrimitive(INSCRIBED);
+                if( primitive.isBoolean() )
+                {
+                    isSubscribed = primitive.getAsBoolean();
+                }
+            }
+            return new Course(id, name, sede, times, vacancies, isSubscribed);
+        }
+        return null;
+    }
 
-            return new Course(id, name, sede, times, vacancies);
+    private String getTeacherName(JsonElement jsonElement) {
+        if(jsonElement.isJsonObject())
+        {
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            if( jsonObject.has(TEACHER) && jsonObject.get(TEACHER).isJsonObject() )
+            {
+                JsonObject teacher = jsonObject.getAsJsonObject(TEACHER);
+                if( isString(teacher, LAST_NAME) )
+                {
+                    return getString(teacher, LAST_NAME);
+                }
+            }
         }
         return null;
     }
