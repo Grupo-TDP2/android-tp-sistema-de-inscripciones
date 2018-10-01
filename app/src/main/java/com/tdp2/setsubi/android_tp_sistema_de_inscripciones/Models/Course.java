@@ -1,5 +1,6 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Course
@@ -8,6 +9,7 @@ public class Course
     private String catedra;
     private Sede sede;
     private List<CursoTimeBand> cursoTimeBands;
+    private List<Integer> subscribedStudents;
     private int cupos;
 
     public Course(int id, String catedra, Sede sede, List<CursoTimeBand> schedules, int cupo)
@@ -17,6 +19,7 @@ public class Course
         this.sede = sede;
         this.cursoTimeBands = schedules;
         this.cupos = cupo;
+        this.subscribedStudents = new ArrayList<>();
     }
 
     public int getId() {
@@ -41,5 +44,18 @@ public class Course
 
     public void setCupos(int cupos) {
         this.cupos = cupos;
+    }
+
+    public boolean isSubscribed(int student)
+    {
+        return subscribedStudents.contains(student);
+    }
+
+    public void addSubscribed(int id)
+    {
+        if( !subscribedStudents.contains(id) )
+        {
+            subscribedStudents.add(id);
+        }
     }
 }

@@ -6,4 +6,5 @@
     <color name="colorPrimaryDark">#e238b76d</color>
     <color name="colorAccent">#e238b76d</color>
     <color name="actionButtonColor">#579dbb</color>
+    <color name="disbaledBackground">#4d4d4d</color>
 </resources>

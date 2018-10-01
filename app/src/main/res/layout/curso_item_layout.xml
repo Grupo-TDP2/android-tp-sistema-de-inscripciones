@@ -94,6 +94,15 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/noHayHorarios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_hay_horarios"
+                android:textAlignment="center"
+                android:visibility="gone"
+                android:textSize="16sp"/>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/horarios_container"
                 android:layout_width="match_parent"

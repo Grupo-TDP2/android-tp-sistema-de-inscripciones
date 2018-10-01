@@ -85,9 +85,9 @@ public class JsonCourseTimeBandTransformer extends JsonTransformer<CursoTimeBand
     {
         switch (value)
         {
-            case "theory":
+            case "theory": case "teoría":
                 return CursoTimeBand.CursoTimeType.TEORICO;
-            case "practice":
+            case "practice": case "práctica":
                 return CursoTimeBand.CursoTimeType.PRACTIO;
         }
         return null;
@@ -97,17 +97,17 @@ public class JsonCourseTimeBandTransformer extends JsonTransformer<CursoTimeBand
     {
         switch (value)
         {
-            case "Monday":
+            case "Monday": case "Lunes":
                 return DayOfWeek.MONDAY;
-            case "Tuesday":
+            case "Tuesday": case "Martes":
                 return DayOfWeek.TUESDAY;
-            case "Wednesday":
+            case "Wednesday": case "Miércoles":
                 return DayOfWeek.WEDNESDAY;
-            case "Thursday":
+            case "Thursday": case "Jueves":
                 return DayOfWeek.THURSDAY;
-            case "Friday":
+            case "Friday": case "Viernes":
                 return DayOfWeek.FRIDAY;
-            case "Saturday":
+            case "Saturday": case "Sábado":
                 return DayOfWeek.SATURDAY;
         }
         return null;

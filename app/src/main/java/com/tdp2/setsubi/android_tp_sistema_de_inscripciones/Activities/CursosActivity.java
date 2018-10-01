@@ -70,11 +70,15 @@ public class CursosActivity extends AppCompatActivity implements LoadingView
     }
 
     public void onFailedToEnroll() {
-        Toast.makeText(this, R.string.failed_enrolment, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.failed_enrolment_error, Toast.LENGTH_SHORT).show();
     }
 
     public void showStillSubscribing() {
         Toast.makeText(this, R.string.wait_till_subscription_ends, Toast.LENGTH_SHORT).show();
+    }
+
+    public void showAlreadySubscribed() {
+        Toast.makeText(this, R.string.failed_enrolment, Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -1,15 +1,18 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters;
 
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CursoTimeBand;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Sede;
@@ -51,6 +54,7 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
         holder.setTimes(course.getCursoTimeBands());
         holder.setSede(course.getSede());
         holder.enableSubscription(canSubscribe);
+        holder.setButtonEnabled(!course.isSubscribed(AppModel.getInstance().getStudent().getId()));
         holder.setSubscribeListener(listener, course.getId());
     }
 
@@ -60,11 +64,12 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
         return courses.size();
     }
 
-    public static class CursoViewHolder extends RecyclerView.ViewHolder
+    static class CursoViewHolder extends RecyclerView.ViewHolder
     {
         private TextView catedra;
         private TextView sede;
         private TextView cupo;
+        private TextView noTimesText;
         private Button subscribe;
         private RecyclerView recyclerView;
 
@@ -75,6 +80,7 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
             sede = itemView.findViewById(R.id.sede_name);
             cupo = itemView.findViewById(R.id.cupo_size);
             subscribe = itemView.findViewById(R.id.subscribe_button);
+            noTimesText = itemView.findViewById(R.id.noHayHorarios);
             recyclerView = itemView.findViewById(R.id.horarios_container);
             recyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
             recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),
@@ -96,21 +102,30 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
         public void setCupo(int cupo)
         {
             this.cupo.setText(String.valueOf(cupo));
-            if( cupo == 0 )
-            {
-                subscribe.setEnabled(false);
-            }
         }
 
         public void setTimes(List<CursoTimeBand> times)
         {
             recyclerView.setAdapter(new CursoTimeAdapter(times));
+            int noTimesVisibility = times.size() == 0 ? View.VISIBLE : View.GONE;
+            noTimesText.setVisibility(noTimesVisibility);
         }
 
         public void enableSubscription(boolean canSubscribe) {
             if( canSubscribe )
             {
                 subscribe.setVisibility(canSubscribe ? View.VISIBLE : View.INVISIBLE);
+            }
+        }
+
+        public void setButtonEnabled(boolean enabled)
+        {
+            if( enabled )
+            {
+                subscribe.setBackgroundColor(ContextCompat.getColor(subscribe.getContext(), R.color.actionButtonColor));
+            } else
+            {
+                subscribe.setBackgroundColor(ContextCompat.getColor(subscribe.getContext(), R.color.disbaledBackground));
             }
         }
 

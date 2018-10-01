@@ -1,5 +1,7 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters;
 
+import android.util.Log;
+
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.CursoAdapter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.CursosActivity;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
@@ -54,15 +56,23 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
     @Override
     public void onSubscribe(int cursoId)
     {
-        //TODO CALL TO API
-        //FOR NOW DECREASE NUMBER
         int index = getCursoIndex(cursoId);
-        if( index != -1 && !isSubscribing )
+        if( index != -1 )
         {
-            isSubscribing = true;
-            AppModel model = AppModel.getInstance();
             Course course = courses.get(index);
-            new EnrolToClassAsyncTask(this).execute(model.getStudent(), model.getSelectedCareer(), model.getSelecteSubject(), course);
+
+            if( course.isSubscribed(AppModel.getInstance().getStudent().getId()) )
+            {
+                activity.showAlreadySubscribed();
+            } else if (!isSubscribing)
+            {
+                isSubscribing = true;
+                AppModel model = AppModel.getInstance();
+                new EnrolToClassAsyncTask(this).execute(model.getStudent(), model.getSelectedCareer(), model.getSelecteSubject(), course);
+            } else if ( isSubscribing)
+            {
+                activity.showStillSubscribing();
+            }
         } else if( isSubscribing )
         {
             activity.showStillSubscribing();
@@ -117,13 +127,15 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
         }
     }
 
-    private void subscribeTo(int index) {
+    private void subscribeTo(int index)
+    {
         Course course = courses.get(index);
+        course.addSubscribed(AppModel.getInstance().getStudent().getId());
         if( course.getCupos() != 0 )
         {
             course.setCupos(course.getCupos() - 1);
-            adapter.notifyItemChanged(index);
         }
+        adapter.notifyItemChanged(index);
     }
 
     @Override
