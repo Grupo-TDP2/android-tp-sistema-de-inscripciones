@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">android-tp-sistema-de-inscripciones</string>
-    <string name="catedra_label">C átedra:</string>
+    <string name="app_name">FIUBA Inscripciones</string>
+    <string name="catedra_label">Cátedra:</string>
     <string name="cupo_label">Cupo:</string>
     <string name="horarios_label">Horarios:</string>
     <string name="sede_label">Sede:</string>
