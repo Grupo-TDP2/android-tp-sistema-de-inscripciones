@@ -30,5 +30,5 @@ class JsonKeys
     static final String ACCESS_TOKEN = "access_token";
     static final String COURSE = "course";
     static final String LAST_NAME = "last_name";
-    static final String INSCRIBED = "inscribed";
+    static final String INSCRIBED = "inscribed?";
 }
