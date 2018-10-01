@@ -1,7 +1,5 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters;
 
-import android.util.Log;
-
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.CursoAdapter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.CursosActivity;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
