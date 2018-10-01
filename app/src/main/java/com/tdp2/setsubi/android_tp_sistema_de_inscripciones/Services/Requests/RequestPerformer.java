@@ -17,36 +17,24 @@ import java.util.Map;
 public class RequestPerformer<T>
 {
     private String url;
-    private RequestMethod method;
+    private RequestBuilder builder;
     private JsonTransformer<T> transformer;
-    private Map<String,String> requestProperties;
 
-    public RequestPerformer(String url, RequestMethod method, JsonTransformer<T> transformer)
+    public RequestPerformer(String url, RequestBuilder builder, JsonTransformer<T> transformer)
     {
         this.url = url;
-        this.method = method;
         this.transformer = transformer;
-        this.requestProperties = new HashMap<>();
-    }
-
-    public RequestPerformer<T> addRequestProperty(String propertyName, String propertyValue)
-    {
-        requestProperties.put(propertyName, propertyValue);
-        return this;
+        this.builder = builder;
     }
 
     public ServiceResponse<T> perform()
     {
-        Log.d("REQ"," url: " + url + " " + method);
+        Log.d("REQ"," url: " + url);
         HttpURLConnection client = null;
         try {
             URL url = new URL(this.url);
             client = (HttpURLConnection) url.openConnection();
-            client.setRequestMethod(method.getMethod());
-            for(Map.Entry<String,String> property : requestProperties.entrySet() )
-            {
-                client.setRequestProperty(property.getKey(), property.getValue());
-            }
+            builder.buildConnection(client);
             client.connect();
 
             BufferedReader br;

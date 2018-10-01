@@ -3,9 +3,11 @@ package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.CursoAdapter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.CursosActivity;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.EnrolmentResponse;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.EnrolToClassAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.GetCoursesAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
 
@@ -13,11 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter.SubscribeListener, ServiceAsyncTask.ForeGroundListener<List<Course>> {
+public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter.SubscribeListener,
+        ServiceAsyncTask.ForeGroundListener {
     private CursoAdapter adapter = null;
     private List<Course> courses = new ArrayList<>();
     private boolean canSubscribe = true;
     private CursosActivity activity;
+    private boolean isSubscribing = false;
 
     public CursosPresenter(CursosActivity activity)
     {
@@ -50,17 +54,26 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
     @Override
     public void onSubscribe(int cursoId)
     {
-        //TODO CALL TO API
-        //FOR NOW DECREASE NUMBER
         int index = getCursoIndex(cursoId);
         if( index != -1 )
         {
             Course course = courses.get(index);
-            if( course.getCupos() > 0 )
+
+            if( course.isSubscribed(AppModel.getInstance().getStudent().getId()) )
             {
-                course.setCupos(course.getCupos() - 1);
-                adapter.notifyItemChanged(index);
+                activity.showAlreadySubscribed();
+            } else if (!isSubscribing)
+            {
+                isSubscribing = true;
+                AppModel model = AppModel.getInstance();
+                new EnrolToClassAsyncTask(this).execute(model.getStudent(), model.getSelectedCareer(), model.getSelecteSubject(), course);
+            } else if ( isSubscribing)
+            {
+                activity.showStillSubscribing();
             }
+        } else if( isSubscribing )
+        {
+            activity.showStillSubscribing();
         }
     }
 
@@ -77,23 +90,54 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
     }
 
     @Override
-    public void onError(ServiceResponse.ServiceStatusCode error)
+    public void onError(ServiceAsyncTask serviceAsyncTask, ServiceResponse.ServiceStatusCode error)
     {
         activity.stopLoading();
-        activity.onFailedtoLoadCursos();
+        if( serviceAsyncTask instanceof EnrolToClassAsyncTask )
+        {
+            isSubscribing = false;
+            activity.onFailedToEnroll();
+        } else {
+            activity.onFailedtoConnectivity();
+        }
     }
 
     @Override
-    public void onSuccess(List<Course> data)
+    public void onSuccess(ServiceAsyncTask serviceAsyncTask, Object data)
     {
         activity.stopLoading();
-        courses.clear();
-        courses.addAll(data);
-        adapter.notifyDataSetChanged();
+        if( data instanceof List )
+        {
+            List<Course> list = (List<Course>)data;
+            courses.clear();
+            courses.addAll(list);
+            adapter.notifyDataSetChanged();
+        } else if( data instanceof EnrolmentResponse)
+        {
+            isSubscribing = false;
+            EnrolmentResponse response = (EnrolmentResponse) data;
+            activity.showSuccessResponse(response);
+            int index = getCursoIndex(response.getCourseId());
+            if( index != -1 )
+            {
+                subscribeTo(index);
+            }
+        }
+    }
+
+    private void subscribeTo(int index)
+    {
+        Course course = courses.get(index);
+        course.addSubscribed(AppModel.getInstance().getStudent().getId());
+        if( course.getCupos() != 0 )
+        {
+            course.setCupos(course.getCupos() - 1);
+        }
+        adapter.notifyItemChanged(index);
     }
 
     @Override
-    public void onStartingAsyncTask() {
+    public void onStartingAsyncTask(ServiceAsyncTask serviceAsyncTask) {
         activity.startLoading();
     }
 }

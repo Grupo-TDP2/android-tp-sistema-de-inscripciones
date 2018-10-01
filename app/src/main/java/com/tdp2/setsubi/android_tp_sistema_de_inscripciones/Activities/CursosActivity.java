@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.CursoAdapter;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.EnrolmentResponse;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.CursosPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.LoadingSnackbar;
@@ -49,8 +50,35 @@ public class CursosActivity extends AppCompatActivity implements LoadingView
         return ToolBarHelper.onClickedHome(this);
     }
 
-    public void onFailedtoLoadCursos() {
+    public void onFailedtoConnectivity() {
         Toast.makeText(this, R.string.connectivityFailed, Toast.LENGTH_SHORT).show();
+    }
+
+    public void showSuccessResponse(EnrolmentResponse response)
+    {
+        String condition = getString(response.getEnrolmentType());
+        Toast.makeText(this, this.getString(R.string.success_enrolment,condition), Toast.LENGTH_SHORT).show();
+    }
+
+    private String getString(EnrolmentResponse.EnrolmentType enrolmentType) {
+        switch (enrolmentType)
+        {
+            case REGULAR:
+                return "regular";
+        }
+        return "condicional";
+    }
+
+    public void onFailedToEnroll() {
+        Toast.makeText(this, R.string.failed_enrolment_error, Toast.LENGTH_SHORT).show();
+    }
+
+    public void showStillSubscribing() {
+        Toast.makeText(this, R.string.wait_till_subscription_ends, Toast.LENGTH_SHORT).show();
+    }
+
+    public void showAlreadySubscribed() {
+        Toast.makeText(this, R.string.failed_enrolment, Toast.LENGTH_SHORT).show();
     }
 
     @Override

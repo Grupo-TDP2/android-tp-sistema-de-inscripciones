@@ -23,4 +23,10 @@
     <string name="fiuba_inscripciones">FIUBA Inscripciones</string>
     <string name="connectivityFailed">No se pudieron cargar los datos por que no hubo conexión</string>
     <string name="loading">Cargando...</string>
+    <string name="failed_login">El login falló</string>
+    <string name="failed_enrolment">Ya estás inscripto en este curso</string>
+    <string name="success_enrolment">Se inscribió como %s correctamente</string>
+    <string name="wait_till_subscription_ends">Hay una inscripción en curso</string>
+    <string name="failed_enrolment_error">Error: No se realizo la inscripción</string>
+    <string name="no_hay_horarios">No hay horarios disponibles</string>
 </resources>
