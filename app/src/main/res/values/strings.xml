@@ -29,4 +29,7 @@
     <string name="wait_till_subscription_ends">Hay una inscripción en curso</string>
     <string name="failed_enrolment_error">Error: No se realizo la inscripción</string>
     <string name="no_hay_horarios">No hay horarios disponibles</string>
+    <string name="inscripto">Inscripto</string>
+    <string name="no_hay_cursos">No hay cursos disponibles</string>
+    <string name="no_hay_materias">No hay materias disponibles</string>
 </resources>

@@ -89,6 +89,10 @@ public class SubjectsPresenter implements SubjectsActivity.ClassesActivityPresen
         classes = (List<Subject>)data;
         transformClasses();
         view.updatedList();
+        if( classes.size() == 0 )
+        {
+            view.showNoAvailableSubjects();
+        }
     }
 
     @Override
