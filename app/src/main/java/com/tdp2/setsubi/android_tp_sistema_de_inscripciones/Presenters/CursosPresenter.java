@@ -165,7 +165,8 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
         {
             course.setCupos(course.getCupos() - 1);
         }
-        adapter.notifyItemChanged(index);
+        adapter.setCanSubscribe(false);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
