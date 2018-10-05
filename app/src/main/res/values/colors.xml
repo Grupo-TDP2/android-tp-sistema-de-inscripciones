@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="textPrimary">@color/primary_material_light</color>
+    <color name="textSecondary">#c7353535</color>
+    <color name="colorPrimary">@color/primary_material_light</color>
+    <color name="colorPrimaryDark">#e238b76d</color>
+    <color name="colorAccent">#e238b76d</color>
+    <color name="actionButtonColor">#579dbb</color>
+    <color name="disbaledBackground">#4d4d4d</color>
+</resources>
