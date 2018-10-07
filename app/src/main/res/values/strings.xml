@@ -35,4 +35,7 @@
     <string name="empty_user_name">Ingrese un usuario valido</string>
     <string name="valid_password">Ingrese una contraseña valida</string>
     <string name="wait_for_login">El login se esta realizando</string>
+    <string name="inscripto">Inscripto</string>
+    <string name="no_hay_cursos">No hay cursos disponibles</string>
+    <string name="no_hay_materias">No hay materias disponibles</string>
 </resources>

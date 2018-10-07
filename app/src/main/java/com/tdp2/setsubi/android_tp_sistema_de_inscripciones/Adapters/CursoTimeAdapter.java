@@ -78,7 +78,8 @@ public class CursoTimeAdapter extends RecyclerView.Adapter<CursoTimeAdapter.View
 
         public void setAula(int aula)
         {
-            cursoAula.setText(String.valueOf(aula));
+            String value = aula == -1 ? "-" : String.valueOf(aula);
+            cursoAula.setText(value);
         }
 
         public void setType(CursoTimeBand.CursoTimeType type, boolean obligatory)

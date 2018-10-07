@@ -38,8 +38,13 @@ public class JsonCourseTimeBandTransformer extends JsonTransformer<CursoTimeBand
                 {
                     aula = Integer.parseInt(JsonUtils.getString(classroom, JsonKeys.FLOOR))*100
                             + Integer.parseInt(JsonUtils.getString(classroom,JsonKeys.NUMBER));
-                } else return null;
-            } else return null;
+                } else
+                {
+                    aula = -1;
+                }
+            } else {
+                aula = -1;
+            }
 
             if( dayOfWeek != null && start != null && end != null && type != null )
             {

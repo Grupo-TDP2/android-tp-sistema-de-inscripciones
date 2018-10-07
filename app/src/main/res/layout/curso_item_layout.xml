@@ -142,7 +142,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
-                    android:background="@color/actionButtonColor"
+                    android:background="@drawable/button_round_green"
                     android:fontFamily="@font/raleway"
                     android:text="@string/inscribirse_btn_text"
                     android:textColor="@color/textPrimary"
