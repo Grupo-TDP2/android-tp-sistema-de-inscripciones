@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         findViewById(R.id.myExamsButton).setOnClickListener(new SoonClickHandler());
         findViewById(R.id.priorityButton).setOnClickListener(new SoonClickHandler());
         findViewById(R.id.myDataButton).setOnClickListener(new SoonClickHandler());
-        presenter.doLogin();
     }
 
     @Override
@@ -61,11 +60,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
                 startActivity(navigationIntent);
                 break;
         }
-    }
-
-    @Override
-    public void showToast(int stringId) {
-        Toast.makeText(this, stringId, Toast.LENGTH_SHORT).show();
     }
 
     protected class AcademicOfferClickHandler implements View.OnClickListener {

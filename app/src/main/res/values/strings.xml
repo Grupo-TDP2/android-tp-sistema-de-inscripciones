@@ -29,4 +29,10 @@
     <string name="wait_till_subscription_ends">Hay una inscripción en curso</string>
     <string name="failed_enrolment_error">Error: No se realizo la inscripción</string>
     <string name="no_hay_horarios">No hay horarios disponibles</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="usuario">Usuario</string>
+    <string name="empty_user_name">Ingrese un usuario valido</string>
+    <string name="valid_password">Ingrese una contraseña valida</string>
+    <string name="wait_for_login">El login se esta realizando</string>
 </resources>
