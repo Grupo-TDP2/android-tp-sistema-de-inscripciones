@@ -12,6 +12,7 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.TextValidator;
 public class LoginPresenter implements LoginActivity.Presenter, ServiceAsyncTask.ForeGroundListener<Student>
 {
     private LoginActivity activity;
+    private boolean doingLogin = false;
 
     public LoginPresenter(LoginActivity activity)
     {
@@ -38,13 +39,21 @@ public class LoginPresenter implements LoginActivity.Presenter, ServiceAsyncTask
 
         if( canLogin )
         {
-            new LoginAsyncTask(this).execute(username, password);
+            if( doingLogin )
+            {
+                activity.showIsLoginIn();
+            } else
+            {
+                doingLogin = true;
+                new LoginAsyncTask(this).execute(username, password);
+            }
         }
     }
 
     @Override
     public void onError(ServiceAsyncTask serviceAsyncTask, ServiceResponse.ServiceStatusCode error)
     {
+        doingLogin = false;
         activity.stopLoading();
         int message = error ==  ServiceResponse.ServiceStatusCode.NO_CONNECTION ?
                 R.string.connectivityFailed : R.string.failed_login;
@@ -54,6 +63,7 @@ public class LoginPresenter implements LoginActivity.Presenter, ServiceAsyncTask
     @Override
     public void onSuccess(ServiceAsyncTask serviceAsyncTask, Object data)
     {
+        doingLogin = false;
         activity.stopLoading();
         AppModel.getInstance().setStudent((Student)data);
         activity.goToMainScreen();

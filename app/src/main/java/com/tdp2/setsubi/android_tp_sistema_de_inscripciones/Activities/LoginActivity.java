@@ -8,6 +8,8 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
@@ -46,6 +48,39 @@ public class LoginActivity extends AppCompatActivity implements LoadingView
                 presenter.onClickedLogin();
             }
         });
+        userName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                usernameLayout.setError(null);
+            }
+        });
+
+        password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                passwordLayout.setError(null);
+            }
+        });
     }
 
     public String getUserName()
@@ -75,9 +110,7 @@ public class LoginActivity extends AppCompatActivity implements LoadingView
 
     public void showFailedLogin(int message)
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(message);
-        builder.create().show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     public void goToMainScreen()
