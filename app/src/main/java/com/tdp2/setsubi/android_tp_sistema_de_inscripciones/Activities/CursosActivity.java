@@ -5,6 +5,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,12 @@ public class CursosActivity extends AppCompatActivity implements LoadingView
 {
     private CursosLogic presenter;
     private Snackbar snackbar;
+    private TextView noHay;
+
+    public void showNoCoursesAvailable()
+    {
+        noHay.setVisibility(View.VISIBLE);
+    }
 
     public interface CursosLogic
     {
@@ -32,11 +39,12 @@ public class CursosActivity extends AppCompatActivity implements LoadingView
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cursos);
-
+        noHay = findViewById(R.id.noHayDisponibles);
         ToolBarHelper.onCreate(this);
         presenter = new CursosPresenter(this);
         ToolBarHelper.setTitle(this, R.string.cursos);
         TextView title = findViewById(R.id.bottomTitle);
+
 
         title.setText(presenter.getCourseName());
         RecyclerView view = findViewById(R.id.cursos_list);
