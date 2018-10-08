@@ -13,7 +13,7 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResp
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.LoginAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
 
-public class MainActivityPresenter implements ServiceAsyncTask.ForeGroundListener<Student>
+public class MainActivityPresenter
 {
     private View view;
 
@@ -34,32 +34,8 @@ public class MainActivityPresenter implements ServiceAsyncTask.ForeGroundListene
         view.navigateToActivity(path);
     }
 
-    public void doLogin()
+    public interface View
     {
-        new LoginAsyncTask(this).execute("leandro.masello@example.com","12345678");
-    }
-
-    public interface View {
-
         void navigateToActivity(String path);
-        void showToast(int stringId);
     }
-
-    @Override
-    public void onError(ServiceAsyncTask serviceAsyncTask, ServiceResponse.ServiceStatusCode error)
-    {
-        view.showToast(R.string.failed_login);
-    }
-
-    @Override
-    public void onSuccess(ServiceAsyncTask serviceAsyncTask, Object data)
-    {
-        AppModel.getInstance().setStudent((Student) data);
-    }
-
-    @Override
-    public void onStartingAsyncTask(ServiceAsyncTask serviceAsyncTask) {
-
-    }
-
 }
