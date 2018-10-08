@@ -18,7 +18,7 @@ public class LoginService implements LoginServieInterface
     public ServiceResponse<Student> login(String email, String password)
     {
         JsonObject object = JsonLoginTransformer.getPostLogin(email, password);
-        return new RequestPerformer<>(APIUriBuilder.getURIBuiled().appendPath("student_sessions").toString(),
+        return new RequestPerformer<>(APIUriBuilder.getURIBuiled().appendPath("sessions").toString(),
                 new RequestBuilder(RequestMethod.POST, new Gson().toJson(object))
                         .addRequestProperty(RequestProperty.CONTENT_TYPE.getKey(), ContentType.JSON.getValue()),
                 new JsonLoginTransformer())
