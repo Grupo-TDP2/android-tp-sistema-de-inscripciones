@@ -18,6 +18,10 @@
         <activity android:name=".Activities.SubjectsActivity" />
         <activity android:name=".Activities.CursosActivity"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".Activities.MyFinalsActivity" />
+        <activity android:name=".Activities.FinalsActivity" />
+
         <activity android:name=".Activities.LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

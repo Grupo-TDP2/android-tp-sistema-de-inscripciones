@@ -79,6 +79,11 @@ public class SubjectsActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    public void goToFinals() {
+        Intent intent = new Intent(this, FinalsActivity.class);
+        startActivity(intent);
+    }
+
     public void onFailedToLoadClasses()
     {
         Toast.makeText(this, R.string.connectivityFailed, Toast.LENGTH_SHORT).show();

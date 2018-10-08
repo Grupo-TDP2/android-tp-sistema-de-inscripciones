@@ -17,6 +17,11 @@ public class AppModel
     private Career selectedCareer = null;
     private Department selectedDepartment = null;
     private Subject selecteClass;
+    private SubjectRoute route = SubjectRoute.COURSES;
+    public enum SubjectRoute
+    {
+        COURSES, FINALS
+    }
 
     public static AppModel getInstance()
     {
@@ -109,5 +114,13 @@ public class AppModel
         } else {
             return null;
         }
+    }
+
+    public SubjectRoute getRoute() {
+        return route;
+    }
+
+    public void setRoute(SubjectRoute route) {
+        this.route = route;
     }
 }

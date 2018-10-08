@@ -43,7 +43,15 @@ public class SubjectsPresenter implements SubjectsActivity.ClassesActivityPresen
     public void onClicked(int position)
     {
         AppModel.getInstance().setSelecteClass(classes.get(position));
-        view.goToCursos();
+        switch (AppModel.getInstance().getRoute())
+        {
+            case FINALS:
+                view.goToFinals();
+                break;
+            default:
+                view.goToCursos();
+                break;
+        }
     }
 
     @Override
