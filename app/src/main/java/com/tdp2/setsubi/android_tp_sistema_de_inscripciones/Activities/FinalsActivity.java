@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.FinalsAdapter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.TextRecyclerViewAdapter;
@@ -22,6 +23,7 @@ public class FinalsActivity extends AppCompatActivity
     public interface Presenter extends FinalsAdapter.Listener {
         void loadFinals();
         List<Final> getFinals();
+        String getSubjectName();
     }
 
     private FinalsAdapter adapter;
@@ -31,12 +33,14 @@ public class FinalsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_departments);
+        setContentView(R.layout.activity_finals_of_subject);
         ToolBarHelper.onCreate(this);
-        ToolBarHelper.setTitle(this, R.string.departments_title);
+        ToolBarHelper.setTitle(this, R.string.finals_title);
+        TextView title = findViewById(R.id.finals_subject);
         presenter = new FinalsPresenter(this);
+        title.setText(presenter.getSubjectName());
 
-        recyclerView = findViewById(R.id.departments_recycler_view);
+        recyclerView = findViewById(R.id.finals);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),
                 DividerItemDecoration.VERTICAL));

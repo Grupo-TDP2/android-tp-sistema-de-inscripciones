@@ -47,4 +47,6 @@
     <string name="log_out_message">¿Está seguro que desea cerrar sesión?</string>
     <string name="log_out_cancel">No</string>
     <string name="log_out_button">Sí</string>
+    <string name="unsubscribe">Desinscribirse</string>
+    <string name="finals_title">Exámenes Finales</string>
 </resources>

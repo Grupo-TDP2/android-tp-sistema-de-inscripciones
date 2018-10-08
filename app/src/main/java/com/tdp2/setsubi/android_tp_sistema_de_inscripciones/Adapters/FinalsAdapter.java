@@ -1,5 +1,6 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters;
 
+import android.database.DataSetObserver;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -120,17 +121,29 @@ public class FinalsAdapter extends RecyclerView.Adapter<FinalsAdapter.ViewHolder
             if( (subscribed && ! canUnsubscribe) || (!subscribed && !canSubscribe) )
             {
                 this.subsrcibe.setVisibility(View.GONE);
+                this.spinner.setVisibility(View.GONE);
             } else
             {
                 this.subsrcibe.setVisibility(View.VISIBLE);
-                ShapeBackgroundColorChanger.changeColor(subsrcibe, subscribed ? R.color.actionButtonColor : R.color.actionButtonDelete);
-                List<String> strings = new ArrayList<>();
-                strings.add(spinner.getContext().getString(R.string.regular));
-                if( supportsLibre )
-                {
-                    strings.add(spinner.getContext().getString(R.string.libre));
+                if( subscribed ) {
+                    ShapeBackgroundColorChanger.changeColor(subsrcibe, R.color.actionButtonDelete);
+                    this.spinner.setVisibility(View.GONE);
+                    this.subsrcibe.setText(R.string.unsubscribe);
+                } else {
+                    this.spinner.setVisibility(View.VISIBLE);
+                    ShapeBackgroundColorChanger.changeColor(subsrcibe, R.color.actionButtonColor);
+                    this.subsrcibe.setText(R.string.inscribirse_btn_text);
+                    List<String> strings = new ArrayList<>();
+                    strings.add(spinner.getContext().getString(R.string.regular));
+                    if( supportsLibre )
+                    {
+                        strings.add(spinner.getContext().getString(R.string.libre));
+                    }
+                    final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(spinner.getContext(), android.R.layout.simple_spinner_item, strings);
+                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setEnabled(strings.size() > 1);
+                    spinner.setAdapter(arrayAdapter);
                 }
-                spinner.setAdapter(new ArrayAdapter<>(spinner.getContext(), android.R.layout.simple_spinner_item, strings));
             }
         }
     }

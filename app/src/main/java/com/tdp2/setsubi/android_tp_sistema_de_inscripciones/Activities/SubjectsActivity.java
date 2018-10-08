@@ -80,7 +80,8 @@ public class SubjectsActivity extends AppCompatActivity
     }
 
     public void goToFinals() {
-
+        Intent intent = new Intent(this, FinalsActivity.class);
+        startActivity(intent);
     }
 
     public void onFailedToLoadClasses()
