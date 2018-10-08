@@ -74,12 +74,12 @@ public class RequestPerformer<T>
             } catch (Exception badJson)
             {
                 Log.d("REQ", badJson.toString());
-                return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.ERROR);
+                return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.SERIALIZATION_ERROR);
             }
         } catch(Exception error) {
             //Handles an incorrectly entered URL
             Log.d("REQ", error.toString());
-            return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.ERROR);
+            return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.NO_CONNECTION);
         }
         finally {
             if(client != null) {
