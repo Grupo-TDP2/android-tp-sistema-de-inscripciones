@@ -24,6 +24,9 @@
         <activity android:name=".Activities.SubjectsActivity" />
         <activity android:name=".Activities.CursosActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".Activities.MyFinalsActivity" />
+        <activity android:name=".Activities.FinalsActivity" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

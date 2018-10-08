@@ -79,6 +79,10 @@ public class SubjectsActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    public void goToFinals() {
+
+    }
+
     public void onFailedToLoadClasses()
     {
         Toast.makeText(this, R.string.connectivityFailed, Toast.LENGTH_SHORT).show();
