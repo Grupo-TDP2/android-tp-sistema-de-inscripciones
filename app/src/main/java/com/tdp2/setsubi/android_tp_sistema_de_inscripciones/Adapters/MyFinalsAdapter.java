@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -12,6 +13,7 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Final;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Sede;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.ShapeBackgroundColorChanger;
 
 import java.util.List;
 import java.util.Locale;
@@ -49,6 +51,7 @@ public class MyFinalsAdapter extends RecyclerView.Adapter<MyFinalsAdapter.ViewHo
         holder.setTime(finales.getTime());
         holder.setSede(finales.getSede());
         holder.setAula(finales.getAula());
+        holder.setCondicion(finales.isRegular());
         Subject subject = finales.getSubject();
         holder.setSubject(subject.getDepartmentCode(), subject.getCode(), subject.getName());
     }
@@ -60,24 +63,31 @@ public class MyFinalsAdapter extends RecyclerView.Adapter<MyFinalsAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder
     {
-        private ImageButton unsubsribe;
-        private TextView catedra,date,time,sede, subject;
+        private Button unsubsribe;
+        private TextView catedra,date,time,sede, subject, condicion;
 
         ViewHolder(@NonNull View itemView)
         {
             super(itemView);
             unsubsribe = itemView.findViewById(R.id.button_unsubscribe);
+            ShapeBackgroundColorChanger.changeColor(unsubsribe, R.color.actionButtonDelete);
             catedra = itemView.findViewById(R.id.catedra_value);
             subject = itemView.findViewById(R.id.subject_value);
             date = itemView.findViewById(R.id.date_value);
             time = itemView.findViewById(R.id.time_value);
             sede = itemView.findViewById(R.id.sede_value);
+            condicion = itemView.findViewById(R.id.condicion_value);
             unsubsribe.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     listener.onUnsubscribe(getAdapterPosition());
                 }
             });
+        }
+
+        void setCondicion(boolean regular)
+        {
+            condicion.setText(regular ? R.string.regular : R.string.libre);
         }
 
         void setUnsubscribeVisibility(boolean unsubscribeVisibility) {

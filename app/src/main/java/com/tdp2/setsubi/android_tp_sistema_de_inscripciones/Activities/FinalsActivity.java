@@ -49,9 +49,4 @@ public class FinalsActivity extends AppCompatActivity
         recyclerView.setAdapter(adapter);
         presenter.loadFinals();
     }
-
-    public boolean regularSelected(int position)
-    {
-        return adapter.selectedRegular(recyclerView.findViewHolderForAdapterPosition(position));
-    }
 }

@@ -49,4 +49,6 @@
     <string name="log_out_button">Sí</string>
     <string name="unsubscribe">Desinscribirse</string>
     <string name="finals_title">Exámenes Finales</string>
+    <string name="condicion_label">Condición:</string>
+    <string name="fecha_label">Fecha:</string>
 </resources>

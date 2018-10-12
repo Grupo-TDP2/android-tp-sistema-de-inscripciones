@@ -50,7 +50,8 @@ public class FinalsAdapter extends RecyclerView.Adapter<FinalsAdapter.ViewHolder
         holder.setTime(exam.getTime());
         holder.setSede(exam.getSede());
         holder.setAula(exam.getAula());
-        holder.setButtons(exam.isSubscribed(), exam.isCanSubscribe(), exam.isCanUnsubscribe(), exam.isSupportsLibre());
+        holder.setCondicion(exam.isRegular());
+        holder.setButtons(exam.isSubscribed(), exam.isCanSubscribe(), exam.isCanUnsubscribe());
     }
 
     @Override
@@ -58,20 +59,9 @@ public class FinalsAdapter extends RecyclerView.Adapter<FinalsAdapter.ViewHolder
         return finals.size();
     }
 
-    public boolean selectedRegular(RecyclerView.ViewHolder viewHolder)
-    {
-        if( viewHolder instanceof  ViewHolder )
-        {
-            ViewHolder viewHolder1 = (ViewHolder) viewHolder;
-            return viewHolder1.selectedRegular();
-        }
-        return false;
-    }
     class ViewHolder extends RecyclerView.ViewHolder
     {
-        private int REGULAR = 0, LIBRE = 1;
-        private TextView catedra, time, date, sede;
-        private Spinner spinner;
+        private TextView catedra, time, date, sede, condicion;
         private Button subsrcibe;
 
         ViewHolder(@NonNull View itemView)
@@ -81,7 +71,7 @@ public class FinalsAdapter extends RecyclerView.Adapter<FinalsAdapter.ViewHolder
             time = itemView.findViewById(R.id.time_value);
             date = itemView.findViewById(R.id.date_value);
             sede = itemView.findViewById(R.id.sede_value);
-            spinner = itemView.findViewById(R.id.spinner_subscription_type);
+            condicion = itemView.findViewById(R.id.condicion_value);
             subsrcibe = itemView.findViewById(R.id.subsribe_button_final);
             subsrcibe.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -91,11 +81,10 @@ public class FinalsAdapter extends RecyclerView.Adapter<FinalsAdapter.ViewHolder
             });
         }
 
-        boolean selectedRegular()
+        void setCondicion(boolean regular)
         {
-            return spinner.getSelectedItemPosition() == REGULAR;
+            condicion.setText(regular ? R.string.regular : R.string.libre);
         }
-
         void setCatedra(String catedra) {
             this.catedra.setText(catedra);
         }
@@ -116,33 +105,20 @@ public class FinalsAdapter extends RecyclerView.Adapter<FinalsAdapter.ViewHolder
 
         }
 
-        void setButtons(boolean subscribed, boolean canSubscribe, boolean canUnsubscribe, boolean supportsLibre)
+        void setButtons(boolean subscribed, boolean canSubscribe, boolean canUnsubscribe)
         {
             if( (subscribed && ! canUnsubscribe) || (!subscribed && !canSubscribe) )
             {
                 this.subsrcibe.setVisibility(View.GONE);
-                this.spinner.setVisibility(View.GONE);
             } else
             {
                 this.subsrcibe.setVisibility(View.VISIBLE);
                 if( subscribed ) {
                     ShapeBackgroundColorChanger.changeColor(subsrcibe, R.color.actionButtonDelete);
-                    this.spinner.setVisibility(View.GONE);
                     this.subsrcibe.setText(R.string.unsubscribe);
                 } else {
-                    this.spinner.setVisibility(View.VISIBLE);
                     ShapeBackgroundColorChanger.changeColor(subsrcibe, R.color.actionButtonColor);
                     this.subsrcibe.setText(R.string.inscribirse_btn_text);
-                    List<String> strings = new ArrayList<>();
-                    strings.add(spinner.getContext().getString(R.string.regular));
-                    if( supportsLibre )
-                    {
-                        strings.add(spinner.getContext().getString(R.string.libre));
-                    }
-                    final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(spinner.getContext(), android.R.layout.simple_spinner_item, strings);
-                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner.setEnabled(strings.size() > 1);
-                    spinner.setAdapter(arrayAdapter);
                 }
             }
         }

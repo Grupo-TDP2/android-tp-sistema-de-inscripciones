@@ -6,12 +6,12 @@ public class Final
     private boolean isSubscribed;
     private boolean canSubscribe;
     private boolean canUnsubscribe;
-    private boolean supportsLibre;
     private String catedraName;
     private String finalDate;
     private Sede sede;
     private int aula;
     private String time;
+    private boolean regular;
 
     public Subject getSubject() {
         return subject;
@@ -19,12 +19,11 @@ public class Final
 
     private Subject subject;
 
-    public Final(int id, boolean isSubscribed, boolean canSubscribe, boolean canUnsubscribe, boolean supportsLibre,
+    public Final(int id, boolean isSubscribed, boolean canSubscribe, boolean canUnsubscribe, boolean regular,
                  Subject subject, String catedraName, String finalDate,  String time, Sede sede, int aula)
     {
         this.id = id;
         this.isSubscribed = isSubscribed;
-        this.supportsLibre = supportsLibre;
         this.catedraName = catedraName;
         this.finalDate = finalDate;
         this.sede = sede;
@@ -33,6 +32,7 @@ public class Final
         this.canSubscribe = canSubscribe;
         this.canUnsubscribe = canUnsubscribe;
         this.subject = subject;
+        this.regular = regular;
     }
 
     public boolean isCanSubscribe() {
@@ -49,10 +49,6 @@ public class Final
 
     public boolean isSubscribed() {
         return isSubscribed;
-    }
-
-    public boolean isSupportsLibre() {
-        return supportsLibre;
     }
 
     public String getCatedraName() {
@@ -77,5 +73,9 @@ public class Final
 
     public void setSubscribed(boolean subscribed) {
         isSubscribed = subscribed;
+    }
+
+    public boolean isRegular() {
+        return regular;
     }
 }
