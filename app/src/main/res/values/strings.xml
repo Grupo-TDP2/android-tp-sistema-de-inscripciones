@@ -23,7 +23,7 @@
     <string name="fiuba_inscripciones">FIUBA Inscripciones</string>
     <string name="connectivityFailed">No se pudieron cargar los datos por que no hubo conexión</string>
     <string name="loading">Cargando...</string>
-    <string name="failed_login">El login falló. Verifique el usuario y la contraseña</string>
+    <string name="failed_login">Email o contraseña inválida</string>
     <string name="failed_enrolment">Ya estás inscripto en este curso</string>
     <string name="success_enrolment">Se inscribió como %s correctamente</string>
     <string name="wait_till_subscription_ends">Hay una inscripción en curso</string>
@@ -31,9 +31,9 @@
     <string name="no_hay_horarios">No hay horarios disponibles</string>
     <string name="ingresar">Ingresar</string>
     <string name="contraseña">Contraseña</string>
-    <string name="usuario">Usuario</string>
+    <string name="usuario">Email</string>
     <string name="empty_user_name">Ingrese un usuario válido</string>
-    <string name="valid_password">Ingrese una contraseña válida</string>
+    <string name="valid_password">Ingrese una contraseña</string>
     <string name="wait_for_login">El login se está realizando</string>
     <string name="inscripto">Inscripto</string>
     <string name="no_hay_cursos">No hay cursos disponibles</string>

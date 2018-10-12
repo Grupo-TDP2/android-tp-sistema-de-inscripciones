@@ -10,25 +10,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+
+        <activity android:name=".Activities.SplashActivity"
+            android:theme="@style/AppTheme.Launcher"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Activities.MainActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".Activities.CareersActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activities.DepartmentsActivity" />
-        <activity android:name=".Activities.SubjectsActivity" />
+        <activity android:name=".Activities.DepartmentsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.SubjectsActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".Activities.CursosActivity"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".Activities.LoginActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".Activities.MyFinalsActivity" />
         <activity android:name=".Activities.FinalsActivity" />
-
-        <activity android:name=".Activities.LoginActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
 
         <meta-data
             android:name="preloaded_fonts"

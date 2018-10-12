@@ -61,8 +61,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/usuario"
             android:imeOptions="actionNext"
-            android:inputType="textEmailAddress"
-            android:text="leandro.masello@example.com" />
+            android:inputType="textImeMultiLine|textEmailAddress" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -85,8 +84,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/contraseña"
             android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:text="12345678" />
+            android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
 
     <Button
