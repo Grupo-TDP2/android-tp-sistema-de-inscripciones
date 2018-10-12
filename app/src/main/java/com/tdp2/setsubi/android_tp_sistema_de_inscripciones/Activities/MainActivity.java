@@ -38,26 +38,28 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         Button newCourseButton = this.findViewById(R.id.newCourseButton);
         newCourseButton.setOnClickListener(new NewCourseClickHandler());
 
-        findViewById(R.id.newFinalExamButton).setOnClickListener(new SoonClickHandler());
+        findViewById(R.id.newFinalExamButton).setOnClickListener(new FinalsExamsHandler());
         findViewById(R.id.myCoursesButton).setOnClickListener(new SoonClickHandler());
-        findViewById(R.id.myExamsButton).setOnClickListener(new SoonClickHandler());
+        findViewById(R.id.myExamsButton).setOnClickListener(new MyExamsHandler());
         findViewById(R.id.priorityButton).setOnClickListener(new SoonClickHandler());
         findViewById(R.id.myDataButton).setOnClickListener(new SoonClickHandler());
     }
 
     @Override
     public void navigateToActivity(String path) {
-        Intent navigationIntent;
+        Intent navigationIntent = null;
 
         switch (path) {
-            case "academicOffer":
+            case "academicOffer": case "newCourse": case "finals":
                 navigationIntent = new Intent(MainActivity.this, CareersActivity.class);
-                startActivity(navigationIntent);
                 break;
-            case "newCourse":
-                navigationIntent = new Intent(MainActivity.this, CareersActivity.class);
-                startActivity(navigationIntent);
+            case "myFinals":
+                navigationIntent = new Intent(MainActivity.this, MyFinalsActivity.class);
                 break;
+        }
+        if( navigationIntent != null )
+        {
+            startActivity(navigationIntent);
         }
     }
 
@@ -114,5 +116,19 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
     public boolean onSupportNavigateUp() {
         SoonToast.show(this);
         return true;
+    }
+
+    private class MyExamsHandler implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            presenter.navigateTo("myFinals");
+        }
+    }
+
+    private class FinalsExamsHandler implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            presenter.navigateTo("finals");
+        }
     }
 }

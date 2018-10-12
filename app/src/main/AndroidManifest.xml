@@ -31,7 +31,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".Activities.LoginActivity"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".Activities.MyFinalsActivity" />
+        <activity android:name=".Activities.FinalsActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

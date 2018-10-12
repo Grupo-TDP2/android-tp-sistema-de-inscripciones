@@ -1,15 +1,11 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Student;
+
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Persistance.UserCredentials;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.LoginAsyncTask;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
+
 
 public class MainActivityPresenter
 {
@@ -21,7 +17,16 @@ public class MainActivityPresenter
         credentials = new UserCredentials(view.getContext()) ;
     }
 
-    public void navigateTo(String path) {
+    public void navigateTo(String path)
+    {
+        switch (path) {
+            case "academicOffer": case "newCourse":
+                AppModel.getInstance().setRoute(AppModel.SubjectRoute.COURSES);
+                break;
+            case "finals":
+                AppModel.getInstance().setRoute(AppModel.SubjectRoute.FINALS);
+                break;
+        }
         view.navigateToActivity(path);
     }
 

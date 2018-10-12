@@ -8,4 +8,5 @@
     <color name="greenBackground">#e238b76d</color>
     <color name="actionButtonColor">#579dbb</color>
     <color name="disbaledBackground">#4d4d4d</color>
+    <color name="actionButtonDelete">#ff544f</color>
 </resources>

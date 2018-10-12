@@ -38,8 +38,15 @@
     <string name="inscripto">Inscripto</string>
     <string name="no_hay_cursos">No hay cursos disponibles</string>
     <string name="no_hay_materias">No hay materias disponibles</string>
+    <string name="hora_label">Hora:</string>
+    <string name="my_finals">Mis Finales</string>
+    <string name="unsubribed_final_success">Se desinscribió correctamente</string>
+    <string name="regular">Regular</string>
+    <string name="libre">Libre</string>
     <string name="log_out_title">Cerrar sesión</string>
     <string name="log_out_message">¿Está seguro que desea cerrar sesión?</string>
     <string name="log_out_cancel">No</string>
     <string name="log_out_button">Sí</string>
+    <string name="unsubscribe">Desinscribirse</string>
+    <string name="finals_title">Exámenes Finales</string>
 </resources>
