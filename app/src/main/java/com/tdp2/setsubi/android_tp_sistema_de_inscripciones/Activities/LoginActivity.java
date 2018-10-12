@@ -22,6 +22,7 @@ public class LoginActivity extends AppCompatActivity implements LoadingView
      public interface Presenter
     {
         void onClickedLogin();
+        void initInputs();
     }
     private Presenter presenter;
     private TextInputEditText password;
@@ -81,6 +82,18 @@ public class LoginActivity extends AppCompatActivity implements LoadingView
                 passwordLayout.setError(null);
             }
         });
+
+        presenter.initInputs();
+    }
+
+    public void setUserEmail(String string)
+    {
+        userName.setText(string);
+    }
+
+    public void setUserPassword(String string)
+    {
+        password.setText(string);
     }
 
     public String getUserName()
@@ -110,7 +123,7 @@ public class LoginActivity extends AppCompatActivity implements LoadingView
 
     public void showFailedLogin(int message)
     {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     public void goToMainScreen()
