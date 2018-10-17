@@ -11,7 +11,7 @@ import java.util.List;
 public class GetSubjectsAsyncTask extends ServiceAsyncTask<Object, Void, List<Subject>>
 {
 
-    public GetSubjectsAsyncTask(ForeGroundListener<List<Subject>> listener) {
+    public GetSubjectsAsyncTask(ForeGroundListener listener) {
         super(listener);
     }
 

@@ -1,5 +1,6 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -63,6 +64,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
     }
 
     @Override
+    public Context getContext() {
+        return this.getApplicationContext();
+    }
+
+    @Override
     public void onBackPressed()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -71,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
                 .setPositiveButton(R.string.log_out_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        presenter.logout();
                         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();

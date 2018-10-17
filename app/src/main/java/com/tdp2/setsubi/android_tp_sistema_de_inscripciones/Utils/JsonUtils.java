@@ -28,4 +28,16 @@ public class JsonUtils
         return object.getAsJsonPrimitive(key).getAsString();
     }
 
+    public static boolean isBool(JsonObject object, String key)
+    {
+        return object.has(key)
+                && object.get(key).isJsonPrimitive()
+                && object.getAsJsonPrimitive(key).isBoolean();
+    }
+
+    public static boolean getBool(JsonObject object, String key)
+    {
+        return object.getAsJsonPrimitive(key).getAsBoolean();
+    }
+
 }

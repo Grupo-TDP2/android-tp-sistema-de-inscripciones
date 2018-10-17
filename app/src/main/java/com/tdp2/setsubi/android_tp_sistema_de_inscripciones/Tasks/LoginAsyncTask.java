@@ -6,7 +6,7 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResp
 
 public class LoginAsyncTask extends ServiceAsyncTask<String,Void,Student>
 {
-    public LoginAsyncTask(ForeGroundListener<Student> listener) {
+    public LoginAsyncTask(ForeGroundListener listener) {
         super(listener);
     }
 

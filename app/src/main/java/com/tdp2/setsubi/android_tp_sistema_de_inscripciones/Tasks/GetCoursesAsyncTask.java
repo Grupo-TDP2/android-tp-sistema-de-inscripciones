@@ -11,7 +11,7 @@ import java.util.List;
 
 public class GetCoursesAsyncTask extends ServiceAsyncTask<Object, Void, List<Course>>
 {
-    public GetCoursesAsyncTask(ForeGroundListener<List<Course>> listener) {
+    public GetCoursesAsyncTask(ForeGroundListener listener) {
         super(listener);
     }
 

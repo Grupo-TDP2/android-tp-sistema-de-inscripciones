@@ -2,11 +2,13 @@ package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.FinalsAdapter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.TextRecyclerViewAdapter;
@@ -14,11 +16,12 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Final;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.DepartmentsPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.FinalsPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.LoadingSnackbar;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.ToolBarHelper;
 
 import java.util.List;
 
-public class FinalsActivity extends AppCompatActivity
+public class FinalsActivity extends AppCompatActivity implements LoadingView
 {
     public interface Presenter extends FinalsAdapter.Listener {
         void loadFinals();
@@ -29,6 +32,8 @@ public class FinalsActivity extends AppCompatActivity
     private FinalsAdapter adapter;
     private Presenter presenter;
     private RecyclerView recyclerView;
+    private Snackbar snackbar = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -48,5 +53,32 @@ public class FinalsActivity extends AppCompatActivity
         adapter = new FinalsAdapter(presenter.getFinals(), presenter);
         recyclerView.setAdapter(adapter);
         presenter.loadFinals();
+    }
+
+    @Override
+    public void startLoading()
+    {
+        if( snackbar == null )
+        {
+            snackbar = LoadingSnackbar.createLoadingSnackBar(recyclerView);
+            snackbar.show();
+        }
+    }
+
+    @Override
+    public void stopLoading() {
+        if( snackbar != null )
+        {
+            snackbar.dismiss();
+            snackbar = null;
+        }
+    }
+
+    public void showToast(int connectivityFailed) {
+        Toast.makeText(this, connectivityFailed, Toast.LENGTH_SHORT).show();
+    }
+
+    public void notifyDataSetChanged() {
+        adapter.notifyDataSetChanged();
     }
 }

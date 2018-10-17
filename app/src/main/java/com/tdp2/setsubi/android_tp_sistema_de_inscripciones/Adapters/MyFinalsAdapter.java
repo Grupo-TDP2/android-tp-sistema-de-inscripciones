@@ -47,11 +47,11 @@ public class MyFinalsAdapter extends RecyclerView.Adapter<MyFinalsAdapter.ViewHo
         Final finales = finals.get(position);
         holder.setUnsubscribeVisibility(finales.isCanUnsubscribe());
         holder.setCatedra(finales.getCatedraName());
-        holder.setDate(finales.getFinalDate());
+        holder.setDate(finales.getDate());
         holder.setTime(finales.getTime());
         holder.setSede(finales.getSede());
         holder.setAula(finales.getAula());
-        holder.setCondicion(finales.isRegular());
+        holder.setCondicion(!finales.isSupportsLibre());
         Subject subject = finales.getSubject();
         holder.setSubject(subject.getDepartmentCode(), subject.getCode(), subject.getName());
     }
