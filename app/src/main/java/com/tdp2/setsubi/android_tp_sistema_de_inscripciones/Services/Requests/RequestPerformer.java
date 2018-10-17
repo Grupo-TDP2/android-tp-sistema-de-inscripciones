@@ -40,10 +40,10 @@ public class RequestPerformer<T>
             BufferedReader br;
 
             int statusCode = client.getResponseCode();
-
-            if (400 <= statusCode && statusCode <= 500){
-                Log.d("REQ"," error: " + statusCode);
-                return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.ERROR);
+            boolean errored = false;
+            if (400 <= statusCode && statusCode <= 500)
+            {
+                errored = true;
             }
 
             if (200 <= statusCode && statusCode <= 299) {
@@ -59,6 +59,11 @@ public class RequestPerformer<T>
             }
             String result = sb.toString();
             Log.d("REQ"," result: " + result);
+            if( errored )
+            {
+                Log.d("REQ"," error: " + statusCode);
+                return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.ERROR);
+            }
             T transformed;
             try
             {

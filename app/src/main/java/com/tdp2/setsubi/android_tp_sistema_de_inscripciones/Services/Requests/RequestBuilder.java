@@ -30,9 +30,15 @@ public class RequestBuilder
         return this;
     }
 
-    public void setBodyText(String body)
+    public RequestBuilder addRequestProperty(RequestProperty key, String value)
+    {
+       return addRequestProperty(key.getKey(), value);
+    }
+
+    public RequestBuilder setBodyText(String body)
     {
         this.body = body;
+        return this;
     }
 
     void buildConnection(HttpURLConnection connection) throws IOException
