@@ -95,7 +95,7 @@ public class Final
         isSubscribed = subscribed;
     }
 
-    public int isBefore(Final fina)
+    public int compare(Final fina)
     {
         return finalDate.compareTo(fina.finalDate);
     }

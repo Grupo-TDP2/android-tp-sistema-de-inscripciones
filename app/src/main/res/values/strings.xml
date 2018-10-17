@@ -49,4 +49,9 @@
     <string name="log_out_button">Sí</string>
     <string name="unsubscribe">Desinscribirse</string>
     <string name="finals_title">Exámenes Finales</string>
+    <string name="error_while_loading_finals">No se pudieron cargar los finales</string>
+    <string name="error_when_unsubscribing">No se pudo realizar la desinscripcion</string>
+    <string name="no_hay_finales">No se encontraron finales</string>
+    <string name="error_when_subscribing">No se pudo realizar la inscripcion</string>
+    <string name="subscribed_final_success">Se realizo la subscripcion correctamente</string>
 </resources>

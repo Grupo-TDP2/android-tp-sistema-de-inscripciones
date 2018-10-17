@@ -13,7 +13,7 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResp
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.LoginAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
 
-public class SplashActivity extends AppCompatActivity implements ServiceAsyncTask.ForeGroundListener<Student>
+public class SplashActivity extends AppCompatActivity implements ServiceAsyncTask.ForeGroundListener
 {
     private UserCredentials credentials;
     @Override

@@ -12,7 +12,7 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.LoginAsyncTask
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.TextValidator;
 
-public class LoginPresenter implements LoginActivity.Presenter, ServiceAsyncTask.ForeGroundListener<Student>
+public class LoginPresenter implements LoginActivity.Presenter, ServiceAsyncTask.ForeGroundListener
 {
     private LoginActivity activity;
     private boolean doingLogin = false;
