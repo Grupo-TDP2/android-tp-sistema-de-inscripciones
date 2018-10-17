@@ -1,17 +1,19 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class Final
 {
     private int id;
     private boolean isSubscribed;
-    private boolean canSubscribe;
-    private boolean canUnsubscribe;
     private boolean supportsLibre;
     private String catedraName;
-    private String finalDate;
+    private Date finalDate;
     private Sede sede;
     private int aula;
-    private String time;
 
     public Subject getSubject() {
         return subject;
@@ -19,28 +21,34 @@ public class Final
 
     private Subject subject;
 
-    public Final(int id, boolean isSubscribed, boolean canSubscribe, boolean canUnsubscribe, boolean supportsLibre,
-                 Subject subject, String catedraName, String finalDate,  String time, Sede sede, int aula)
+    public Final(int id, boolean isSubscribed, boolean supportsLibre,
+                 Subject subject, String catedraName, Date date, Sede sede, int aula)
     {
         this.id = id;
         this.isSubscribed = isSubscribed;
         this.supportsLibre = supportsLibre;
         this.catedraName = catedraName;
-        this.finalDate = finalDate;
+        this.finalDate = date;
         this.sede = sede;
         this.aula = aula;
-        this.time = time;
-        this.canSubscribe = canSubscribe;
-        this.canUnsubscribe = canUnsubscribe;
         this.subject = subject;
     }
 
-    public boolean isCanSubscribe() {
-        return canSubscribe;
+    public boolean isCanSubscribe()
+    {
+        return isSubscribed && isAtTimeToSubscribe();
     }
 
     public boolean isCanUnsubscribe() {
-        return canUnsubscribe;
+        return !isSubscribed && isAtTimeToSubscribe();
+    }
+
+    private boolean isAtTimeToSubscribe()
+    {
+        Date currentTime = Calendar.getInstance().getTime();
+        long secs = (finalDate.getTime() - currentTime.getTime()) / 1000;
+        int hours = (int) (secs / 3600);
+        return hours < 48;
     }
 
     public int getId() {
@@ -59,7 +67,14 @@ public class Final
         return catedraName;
     }
 
-    public String getFinalDate() {
+    public String getDate()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        return sdf.format(finalDate);
+    }
+
+    public Date getFinalDate()
+    {
         return finalDate;
     }
 
@@ -72,10 +87,16 @@ public class Final
     }
 
     public String getTime() {
-        return time;
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        return sdf.format(finalDate);
     }
 
     public void setSubscribed(boolean subscribed) {
         isSubscribed = subscribed;
+    }
+
+    public int isBefore(Final fina)
+    {
+        return finalDate.compareTo(fina.finalDate);
     }
 }

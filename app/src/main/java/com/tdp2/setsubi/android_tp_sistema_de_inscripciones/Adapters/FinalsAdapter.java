@@ -1,6 +1,5 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters;
 
-import android.database.DataSetObserver;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -46,7 +45,7 @@ public class FinalsAdapter extends RecyclerView.Adapter<FinalsAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Final exam = finals.get(position);
         holder.setCatedra(exam.getCatedraName());
-        holder.setDate(exam.getFinalDate());
+        holder.setDate(exam.getDate());
         holder.setTime(exam.getTime());
         holder.setSede(exam.getSede());
         holder.setAula(exam.getAula());

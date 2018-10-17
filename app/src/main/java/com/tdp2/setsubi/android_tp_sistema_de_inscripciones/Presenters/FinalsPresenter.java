@@ -19,22 +19,6 @@ public class FinalsPresenter implements FinalsActivity.Presenter
     public FinalsPresenter(FinalsActivity activity)
     {
         this.activity = activity;
-        finals.add(new Final(1,false, true, false, true,
-                new Subject(1,15, "Algoritmos y Programacion II", 6,
-                        new Department(1, "Informatica", 75)),
-                "Wachencauzer","10/01/2019","19:00", Sede.PASEO_COLON, 310));
-        finals.add(new Final(2,true, false, true, false,
-                new Subject(1,15, "Algoritmos y Programacion II", 6,
-                        new Department(1, "Informatica", 75)),
-                "Wachencauzer","17/01/2019","19:00", Sede.PASEO_COLON, 312));
-        finals.add(new Final(2,false, true, false, false,
-                new Subject(1,15, "Algoritmos y Programacion II", 6,
-                        new Department(1, "Informatica", 75)),
-                "Wachencauzer","17/01/2019","19:00", Sede.PASEO_COLON, 312));
-        finals.add(new Final(2,true, false, false, false,
-                new Subject(1,15, "Algoritmos y Programacion II", 6,
-                        new Department(1, "Informatica", 75)),
-                "Wachencauzer","17/01/2019","19:00", Sede.PASEO_COLON, 312));
     }
 
     @Override
