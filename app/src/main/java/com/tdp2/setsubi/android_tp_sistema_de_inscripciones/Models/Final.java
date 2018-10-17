@@ -26,12 +26,12 @@ public class Final
     {
         this.id = id;
         this.isSubscribed = isSubscribed;
-        this.supportsLibre = supportsLibre;
         this.catedraName = catedraName;
         this.finalDate = date;
         this.sede = sede;
         this.aula = aula;
         this.subject = subject;
+        this.supportsLibre = supportsLibre;
     }
 
     public boolean isCanSubscribe()
@@ -48,7 +48,7 @@ public class Final
         Date currentTime = Calendar.getInstance().getTime();
         long secs = (finalDate.getTime() - currentTime.getTime()) / 1000;
         int hours = (int) (secs / 3600);
-        return hours < 48;
+        return hours >= 48;
     }
 
     public int getId() {
@@ -59,12 +59,12 @@ public class Final
         return isSubscribed;
     }
 
-    public boolean isSupportsLibre() {
-        return supportsLibre;
-    }
-
     public String getCatedraName() {
         return catedraName;
+    }
+
+    public boolean isSupportsLibre() {
+        return supportsLibre;
     }
 
     public String getDate()

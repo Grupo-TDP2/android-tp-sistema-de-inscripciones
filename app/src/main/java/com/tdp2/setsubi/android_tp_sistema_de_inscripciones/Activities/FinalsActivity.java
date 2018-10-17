@@ -81,5 +81,4 @@ public class FinalsActivity extends AppCompatActivity implements LoadingView
     public void notifyDataSetChanged() {
         adapter.notifyDataSetChanged();
     }
-
 }
