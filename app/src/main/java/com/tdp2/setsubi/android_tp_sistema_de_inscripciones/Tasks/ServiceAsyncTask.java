@@ -6,15 +6,15 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResp
 
 public abstract class ServiceAsyncTask<Params, Progress, T> extends AsyncTask<Params, Progress, ServiceResponse<T>>
 {
-    public interface ForeGroundListener<R>
+    public interface ForeGroundListener
     {
         void onError(ServiceAsyncTask serviceAsyncTask, ServiceResponse.ServiceStatusCode error);
         void onSuccess(ServiceAsyncTask serviceAsyncTask, Object data);
         void onStartingAsyncTask(ServiceAsyncTask serviceAsyncTask);
     }
-    private ForeGroundListener<T> listener;
+    private ForeGroundListener listener;
 
-    public ServiceAsyncTask(ForeGroundListener<T> listener)
+    public ServiceAsyncTask(ForeGroundListener listener)
     {
         this.listener = listener;
     }

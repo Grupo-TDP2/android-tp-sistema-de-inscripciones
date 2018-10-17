@@ -9,7 +9,7 @@ import java.util.List;
 
 public class GetCareersAsyncTask extends ServiceAsyncTask<Student,Void,List<Career>>
 {
-    public GetCareersAsyncTask(ForeGroundListener<List<Career>> listener)
+    public GetCareersAsyncTask(ForeGroundListener listener)
     {
         super(listener);
     }

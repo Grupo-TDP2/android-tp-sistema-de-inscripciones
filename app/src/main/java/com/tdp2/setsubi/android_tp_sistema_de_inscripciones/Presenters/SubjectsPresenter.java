@@ -14,8 +14,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-public class SubjectsPresenter implements SubjectsActivity.ClassesActivityPresenter, ServiceAsyncTask.ForeGroundListener<List<Subject>> {
-
+public class SubjectsPresenter implements SubjectsActivity.ClassesActivityPresenter, ServiceAsyncTask.ForeGroundListener
+{
     private List<Subject> classes = new ArrayList<>();
     private ArrayList<String> viewClases = new ArrayList<>();
     private SubjectsActivity view;
