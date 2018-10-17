@@ -56,7 +56,8 @@ public class FinalsServiceAPI implements FinalsServiceInterface
         return new RequestPerformer<>(APIUriBuilder.getURIBuiled()
                 .appendPath("course_of_studies").appendPath(String.valueOf(career))
                 .appendPath("subjects").appendPath(String.valueOf(subject))
-                .appendPath("courses").appendPath(String.valueOf(course)).build().toString(),
+                .appendPath("courses").appendPath(String.valueOf(course))
+                .appendPath("exams").build().toString(),
                 new RequestBuilder(RequestMethod.GET)
         .addRequestProperty(RequestProperty.AUTHORIZATION, token),
                 new JsonArrayTransformer<>(new JsonFinalTransformer())).perform();

@@ -33,7 +33,8 @@ public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTa
     @Override
     public void loadFinals() {
         AppModel model = AppModel.getInstance();
-        new GetFinalsForsSubjectAsyncTask(this).execute(model.getStudent(), model.getSelectedCareer(), model.getSelecteSubject());
+        new GetFinalsForsSubjectAsyncTask(this)
+                .execute(model.getStudent(), model.getSelectedCareer(), model.getSelecteSubject());
     }
 
     @Override
