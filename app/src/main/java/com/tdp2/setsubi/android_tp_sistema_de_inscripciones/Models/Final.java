@@ -8,8 +8,10 @@ import java.util.Locale;
 public class Final
 {
     private int id;
+    private int subscriptionId = -1;
     private boolean isSubscribed;
     private boolean supportsLibre;
+    private boolean approvedCourseOfFinal;
     private String catedraName;
     private Date finalDate;
     private Sede sede;
@@ -21,7 +23,7 @@ public class Final
 
     private Subject subject;
 
-    public Final(int id, boolean isSubscribed, boolean supportsLibre,
+    public Final(int id, boolean isSubscribed, boolean supportsLibre, boolean approvedCourseOfFinal,
                  Subject subject, String catedraName, Date date, Sede sede, int aula)
     {
         this.id = id;
@@ -32,6 +34,7 @@ public class Final
         this.aula = aula;
         this.subject = subject;
         this.supportsLibre = supportsLibre;
+        this.approvedCourseOfFinal = approvedCourseOfFinal;
     }
 
     public boolean isCanSubscribe()
@@ -100,7 +103,15 @@ public class Final
         return finalDate.compareTo(fina.finalDate);
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setSubscriptionId(Integer id) {
+        this.subscriptionId = id;
+    }
+
+    public int getSubscriptionId(){
+        return subscriptionId;
+    }
+
+    public boolean isApprovedCourseOfFinal() {
+        return approvedCourseOfFinal;
     }
 }

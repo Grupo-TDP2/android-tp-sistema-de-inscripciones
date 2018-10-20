@@ -45,8 +45,8 @@ public class JsonMyFinalTransformer extends JsonTransformer<Final>
     {
         if( object.isJsonObject() )
         {
-            int id, aula;
-            boolean supportsLibre = false;
+            int id, subscriptionId, aula;
+            boolean supportsLibre = false, approvedCourse = false;
             String catedra = null;
             Subject subject = null;
             Date finalDate = null;
@@ -62,18 +62,20 @@ public class JsonMyFinalTransformer extends JsonTransformer<Final>
             } else return null;
             if( JsonUtils.isInt(finalObject, JsonKeys.ID) )
             {
-                id = JsonUtils.getInt(finalObject, JsonKeys.ID);
+                subscriptionId = JsonUtils.getInt(finalObject, JsonKeys.ID);
             } else return null;
+
             if( finalObject.has(JsonKeys.EXAM) && finalObject.get(JsonKeys.EXAM).isJsonObject() )
             {
                 JsonObject exam = finalObject.getAsJsonObject(JsonKeys.EXAM);
+                if( isInt(exam, ID) )
+                {
+                    id = getInt(exam, ID);
+                } else return null;
                 aula = JsonTransformHelper.getAula(exam);
                 sede = JsonTransformHelper.getSede(exam);
                 if( sede == null || aula == -1 ) return null;
-                /*if( JsonUtils.isInt(exam, JsonKeys.ID) )
-                {
-                    id = JsonUtils.getInt(exam, JsonKeys.ID);
-                } else return null;*/
+
                 if( JsonUtils.isString(exam, JsonKeys.DATE_TIME) )
                 {
                     try {
@@ -85,10 +87,8 @@ public class JsonMyFinalTransformer extends JsonTransformer<Final>
                 if( exam.has(JsonKeys.COURSE) && exam.get(JsonKeys.COURSE).isJsonObject() )
                 {
                     JsonObject course = exam.getAsJsonObject(JsonKeys.COURSE);
-                    if( JsonUtils.isString(course, JsonKeys.NAME))
-                    {
-                        catedra = JsonUtils.getString(course, JsonKeys.NAME);
-                    }
+                    catedra = JsonTransformHelper.getCatedra(course);
+                    approvedCourse = JsonTransformHelper.hasApprovedCourse(course);
 
                     if(JsonUtils.isObject(course, JsonKeys.SUBJECT))
                     {
@@ -99,38 +99,19 @@ public class JsonMyFinalTransformer extends JsonTransformer<Final>
                 if( finalDate == null || catedra == null || subject == null  ) return null;
             } else return null;
 
-            return new Final(id, true, supportsLibre,
-                    subject,
-                    catedra,
-                    finalDate, sede, aula);
+            Final fina = new Final(id, true, supportsLibre, approvedCourse,
+                subject,
+                catedra,
+                finalDate, sede, aula);
+            fina.setSubscriptionId(subscriptionId);
+            return fina;
         }
         return null;
     }
 
     private Subject getSubject(JsonObject jsonObject)
     {
-        //TODO DEPARTMENT
-        int id, code, credits;
-        Department department;
-        String name;
-        if( isInt(jsonObject, ID) ){
-            id = getInt(jsonObject, ID);
-        } else return null;
-
-        if( isInt(jsonObject, CREDITS) ){
-            credits = getInt(jsonObject, CREDITS);
-        } else return null;
-
-        if( isString(jsonObject, CODE) )
-        {
-            code = Integer.parseInt(getString(jsonObject,CODE));
-        } else return null;
-
-        if( isString(jsonObject, NAME) )
-        {
-            name = getString(jsonObject, NAME);
-        } else return null;
-        return new Subject(id, code, name, credits, new Department(5,"", 75));
+        return new JsonSubjectTransformer().transform(jsonObject);
     }
 
 

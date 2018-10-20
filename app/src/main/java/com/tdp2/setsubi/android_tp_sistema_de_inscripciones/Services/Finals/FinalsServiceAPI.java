@@ -99,7 +99,7 @@ public class FinalsServiceAPI implements FinalsServiceInterface
     @Override
     public ServiceResponse<Boolean> unsubscribe(Student student, Final fina)
     {
-        return new RequestPerformer<>(getFinalInscriptionURI().appendPath(String.valueOf(fina.getId()))
+        return new RequestPerformer<>(getFinalInscriptionURI().appendPath(String.valueOf(fina.getSubscriptionId()))
                 .toString(),
                 new RequestBuilder(RequestMethod.DELETE)
                         .addRequestProperty(RequestProperty.AUTHORIZATION, student.getAuthorization()),

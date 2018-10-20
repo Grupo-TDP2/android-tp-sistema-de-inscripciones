@@ -40,4 +40,6 @@ class JsonKeys
     static final String ENROLMENT = "enrolment";
     static final String STATUS = "status";
     static final String ENABLED_TO_ENROL = "able_to_enrol?";
+    static final String TEACHING_POSITION = "teaching_position";
+    public static final String REGISTRATION = "registration";
 }

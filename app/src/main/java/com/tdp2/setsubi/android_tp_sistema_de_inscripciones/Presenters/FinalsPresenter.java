@@ -1,10 +1,11 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters;
 
+import android.os.Debug;
+import android.util.Log;
+
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.FinalsActivity;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Department;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Final;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Sede;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Student;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
@@ -15,9 +16,11 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.SubscribeToFin
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.UnsubscribeFromFinalAsyncTask;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Locale;
 
 public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTask.ForeGroundListener {
@@ -91,7 +94,7 @@ public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTa
         if( serviceAsyncTask instanceof GetFinalsForsSubjectAsyncTask )
         {
             finals.clear();
-            finals.addAll((List<Final>)data);
+            finals.addAll(filterPossible((List<Final>)data));
             Collections.sort(finals, new Comparator<Final>() {
                 @Override
                 public int compare(Final o1, Final o2) {
@@ -109,12 +112,27 @@ public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTa
             fina.setSubscribed(!fina.isSubscribed());
             if( serviceAsyncTask instanceof SubscribeToFinalAsyncTask )
             {
-                fina.setId((Integer)data);
+                fina.setSubscriptionId((Integer)data);
             }
             activity.notifyFinalChange(interactingPosition);
             activity.showToast(fina.isSubscribed() ? R.string.subscribed_final_success : R.string.unsubribed_final_success);
             interactingPosition = -1;
         }
+    }
+
+    private List<Final> filterPossible(List<Final> data)
+    {
+        ListIterator<Final> iterator = data.listIterator();
+        while (iterator.hasNext())
+        {
+            Final next = iterator.next();
+            if( !next.isSupportsLibre() && !next.isApprovedCourseOfFinal())
+            {
+                Log.d("FINAL","Filtered a final because it can't be enroled by student");
+                iterator.remove();
+            }
+        }
+        return data;
     }
 
     @Override
