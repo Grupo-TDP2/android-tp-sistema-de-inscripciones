@@ -1,19 +1,17 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.FinalsAdapter;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.TextRecyclerViewAdapter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Final;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.DepartmentsPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.FinalsPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.LoadingSnackbar;
@@ -56,6 +54,11 @@ public class FinalsActivity extends AppCompatActivity implements LoadingView
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        return ToolBarHelper.onClickedHome(this);
+    }
+
+    @Override
     public void startLoading()
     {
         if( snackbar == null )
@@ -80,5 +83,13 @@ public class FinalsActivity extends AppCompatActivity implements LoadingView
 
     public void notifyDataSetChanged() {
         adapter.notifyDataSetChanged();
+    }
+
+    public void notifyFinalChange(int interactingPosition) {
+        adapter.notifyItemChanged(interactingPosition);
+    }
+
+    public void showNoFinalsAvailable() {
+        findViewById(R.id.noFinals).setVisibility(View.VISIBLE);
     }
 }

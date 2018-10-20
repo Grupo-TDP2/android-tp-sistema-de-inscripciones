@@ -76,9 +76,11 @@ public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTa
             activity.showToast(R.string.error_while_loading_finals);
         } else if( serviceAsyncTask instanceof UnsubscribeFromFinalAsyncTask )
         {
+            interactingPosition = -1;
             activity.showToast(R.string.error_when_unsubscribing);
         } else if( serviceAsyncTask instanceof SubscribeToFinalAsyncTask )
         {
+            interactingPosition = -1;
             activity.showToast(R.string.error_when_subscribing);
         }
     }
@@ -97,10 +99,19 @@ public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTa
                 }
             });
             activity.notifyDataSetChanged();
+            if( finals.size() == 0 )
+            {
+                activity.showNoFinalsAvailable();
+            }
         } else
         {
             Final fina = finals.get(interactingPosition);
             fina.setSubscribed(!fina.isSubscribed());
+            if( serviceAsyncTask instanceof SubscribeToFinalAsyncTask )
+            {
+                fina.setId((Integer)data);
+            }
+            activity.notifyFinalChange(interactingPosition);
             activity.showToast(fina.isSubscribed() ? R.string.subscribed_final_success : R.string.unsubribed_final_success);
             interactingPosition = -1;
         }

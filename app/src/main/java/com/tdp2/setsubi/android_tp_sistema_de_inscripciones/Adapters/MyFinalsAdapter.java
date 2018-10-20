@@ -116,7 +116,7 @@ public class MyFinalsAdapter extends RecyclerView.Adapter<MyFinalsAdapter.ViewHo
         }
 
         void setSubject(int departmentCode, int code, String name) {
-            this.subject.setText(String.format(Locale.getDefault(), "%02d:%02d %s",departmentCode, code, name));
+            this.subject.setText(String.format(Locale.getDefault(), "%02d.%02d %s",departmentCode, code, name));
         }
     }
 }
