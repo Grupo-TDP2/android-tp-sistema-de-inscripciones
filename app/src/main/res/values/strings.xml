@@ -32,7 +32,7 @@
     <string name="ingresar">Ingresar</string>
     <string name="contraseña">Contraseña</string>
     <string name="usuario">Email</string>
-    <string name="empty_user_name">Ingrese un usuario válido</string>
+    <string name="empty_user_name">Ingrese un email válido</string>
     <string name="valid_password">Ingrese una contraseña</string>
     <string name="wait_for_login">El login se está realizando</string>
     <string name="inscripto">Inscripto</string>
@@ -55,6 +55,6 @@
     <string name="error_when_unsubscribing">No se pudo realizar la desinscripción</string>
     <string name="no_hay_finales">No se encontraron finales</string>
     <string name="error_when_subscribing">No se pudo realizar la inscripción</string>
-    <string name="subscribed_final_success">Se realizo la subscripción correctamente</string>
+    <string name="subscribed_final_success">Se realizó la subscripción correctamente</string>
 
 </resources>
