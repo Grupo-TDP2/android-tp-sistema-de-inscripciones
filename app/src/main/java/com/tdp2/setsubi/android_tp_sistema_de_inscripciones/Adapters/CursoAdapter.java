@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.ShapeBackgroundColorChanger;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHolder>
 {
@@ -56,6 +58,7 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
         holder.setCupo(course.getCupos());
         holder.setTimes(course.getCursoTimeBands());
         holder.setSede(course.getSede());
+        Log.d("COUR",canSubscribe + ", " + course.isSubscribed());
         holder.enableSubscription(canSubscribe||course.isSubscribed());
         holder.setNotSubscribed(!course.isSubscribed());
         holder.setSubscribeListener(listener, course.getId());
@@ -114,11 +117,9 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
             noTimesText.setVisibility(noTimesVisibility);
         }
 
-        public void enableSubscription(boolean canSubscribe) {
-            if( canSubscribe )
-            {
-                subscribe.setVisibility(canSubscribe ? View.VISIBLE : View.INVISIBLE);
-            }
+        public void enableSubscription(boolean canSubscribe)
+        {
+            subscribe.setVisibility(canSubscribe ? View.VISIBLE : View.INVISIBLE);
         }
 
         public void setNotSubscribed(boolean enabled)
