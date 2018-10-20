@@ -113,7 +113,7 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
             List<Course> list = filterComplete((List<Course>)data);
             courses.clear();
             courses.addAll(list);
-            adapter.setCanSubscribe(anySubscribed());
+            adapter.setCanSubscribe(!anySubscribed());
             adapter.notifyDataSetChanged();
             if( list.size() == 0 )
             {
