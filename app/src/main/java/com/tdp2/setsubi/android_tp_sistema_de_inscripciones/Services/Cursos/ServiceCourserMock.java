@@ -56,26 +56,26 @@ public class ServiceCourserMock implements ServiceCourses
                     new CourseTime(20,0),
                     CursoTimeBand.CursoTimeType.PRACTIO, true
             ));
-    private Course numerico1 = new Course(1,"Griggo", Sede.PASEO_COLON, times,10, false);
-    private Course numerico2 = new Course(2,"Opatowski", Sede.PASEO_COLON, times,15, false);
+    private Course numerico1 = new Course(1,"Griggo", Sede.PASEO_COLON, times,10, false, true);
+    private Course numerico2 = new Course(2,"Opatowski", Sede.PASEO_COLON, times,15, false, true);
     private List<Course> numericoCourses = Arrays.asList(numerico1, numerico2);
-    private Course alg21 = new Course(1,"Wachenchauzer", Sede.PASEO_COLON, times,10, false);
-    private Course alg22 = new Course(2,"Mendez", Sede.PASEO_COLON, times,15, false);
+    private Course alg21 = new Course(1,"Wachenchauzer", Sede.PASEO_COLON, times,10, false, true);
+    private Course alg22 = new Course(2,"Mendez", Sede.PASEO_COLON, times,15, false, true);
     private List<Course> algoritmosCourses = Arrays.asList(alg21, alg22);
-    private Course an11 = new Course(1,"Prelat", Sede.PASEO_COLON, times,10, false);
-    private Course an12 = new Course(2,"Cachile", Sede.PASEO_COLON, times,15, false);
+    private Course an11 = new Course(1,"Prelat", Sede.PASEO_COLON, times,10, false, true);
+    private Course an12 = new Course(2,"Cachile", Sede.PASEO_COLON, times,15, false, true);
     private List<Course> analisis1Courses = Arrays.asList(an11, an12);
-    private Course an31 = new Course(1,"Acero", Sede.PASEO_COLON, times,10, false);
-    private Course an32 = new Course(2,"Prelat", Sede.PASEO_COLON, times,15, false);
+    private Course an31 = new Course(1,"Acero", Sede.PASEO_COLON, times,10, false, true);
+    private Course an32 = new Course(2,"Prelat", Sede.PASEO_COLON, times,15, false, true);
     private List<Course> analis3Courses = Arrays.asList(an31, an32);
-    private Course f11 = new Course(1,"Sirne", Sede.PASEO_COLON, times,10, false);
-    private Course f12 = new Course(2,"Lopez", Sede.PASEO_COLON, times,15, false);
+    private Course f11 = new Course(1,"Sirne", Sede.PASEO_COLON, times,10, false, true);
+    private Course f12 = new Course(2,"Lopez", Sede.PASEO_COLON, times,15, false, true);
     private List<Course> fisica1Courses = Arrays.asList(f11, f12);
-    private Course f21 = new Course(1,"Sirne", Sede.PASEO_COLON, times,10, false);
-    private Course f22 = new Course(2,"Guitierrez", Sede.PASEO_COLON, times,15, false);
+    private Course f21 = new Course(1,"Sirne", Sede.PASEO_COLON, times,10, false, true);
+    private Course f22 = new Course(2,"Guitierrez", Sede.PASEO_COLON, times,15, false, true);
     private List<Course> fisica2Courses = Arrays.asList(f21, f22);
-    private Course f31 = new Course(1,"Madero", Sede.PASEO_COLON, times,10, false);
-    private Course f32 = new Course(2,"Sirne", Sede.PASEO_COLON, times,15, false);
+    private Course f31 = new Course(1,"Madero", Sede.PASEO_COLON, times,10, false, true);
+    private Course f32 = new Course(2,"Sirne", Sede.PASEO_COLON, times,15, false, true);
     private List<Course> fisica3Courses = Arrays.asList(f31, f32);
 
     @Override

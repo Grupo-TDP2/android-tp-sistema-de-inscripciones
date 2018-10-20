@@ -31,12 +31,13 @@ class JsonKeys
     static final String COURSE = "course";
     static final String LAST_NAME = "last_name";
     static final String INSCRIBED = "inscribed?";
-    public static final String CONDITION = "condition";
-    public static final String EXAM = "exam";
-    public static final String DATE_TIME = "date_time";
-    public static final String ACCEPTS_FREE_CONDITION = "accept_free_condition_exam";
-    public static final String COURSES = "courses";
-    public static final String SUBJECT = "subject";
-    public static final String ENROLMENT = "enrolment";
-    public static final String STATUS = "status";
+    static final String CONDITION = "condition";
+    static final String EXAM = "exam";
+    static final String DATE_TIME = "date_time";
+    static final String ACCEPTS_FREE_CONDITION = "accept_free_condition_exam";
+    static final String COURSES = "courses";
+    static final String SUBJECT = "subject";
+    static final String ENROLMENT = "enrolment";
+    static final String STATUS = "status";
+    static final String ENABLED_TO_ENROL = "able_to_enrol?";
 }

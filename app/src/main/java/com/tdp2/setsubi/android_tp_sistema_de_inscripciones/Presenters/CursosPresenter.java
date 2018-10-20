@@ -13,6 +13,8 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTa
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
@@ -113,6 +115,12 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
             List<Course> list = filterComplete((List<Course>)data);
             courses.clear();
             courses.addAll(list);
+            Collections.sort(list, new Comparator<Course>() {
+                @Override
+                public int compare(Course o1, Course o2) {
+                    return o1.getCatedra().compareTo(o2.getCatedra());
+                }
+            });
             adapter.setCanSubscribe(!anySubscribed());
             adapter.notifyDataSetChanged();
             if( list.size() == 0 )
