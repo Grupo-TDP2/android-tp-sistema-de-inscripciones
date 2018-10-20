@@ -1,5 +1,7 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Sede;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.JsonUtils;
@@ -11,7 +13,11 @@ import java.util.Locale;
 
 import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonKeys.BUILDING;
 import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonKeys.CLASSROOM;
+import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonKeys.LAST_NAME;
 import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonKeys.NAME;
+import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonKeys.TEACHER;
+import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonKeys.TEACHERS;
+import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonKeys.TEACHING_POSITION;
 import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.JsonUtils.getString;
 import static com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.JsonUtils.isString;
 
@@ -63,5 +69,71 @@ public class JsonTransformHelper
         String toParse = jsonDate.replace('T',' ').replace("Z","");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
         return formatter.parse(toParse);
+    }
+
+    public static String getCatedra(JsonObject course)
+    {
+        if( isString(course, NAME) )
+        {
+            String teacherName = null;
+            if( course.has(TEACHERS) && course.get(TEACHERS).isJsonArray() )
+            {
+                JsonArray array = course.get(TEACHERS).getAsJsonArray();
+
+                if( array.size() != 0 )
+                {
+                    for( int i = 0; i < array.size(); i++ )
+                    {
+                        JsonElement element = array.get(i);
+                        if( element.isJsonObject() )
+                        {
+                            JsonObject teacher = element.getAsJsonObject();
+                            if( isString(teacher, TEACHING_POSITION) &&
+                                    getString(teacher, TEACHING_POSITION).equals("course_chief")
+                                    || getString(teacher, TEACHING_POSITION).equals("practice_chief") )
+                            {
+                                teacherName = getTeacherName(teacher);
+                            }
+                        }
+                    }
+                }
+            }
+            if( teacherName != null )
+            {
+                return teacherName + " - " + getString(course, NAME);
+            } else {
+               return getString(course, NAME);
+            }
+        } else return null;
+    }
+
+    private static String getTeacherName(JsonObject jsonObject)
+    {
+        if( jsonObject.has(TEACHER) && jsonObject.get(TEACHER).isJsonObject() )
+        {
+            JsonObject teacher = jsonObject.getAsJsonObject(TEACHER);
+            if( isString(teacher, LAST_NAME) )
+            {
+                return getString(teacher, LAST_NAME);
+            }
+        }
+        return null;
+    }
+
+    public static boolean hasApprovedCourse(JsonObject jsonObject)
+    {
+        if( JsonUtils.isObject(jsonObject, JsonKeys.ENROLMENT))
+        {
+            JsonObject enrolmnet = jsonObject.getAsJsonObject(JsonKeys.ENROLMENT);
+            if( JsonUtils.isString(enrolmnet, JsonKeys.STATUS) )
+            {
+                return isApproved(JsonUtils.getString(enrolmnet, JsonKeys.STATUS));
+            }
+        }
+        return false;
+    }
+
+    private static boolean isApproved(String string) {
+        return string.toLowerCase().equals("approved");
     }
 }

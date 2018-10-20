@@ -49,25 +49,8 @@ public class JsonCourseTransformer extends JsonTransformer<Course>
                 id = getInt(jsonObject, ID);
             } else return null;
 
-            if( isString(jsonObject, NAME) )
-            {
-                String teacherName = null;
-                if( jsonObject.has(TEACHERS) && jsonObject.get(TEACHERS).isJsonArray() )
-                {
-                    JsonArray array = jsonObject.get(TEACHERS).getAsJsonArray();
-
-                    if( array.size() != 0 )
-                    {
-                        teacherName = getTeacherName(array.get(0));
-                    }
-                }
-                if( teacherName != null )
-                {
-                    name = teacherName + " - " + getString(jsonObject, NAME);
-                } else {
-                    name = getString(jsonObject, NAME);
-                }
-            } else return null;
+            name = JsonTransformHelper.getCatedra(jsonObject);
+            if( name == null ) return null;
 
             if( isInt(jsonObject, VACANCIES) )
             {

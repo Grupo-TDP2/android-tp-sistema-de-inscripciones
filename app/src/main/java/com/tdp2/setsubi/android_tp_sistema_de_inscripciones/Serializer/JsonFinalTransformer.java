@@ -16,8 +16,8 @@ public class JsonFinalTransformer extends JsonTransformer<Final>
     public Final transform(JsonElement object) {
         if( object.isJsonObject() )
         {
-            int id, aula;
-            boolean supportsLibre = false, isSubscribed;
+            int id, aula, subscriptionId = -1;
+            boolean supportsLibre = false, isSubscribed, approvedCourse;
             Date finalDate;
             Sede sede;
             String catedra;
@@ -30,9 +30,9 @@ public class JsonFinalTransformer extends JsonTransformer<Final>
             if( finalObject.has(JsonKeys.COURSE) && finalObject.get(JsonKeys.COURSE).isJsonObject())
             {
                 JsonObject course = finalObject.getAsJsonObject(JsonKeys.COURSE);
-                catedra = getCatedra(course);
-                boolean subscibedToCourse = getSubscribedToCourse(course),
-                        approvedCourse = getApprovedCourse(course);
+                catedra = JsonTransformHelper.getCatedra(course);
+                boolean subscibedToCourse = getSubscribedToCourse(course);
+                approvedCourse = JsonTransformHelper.hasApprovedCourse(course);
 
                 if( JsonUtils.isBool(course, JsonKeys.ACCEPTS_FREE_CONDITION) )
                 {
@@ -41,6 +41,14 @@ public class JsonFinalTransformer extends JsonTransformer<Final>
                 }
             } else return null;
 
+            if( JsonUtils.isObject(finalObject, JsonKeys.REGISTRATION) )
+            {
+                JsonObject registration = finalObject.getAsJsonObject(JsonKeys.REGISTRATION);
+                if( JsonUtils.isInt(registration, JsonKeys.ID) )
+                {
+                    subscriptionId = JsonUtils.getInt(registration, JsonKeys.ID);
+                }
+            }
             if( JsonUtils.isInt(finalObject, JsonKeys.ID) )
             {
                 id = JsonUtils.getInt(finalObject, JsonKeys.ID);
@@ -59,10 +67,12 @@ public class JsonFinalTransformer extends JsonTransformer<Final>
 
 
             if( catedra == null ) return null;
-            return new Final(id, isSubscribed, supportsLibre,
+            Final fina = new Final(id, isSubscribed, supportsLibre, approvedCourse,
                     AppModel.getInstance().getSelecteSubject(),
                     catedra,
                     finalDate, sede, aula);
+            if( subscriptionId != -1 ) fina.setSubscriptionId(subscriptionId);
+            return fina;
         }
         return null;
     }
@@ -74,24 +84,6 @@ public class JsonFinalTransformer extends JsonTransformer<Final>
             return JsonUtils.getString(course, JsonKeys.NAME);
         }
         return null;
-    }
-
-    private boolean getApprovedCourse(JsonObject course)
-    {
-        if( JsonUtils.isObject(course, JsonKeys.ENROLMENT))
-        {
-            JsonObject enrolmnet = course.getAsJsonObject(JsonKeys.ENROLMENT);
-            if( JsonUtils.isString(enrolmnet, JsonKeys.STATUS) )
-            {
-                return isApproved(JsonUtils.getString(enrolmnet, JsonKeys.STATUS));
-            }
-        }
-        return false;
-    }
-
-    private boolean isApproved(String string)
-    {
-        return string.toLowerCase().equals("approved");
     }
 
     private boolean getSubscribedToCourse(JsonObject course) {
