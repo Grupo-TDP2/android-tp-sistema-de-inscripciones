@@ -99,6 +99,10 @@ public class MyFinalsPresenter implements MyFinalsActivity.Presenter,
                 finals.remove(unsubcribinPosition);
                 activity.notifyRemoved(unsubcribinPosition);
                 activity.showToast(R.string.unsubribed_final_success);
+                if( this.finals.size() == 0 )
+                {
+                    activity.showNoFinalsFound();
+                }
             }
             unsubcribinPosition = -1;
         }

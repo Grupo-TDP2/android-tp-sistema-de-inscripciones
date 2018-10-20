@@ -40,4 +40,9 @@ public class JsonUtils
         return object.getAsJsonPrimitive(key).getAsBoolean();
     }
 
+    public static boolean isObject(JsonObject object, String key)
+    {
+        return object.has(key) && object.get(key).isJsonObject();
+    }
+
 }

@@ -36,11 +36,11 @@ public class Final
 
     public boolean isCanSubscribe()
     {
-        return isSubscribed && isAtTimeToSubscribe();
+        return !isSubscribed && isAtTimeToSubscribe();
     }
 
     public boolean isCanUnsubscribe() {
-        return !isSubscribed && isAtTimeToSubscribe();
+        return isSubscribed && isAtTimeToSubscribe();
     }
 
     private boolean isAtTimeToSubscribe()
@@ -98,5 +98,9 @@ public class Final
     public int compare(Final fina)
     {
         return finalDate.compareTo(fina.finalDate);
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

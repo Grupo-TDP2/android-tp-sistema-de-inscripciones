@@ -36,4 +36,7 @@ class JsonKeys
     public static final String DATE_TIME = "date_time";
     public static final String ACCEPTS_FREE_CONDITION = "accept_free_condition_exam";
     public static final String COURSES = "courses";
+    public static final String SUBJECT = "subject";
+    public static final String ENROLMENT = "enrolment";
+    public static final String STATUS = "status";
 }

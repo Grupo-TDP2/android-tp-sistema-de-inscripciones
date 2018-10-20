@@ -77,6 +77,11 @@ public class MyFinalsActivity extends AppCompatActivity implements LoadingView
         }
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        return ToolBarHelper.onClickedHome(this);
+    }
+
     public void notifyDataSetChanged()
     {
         adapter.notifyDataSetChanged();

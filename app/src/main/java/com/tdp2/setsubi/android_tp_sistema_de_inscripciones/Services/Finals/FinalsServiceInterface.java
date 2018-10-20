@@ -13,5 +13,5 @@ public interface FinalsServiceInterface
     ServiceResponse<List<Final>> getFinalsForSubject(Student student, Career career, Subject subject);
     ServiceResponse<List<Final>> getStudentFinals(Student student);
     ServiceResponse<Integer> subscribe(Student student, Final fina);
-    ServiceResponse<Integer> unsubscribe(Student student, Final fina);
+    ServiceResponse<Boolean> unsubscribe(Student student, Final fina);
 }
