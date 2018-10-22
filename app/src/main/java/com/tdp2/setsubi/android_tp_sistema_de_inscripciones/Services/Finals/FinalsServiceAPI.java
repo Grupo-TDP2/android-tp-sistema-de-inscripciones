@@ -91,7 +91,7 @@ public class FinalsServiceAPI implements FinalsServiceInterface
     private String getCondition(boolean supportsLibre) {
         if( supportsLibre )
         {
-            return "libre";
+            return "free";
         }
         return "regular";
     }

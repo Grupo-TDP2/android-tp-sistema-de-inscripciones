@@ -114,4 +114,10 @@ public class Final
     public boolean isApprovedCourseOfFinal() {
         return approvedCourseOfFinal;
     }
+
+    public boolean hasAlreadyPassedDate()
+    {
+        Date currentTime = Calendar.getInstance().getTime();
+        return finalDate.getTime() - currentTime.getTime() <= 0;
+    }
 }

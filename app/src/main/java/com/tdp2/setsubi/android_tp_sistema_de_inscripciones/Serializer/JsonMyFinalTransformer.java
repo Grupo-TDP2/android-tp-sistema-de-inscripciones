@@ -56,7 +56,7 @@ public class JsonMyFinalTransformer extends JsonTransformer<Final>
             {
                 switch (JsonUtils.getString(finalObject, JsonKeys.CONDITION))
                 {
-                    case "libre":
+                    case "free":
                         supportsLibre = true;
                 }
             } else return null;
