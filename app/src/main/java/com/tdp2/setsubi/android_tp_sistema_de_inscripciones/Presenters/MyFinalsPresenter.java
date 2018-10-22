@@ -1,5 +1,7 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters;
 
+import android.util.Log;
+
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.MyFinalsActivity;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Final;
@@ -10,9 +12,11 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTa
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.UnsubscribeFromFinalAsyncTask;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class MyFinalsPresenter implements MyFinalsActivity.Presenter,
         ServiceAsyncTask.ForeGroundListener
@@ -78,7 +82,7 @@ public class MyFinalsPresenter implements MyFinalsActivity.Presenter,
         {
             List<Final> finals = (List<Final>) data;
             this.finals.clear();
-            this.finals.addAll(finals);
+            this.finals.addAll(filterPossible(finals));
 
             if( this.finals.size() == 0 )
             {
@@ -106,6 +110,20 @@ public class MyFinalsPresenter implements MyFinalsActivity.Presenter,
             }
             unsubcribinPosition = -1;
         }
+    }
+
+    private Collection<? extends Final> filterPossible(List<Final> finals) {
+        ListIterator<Final> iterator = finals.listIterator();
+        while (iterator.hasNext())
+        {
+            Final next = iterator.next();
+            if( next.hasAlreadyPassedDate() )
+            {
+                Log.d("FINAL","Filtered a final because it can't be enroled by student");
+                iterator.remove();
+            }
+        }
+        return finals;
     }
 
     @Override

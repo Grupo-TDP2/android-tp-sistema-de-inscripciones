@@ -16,9 +16,11 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.SubscribeToFin
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.UnsubscribeFromFinalAsyncTask;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
@@ -126,7 +128,8 @@ public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTa
         while (iterator.hasNext())
         {
             Final next = iterator.next();
-            if( !next.isSupportsLibre() && !next.isApprovedCourseOfFinal())
+            if( (!next.isSupportsLibre() && !next.isApprovedCourseOfFinal())
+                    || next.hasAlreadyPassedDate())
             {
                 Log.d("FINAL","Filtered a final because it can't be enroled by student");
                 iterator.remove();
@@ -134,6 +137,8 @@ public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTa
         }
         return data;
     }
+
+
 
     @Override
     public void onStartingAsyncTask(ServiceAsyncTask serviceAsyncTask) {
