@@ -12,7 +12,11 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.GetCoursesAsyn
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Locale;
 
 public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter.SubscribeListener,
@@ -108,10 +112,21 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
         activity.stopLoading();
         if( data instanceof List )
         {
-            List<Course> list = (List<Course>)data;
+            List<Course> list = filterComplete((List<Course>)data);
             courses.clear();
             courses.addAll(list);
+            Collections.sort(list, new Comparator<Course>() {
+                @Override
+                public int compare(Course o1, Course o2) {
+                    return o1.getCatedra().compareTo(o2.getCatedra());
+                }
+            });
+            adapter.setCanSubscribe(!anySubscribed());
             adapter.notifyDataSetChanged();
+            if( list.size() == 0 )
+            {
+                activity.showNoCoursesAvailable();
+            }
         } else if( data instanceof EnrolmentResponse)
         {
             isSubscribing = false;
@@ -125,6 +140,31 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
         }
     }
 
+    private List<Course> filterComplete(List<Course> list)
+    {
+        List<Course> courses = new ArrayList<>(list);
+        ListIterator<Course> iterator = courses.listIterator();
+        while (iterator.hasNext())
+        {
+            if( iterator.next().getCursoTimeBands().size() == 0 )
+            {
+                iterator.remove();
+            }
+        }
+        return courses;
+    }
+
+    private boolean anySubscribed() {
+        for( Course course : courses)
+        {
+            if( course.isSubscribed() )
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void subscribeTo(int index)
     {
         Course course = courses.get(index);
@@ -133,7 +173,8 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
         {
             course.setCupos(course.getCupos() - 1);
         }
-        adapter.notifyItemChanged(index);
+        adapter.setCanSubscribe(false);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

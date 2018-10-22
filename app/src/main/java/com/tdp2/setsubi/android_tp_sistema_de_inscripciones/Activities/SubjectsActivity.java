@@ -15,6 +15,8 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.SubjectsP
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.ToolBarHelper;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class SubjectsActivity extends AppCompatActivity
@@ -30,12 +32,14 @@ public class SubjectsActivity extends AppCompatActivity
 
     private ClassesActivityPresenter presenter;
     private TextRecyclerViewAdapter adapter;
+    private TextView notAvailable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_classes);
-
+        notAvailable = findViewById(R.id.noHayDisponibles);
         presenter = new SubjectsPresenter(this);
         ToolBarHelper.onCreate(this);
         ToolBarHelper.setTitle(this, R.string.materias);
@@ -64,9 +68,19 @@ public class SubjectsActivity extends AppCompatActivity
        return ToolBarHelper.onClickedHome(this);
     }
 
+    public void showNoAvailableSubjects()
+    {
+        notAvailable.setVisibility(View.VISIBLE);
+    }
+
     public void goToCursos()
     {
         Intent intent = new Intent(this, CursosActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToFinals() {
+        Intent intent = new Intent(this, FinalsActivity.class);
         startActivity(intent);
     }
 

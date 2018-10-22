@@ -31,4 +31,15 @@ class JsonKeys
     static final String COURSE = "course";
     static final String LAST_NAME = "last_name";
     static final String INSCRIBED = "inscribed?";
+    static final String CONDITION = "condition";
+    static final String EXAM = "exam";
+    static final String DATE_TIME = "date_time";
+    static final String ACCEPTS_FREE_CONDITION = "accept_free_condition_exam";
+    static final String COURSES = "courses";
+    static final String SUBJECT = "subject";
+    static final String ENROLMENT = "enrolment";
+    static final String STATUS = "status";
+    static final String ENABLED_TO_ENROL = "able_to_enrol?";
+    static final String TEACHING_POSITION = "teaching_position";
+    public static final String REGISTRATION = "registration";
 }

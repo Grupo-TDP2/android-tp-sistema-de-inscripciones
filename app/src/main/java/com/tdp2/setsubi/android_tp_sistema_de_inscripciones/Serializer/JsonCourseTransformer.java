@@ -9,6 +9,7 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CourseTime;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CursoTimeBand;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Sede;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.DayOfWeek;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.JsonUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,25 +49,8 @@ public class JsonCourseTransformer extends JsonTransformer<Course>
                 id = getInt(jsonObject, ID);
             } else return null;
 
-            if( isString(jsonObject, NAME) )
-            {
-                String teacherName = null;
-                if( jsonObject.has(TEACHERS) && jsonObject.get(TEACHERS).isJsonArray() )
-                {
-                    JsonArray array = jsonObject.get(TEACHERS).getAsJsonArray();
-
-                    if( array.size() != 0 )
-                    {
-                        teacherName = getTeacherName(array.get(0));
-                    }
-                }
-                if( teacherName != null )
-                {
-                    name = teacherName + " - " + getString(jsonObject, NAME);
-                } else {
-                    name = getString(jsonObject, NAME);
-                }
-            } else return null;
+            name = JsonTransformHelper.getCatedra(jsonObject);
+            if( name == null ) return null;
 
             if( isInt(jsonObject, VACANCIES) )
             {
@@ -79,7 +63,7 @@ public class JsonCourseTransformer extends JsonTransformer<Course>
                 sede = getSede(jsonObject.get(LESSON_SCHEDULES));
             } else return null;
 
-            boolean isSubscribed = false;
+            boolean isSubscribed = false, enabledToEnroll = false;
             if( jsonObject.has(INSCRIBED) && jsonObject.get(INSCRIBED).isJsonPrimitive() )
             {
                 JsonPrimitive primitive = jsonObject.getAsJsonPrimitive(INSCRIBED);
@@ -88,7 +72,12 @@ public class JsonCourseTransformer extends JsonTransformer<Course>
                     isSubscribed = primitive.getAsBoolean();
                 }
             }
-            return new Course(id, name, sede, times, vacancies, isSubscribed);
+
+            if( JsonUtils.isBool(jsonObject, JsonKeys.ENABLED_TO_ENROL) )
+            {
+                enabledToEnroll = JsonUtils.getBool(jsonObject, JsonKeys.ENABLED_TO_ENROL);
+            }
+            return new Course(id, name, sede, times, vacancies, isSubscribed, enabledToEnroll);
         }
         return null;
     }

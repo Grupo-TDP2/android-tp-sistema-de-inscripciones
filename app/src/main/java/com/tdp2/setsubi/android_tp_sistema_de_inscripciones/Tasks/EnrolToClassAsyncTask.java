@@ -10,7 +10,7 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResp
 
 public class EnrolToClassAsyncTask extends ServiceAsyncTask<Object, Void, EnrolmentResponse>
 {
-    public EnrolToClassAsyncTask(ForeGroundListener<EnrolmentResponse> listener) {
+    public EnrolToClassAsyncTask(ForeGroundListener listener) {
         super(listener);
     }
 

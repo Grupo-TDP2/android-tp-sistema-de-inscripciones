@@ -10,7 +10,7 @@ import java.util.List;
 
 public class GetDepartmentsAsyncTask extends ServiceAsyncTask<Object,Void,List<Subject>>
 {
-    public GetDepartmentsAsyncTask(ForeGroundListener<List<Subject>> listener) {
+    public GetDepartmentsAsyncTask(ForeGroundListener listener) {
         super(listener);
     }
 

@@ -9,7 +9,7 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTa
 import java.util.ArrayList;
 import java.util.List;
 
-public class CareersActivityPresenter implements ServiceAsyncTask.ForeGroundListener<List<Career>>
+public class CareersActivityPresenter implements ServiceAsyncTask.ForeGroundListener
 {
     private View view;
     private List<Career> careers = new ArrayList<>();

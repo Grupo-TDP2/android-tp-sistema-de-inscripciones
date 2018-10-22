@@ -14,8 +14,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-public class SubjectsPresenter implements SubjectsActivity.ClassesActivityPresenter, ServiceAsyncTask.ForeGroundListener<List<Subject>> {
-
+public class SubjectsPresenter implements SubjectsActivity.ClassesActivityPresenter, ServiceAsyncTask.ForeGroundListener
+{
     private List<Subject> classes = new ArrayList<>();
     private ArrayList<String> viewClases = new ArrayList<>();
     private SubjectsActivity view;
@@ -43,7 +43,15 @@ public class SubjectsPresenter implements SubjectsActivity.ClassesActivityPresen
     public void onClicked(int position)
     {
         AppModel.getInstance().setSelecteClass(classes.get(position));
-        view.goToCursos();
+        switch (AppModel.getInstance().getRoute())
+        {
+            case FINALS:
+                view.goToFinals();
+                break;
+            default:
+                view.goToCursos();
+                break;
+        }
     }
 
     @Override
@@ -89,6 +97,10 @@ public class SubjectsPresenter implements SubjectsActivity.ClassesActivityPresen
         classes = (List<Subject>)data;
         transformClasses();
         view.updatedList();
+        if( classes.size() == 0 )
+        {
+            view.showNoAvailableSubjects();
+        }
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters;
 
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,13 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CursoTimeBand;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Sede;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.ShapeBackgroundColorChanger;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHolder>
 {
@@ -38,6 +38,11 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
         this.listener = listener;
     }
 
+    public void setCanSubscribe(boolean value)
+    {
+        this.canSubscribe = value;
+    }
+
     @NonNull
     @Override
     public CursoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
@@ -53,8 +58,8 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
         holder.setCupo(course.getCupos());
         holder.setTimes(course.getCursoTimeBands());
         holder.setSede(course.getSede());
-        holder.enableSubscription(canSubscribe);
-        holder.setButtonEnabled(!course.isSubscribed());
+        holder.enableSubscription((canSubscribe && course.isEnabledToEnroll()) || course.isSubscribed());
+        holder.setNotSubscribed(!course.isSubscribed());
         holder.setSubscribeListener(listener, course.getId());
     }
 
@@ -111,22 +116,22 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
             noTimesText.setVisibility(noTimesVisibility);
         }
 
-        public void enableSubscription(boolean canSubscribe) {
-            if( canSubscribe )
-            {
-                subscribe.setVisibility(canSubscribe ? View.VISIBLE : View.INVISIBLE);
-            }
+        public void enableSubscription(boolean canSubscribe)
+        {
+            subscribe.setVisibility(canSubscribe ? View.VISIBLE : View.INVISIBLE);
         }
 
-        public void setButtonEnabled(boolean enabled)
+        public void setNotSubscribed(boolean enabled)
         {
+            int color = R.color.disbaledBackground;
+            int text = R.string.inscripto;
             if( enabled )
             {
-                subscribe.setBackgroundColor(ContextCompat.getColor(subscribe.getContext(), R.color.actionButtonColor));
-            } else
-            {
-                subscribe.setBackgroundColor(ContextCompat.getColor(subscribe.getContext(), R.color.disbaledBackground));
+                color = R.color.actionButtonColor;
+                text = R.string.inscribirse_btn_text;
             }
+            ShapeBackgroundColorChanger.changeColor(subscribe, color);
+            subscribe.setText(text);
         }
 
         public void setSubscribeListener(final SubscribeListener subscribeListener,final int id)

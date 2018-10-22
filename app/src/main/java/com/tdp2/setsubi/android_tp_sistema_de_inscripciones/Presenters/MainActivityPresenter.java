@@ -1,52 +1,42 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters;
 
-import android.widget.Toast;
+import android.content.Context;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Student;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.LoginAsyncTask;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
 
-public class MainActivityPresenter implements ServiceAsyncTask.ForeGroundListener<Student>
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Persistance.UserCredentials;
+
+
+public class MainActivityPresenter
 {
     private View view;
+    private UserCredentials credentials;
 
     public MainActivityPresenter(View view) {
         this.view = view;
+        credentials = new UserCredentials(view.getContext()) ;
     }
 
-    public void navigateTo(String path) {
+    public void navigateTo(String path)
+    {
+        switch (path) {
+            case "academicOffer": case "newCourse":
+                AppModel.getInstance().setRoute(AppModel.SubjectRoute.COURSES);
+                break;
+            case "finals":
+                AppModel.getInstance().setRoute(AppModel.SubjectRoute.FINALS);
+                break;
+        }
         view.navigateToActivity(path);
     }
 
-    public void doLogin()
-    {
-        new LoginAsyncTask(this).execute("leandro.masello@example.com","12345678");
+    public void logout() {
+        credentials.saveUserCredentials(null, null);
     }
 
-    public interface View {
-
+    public interface View
+    {
         void navigateToActivity(String path);
-        void showToast(int stringId);
+        Context getContext();
     }
-
-    @Override
-    public void onError(ServiceAsyncTask serviceAsyncTask, ServiceResponse.ServiceStatusCode error)
-    {
-        view.showToast(R.string.failed_login);
-    }
-
-    @Override
-    public void onSuccess(ServiceAsyncTask serviceAsyncTask, Object data)
-    {
-        AppModel.getInstance().setStudent((Student) data);
-    }
-
-    @Override
-    public void onStartingAsyncTask(ServiceAsyncTask serviceAsyncTask) {
-
-    }
-
 }

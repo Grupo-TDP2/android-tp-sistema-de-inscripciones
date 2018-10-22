@@ -1,19 +1,18 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Student;
+
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.MainActivityPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.SoonToast;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.ToolBarHelper;
 
@@ -39,33 +38,58 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         Button newCourseButton = this.findViewById(R.id.newCourseButton);
         newCourseButton.setOnClickListener(new NewCourseClickHandler());
 
-        findViewById(R.id.newFinalExamButton).setOnClickListener(new SoonClickHandler());
+        findViewById(R.id.newFinalExamButton).setOnClickListener(new FinalsExamsHandler());
         findViewById(R.id.myCoursesButton).setOnClickListener(new SoonClickHandler());
-        findViewById(R.id.myExamsButton).setOnClickListener(new SoonClickHandler());
+        findViewById(R.id.myExamsButton).setOnClickListener(new MyExamsHandler());
         findViewById(R.id.priorityButton).setOnClickListener(new SoonClickHandler());
         findViewById(R.id.myDataButton).setOnClickListener(new SoonClickHandler());
-        presenter.doLogin();
     }
 
     @Override
     public void navigateToActivity(String path) {
-        Intent navigationIntent;
+        Intent navigationIntent = null;
 
         switch (path) {
-            case "academicOffer":
+            case "academicOffer": case "newCourse": case "finals":
                 navigationIntent = new Intent(MainActivity.this, CareersActivity.class);
-                startActivity(navigationIntent);
                 break;
-            case "newCourse":
-                navigationIntent = new Intent(MainActivity.this, CareersActivity.class);
-                startActivity(navigationIntent);
+            case "myFinals":
+                navigationIntent = new Intent(MainActivity.this, MyFinalsActivity.class);
                 break;
+        }
+        if( navigationIntent != null )
+        {
+            startActivity(navigationIntent);
         }
     }
 
     @Override
-    public void showToast(int stringId) {
-        Toast.makeText(this, stringId, Toast.LENGTH_SHORT).show();
+    public Context getContext() {
+        return this.getApplicationContext();
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.log_out_title)
+                .setMessage(R.string.log_out_message)
+                .setPositiveButton(R.string.log_out_button, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        presenter.logout();
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.log_out_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     protected class AcademicOfferClickHandler implements View.OnClickListener {
@@ -92,5 +116,19 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
     public boolean onSupportNavigateUp() {
         SoonToast.show(this);
         return true;
+    }
+
+    private class MyExamsHandler implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            presenter.navigateTo("myFinals");
+        }
+    }
+
+    private class FinalsExamsHandler implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            presenter.navigateTo("finals");
+        }
     }
 }

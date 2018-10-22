@@ -50,7 +50,8 @@ public class ServiceCoursesAPI implements ServiceCourses
     @Override
     public ServiceResponse<List<Career>> getCareers(Student student)
     {
-        return new RequestPerformer<>(getCareersPath().toString(), getBuilder,
+        return new RequestPerformer<>(getCareersPath().toString(), new RequestBuilder(RequestMethod.GET)
+                .addRequestProperty(RequestProperty.AUTHORIZATION.getKey(), student.getAuthorization()),
                 new JsonArrayTransformer<>(new JsonCareerTransformer())).perform();
     }
 
@@ -58,7 +59,8 @@ public class ServiceCoursesAPI implements ServiceCourses
     public ServiceResponse<List<Subject>> getSubjects(Student student, Career career)
     {
         String path = getSubjetsPath(career.getId()).build().toString();
-        return new RequestPerformer<>(path, getBuilder,
+        return new RequestPerformer<>(path, new RequestBuilder(RequestMethod.GET)
+                .addRequestProperty(RequestProperty.AUTHORIZATION.getKey(), student.getAuthorization()),
                 new JsonArrayTransformer<>(new JsonSubjectTransformer()))
                 .perform();
     }
