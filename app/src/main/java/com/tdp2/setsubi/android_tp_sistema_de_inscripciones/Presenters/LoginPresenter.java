@@ -71,26 +71,33 @@ public class LoginPresenter implements LoginActivity.Presenter, ServiceAsyncTask
     @Override
     public void onError(ServiceAsyncTask serviceAsyncTask, ServiceResponse.ServiceStatusCode error)
     {
-        doingLogin = false;
-        activity.stopLoading();
-        int message = error ==  ServiceResponse.ServiceStatusCode.NO_CONNECTION ?
-                R.string.connectivityFailed : R.string.failed_login;
-        activity.showFailedLogin(message);
+        if( serviceAsyncTask instanceof LoginAsyncTask )
+        {
+            doingLogin = false;
+            activity.stopLoading();
+            int message = error ==  ServiceResponse.ServiceStatusCode.NO_CONNECTION ?
+                    R.string.connectivityFailed : R.string.failed_login;
+            activity.showFailedLogin(message);
+        }
     }
 
     @Override
     public void onSuccess(ServiceAsyncTask serviceAsyncTask, Object data)
     {
-        doingLogin = false;
-        credentials.saveUserCredentials(mailUsed, passwordUsed);
-        activity.stopLoading();
-        AppModel.getInstance().setStudent((Student)data);
-        activity.goToMainScreen();
+        if( serviceAsyncTask instanceof LoginAsyncTask )
+        {
+            doingLogin = false;
+            credentials.saveUserCredentials(mailUsed, passwordUsed);
+            activity.stopLoading();
+            AppModel.getInstance().setStudent((Student)data);
+            activity.goToMainScreen();
+        }
     }
 
     @Override
     public void onStartingAsyncTask(ServiceAsyncTask serviceAsyncTask)
     {
-        activity.startLoading();
+
+        if( serviceAsyncTask instanceof LoginAsyncTask )activity.startLoading();
     }
 }

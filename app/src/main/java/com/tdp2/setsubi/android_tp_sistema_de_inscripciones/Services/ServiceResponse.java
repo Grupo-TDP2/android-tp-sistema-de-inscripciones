@@ -3,7 +3,7 @@ package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services;
 public class ServiceResponse<T>
 {
     public enum ServiceStatusCode {
-        SUCCESS, UNAUTHORIZED, ERROR, CONFLICT, SERIALIZATION_ERROR, NO_CONNECTION
+        SUCCESS, UNAUTHORIZED, ERROR, CONFLICT, SERIALIZATION_ERROR, PARAMETER_ERROR, NO_CONNECTION
     }
 
     private ServiceStatusCode statusCode;
