@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Student;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Persistance.UserCredentials;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.LoginAsyncTask;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.SendFirebaseTokenTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
 
 public class SplashActivity extends AppCompatActivity implements ServiceAsyncTask.ForeGroundListener
@@ -21,6 +23,7 @@ public class SplashActivity extends AppCompatActivity implements ServiceAsyncTas
     {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstance);
+        FirebaseApp.initializeApp(this);
         setContentView(R.layout.splash_layout);
         credentials = new UserCredentials(this);
         String mail = credentials.getUserMail();
@@ -37,18 +40,30 @@ public class SplashActivity extends AppCompatActivity implements ServiceAsyncTas
     @Override
     public void onError(ServiceAsyncTask serviceAsyncTask, ServiceResponse.ServiceStatusCode error)
     {
-        int message = error ==  ServiceResponse.ServiceStatusCode.NO_CONNECTION ?
-                R.string.connectivityFailed : R.string.failed_login;
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        goToLoginActivity(credentials.getUserMail(), credentials.getUserPassword());
+        if( serviceAsyncTask instanceof LoginAsyncTask )
+        {
+            int message = error ==  ServiceResponse.ServiceStatusCode.NO_CONNECTION ?
+                    R.string.connectivityFailed : R.string.failed_login;
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            goToLoginActivity(credentials.getUserMail(), credentials.getUserPassword());
+        } else
+        {
+            goToMainActivity();
+        }
     }
 
     @Override
     public void onSuccess(ServiceAsyncTask serviceAsyncTask, Object data)
     {
-        Student student = (Student) data;
-        AppModel.getInstance().setStudent(student);
-        goToMainActivity();
+        if( serviceAsyncTask instanceof LoginAsyncTask )
+        {
+            Student student = (Student) data;
+            AppModel.getInstance().setStudent(student);
+            new SendFirebaseTokenTask(this).execute(student);
+        } else
+        {
+            goToMainActivity();
+        }
     }
 
     @Override
