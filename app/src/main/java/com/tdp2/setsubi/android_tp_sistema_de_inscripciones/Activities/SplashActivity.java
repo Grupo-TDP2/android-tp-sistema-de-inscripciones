@@ -46,6 +46,9 @@ public class SplashActivity extends AppCompatActivity implements ServiceAsyncTas
                     R.string.connectivityFailed : R.string.failed_login;
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
             goToLoginActivity(credentials.getUserMail(), credentials.getUserPassword());
+        } else
+        {
+            goToMainActivity();
         }
     }
 
@@ -57,6 +60,8 @@ public class SplashActivity extends AppCompatActivity implements ServiceAsyncTas
             Student student = (Student) data;
             AppModel.getInstance().setStudent(student);
             new SendFirebaseTokenTask(this).execute(student);
+        } else
+        {
             goToMainActivity();
         }
     }

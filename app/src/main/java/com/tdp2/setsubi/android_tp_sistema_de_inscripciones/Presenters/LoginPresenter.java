@@ -9,6 +9,7 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Persistance.UserCred
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.LoginAsyncTask;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.SendFirebaseTokenTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.TextValidator;
 
@@ -78,6 +79,8 @@ public class LoginPresenter implements LoginActivity.Presenter, ServiceAsyncTask
             int message = error ==  ServiceResponse.ServiceStatusCode.NO_CONNECTION ?
                     R.string.connectivityFailed : R.string.failed_login;
             activity.showFailedLogin(message);
+        } else {
+            activity.goToMainScreen();
         }
     }
 
@@ -90,6 +93,9 @@ public class LoginPresenter implements LoginActivity.Presenter, ServiceAsyncTask
             credentials.saveUserCredentials(mailUsed, passwordUsed);
             activity.stopLoading();
             AppModel.getInstance().setStudent((Student)data);
+            new SendFirebaseTokenTask(this).execute(data);
+        } else
+        {
             activity.goToMainScreen();
         }
     }
