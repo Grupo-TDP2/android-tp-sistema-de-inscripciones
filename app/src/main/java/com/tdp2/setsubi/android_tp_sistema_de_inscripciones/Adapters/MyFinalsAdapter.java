@@ -70,7 +70,6 @@ public class MyFinalsAdapter extends RecyclerView.Adapter<MyFinalsAdapter.ViewHo
         {
             super(itemView);
             unsubsribe = itemView.findViewById(R.id.button_unsubscribe);
-            ShapeBackgroundColorChanger.changeColor(unsubsribe, R.color.actionButtonDelete);
             catedra = itemView.findViewById(R.id.catedra_value);
             subject = itemView.findViewById(R.id.subject_value);
             date = itemView.findViewById(R.id.date_value);

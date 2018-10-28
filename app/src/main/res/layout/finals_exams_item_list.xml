@@ -40,7 +40,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/button_round_green"
+        android:background="@drawable/button_round_blue"
         android:text="@string/inscribirse_btn_text"
         android:textColor="@color/textPrimary"
         android:visibility="visible"

@@ -13,7 +13,8 @@ public class Course
     private boolean enabledToEnroll;
     private int cupos;
 
-    public Course(int id, String catedra, Sede sede, List<CursoTimeBand> schedules, int cupo, boolean isSubscribed, boolean enabledToEnroll)
+    public Course(int id, String catedra, Sede sede, List<CursoTimeBand> schedules,
+                  int cupo, boolean isSubscribed, boolean enabledToEnroll)
     {
         this.id = id;
         this.catedra = catedra;
