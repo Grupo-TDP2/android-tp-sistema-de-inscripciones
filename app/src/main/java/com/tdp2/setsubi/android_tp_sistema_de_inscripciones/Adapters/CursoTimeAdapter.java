@@ -14,15 +14,18 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.DayOfWeek;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.StringTransform;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-public class CursoTimeAdapter extends RecyclerView.Adapter<CursoTimeAdapter.ViewHolder> {
+public class CursoTimeAdapter extends RecyclerView.Adapter<CursoTimeAdapter.ViewHolder> implements Comparator<CursoTimeBand> {
 
     private List<CursoTimeBand> cursosSchedules;
 
     public CursoTimeAdapter(List<CursoTimeBand> cursosSchedules)
     {
         this.cursosSchedules = cursosSchedules;
+        Collections.sort(cursosSchedules, this);
     }
 
     @NonNull
@@ -45,6 +48,20 @@ public class CursoTimeAdapter extends RecyclerView.Adapter<CursoTimeAdapter.View
     @Override
     public int getItemCount() {
         return cursosSchedules.size();
+    }
+
+    @Override
+    public int compare(CursoTimeBand o1, CursoTimeBand o2)
+    {
+        int comparison = o1.getDayOfWeek().getValue() - o2.getDayOfWeek().getValue();
+        if( comparison == 0 )
+        {
+            return o1.getStarTime().getHours() - o2.getStarTime().getHours();
+        } if( comparison < 0 )
+        {
+            return -1;
+        }
+        return 1;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder

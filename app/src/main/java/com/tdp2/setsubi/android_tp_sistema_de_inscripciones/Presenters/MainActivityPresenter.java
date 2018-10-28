@@ -24,7 +24,7 @@ public class MainActivityPresenter
                 AppModel.getInstance().setRoute(AppModel.SubjectRoute.COURSES);
                 break;
             case "finals":
-                AppModel.getInstance().setRoute(AppModel.SubjectRoute.FINALS);
+                AppModel.getInstance().setRoute(AppModel.SubjectRoute.FREE_FINALS);
                 break;
         }
         view.navigateToActivity(path);

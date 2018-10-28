@@ -1,6 +1,7 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Career;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Department;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Student;
@@ -18,9 +19,11 @@ public class AppModel
     private Department selectedDepartment = null;
     private Subject selecteClass;
     private SubjectRoute route = SubjectRoute.COURSES;
+    private Course selectedCourse = null;
+
     public enum SubjectRoute
     {
-        COURSES, FINALS
+        COURSES, FINALS_OF_COURSE, FREE_FINALS
     }
 
     public static AppModel getInstance()
@@ -122,5 +125,9 @@ public class AppModel
 
     public void setRoute(SubjectRoute route) {
         this.route = route;
+    }
+
+    public void setSelectedCourse(Course selectedCourse) {
+        this.selectedCourse = selectedCourse;
     }
 }

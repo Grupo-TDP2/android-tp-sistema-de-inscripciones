@@ -56,5 +56,8 @@
     <string name="no_hay_finales">No se encontraron finales</string>
     <string name="error_when_subscribing">No se pudo realizar la inscripción</string>
     <string name="subscribed_final_success">Se realizó la subscripción correctamente</string>
+    <string name="see_finals">Ver Finales</string>
+    <string name="my_courses">Mis Cursos</string>
+    <string name="error_while_loading_my_courses">Los cursos no se puedieron cargar</string>
 
 </resources>

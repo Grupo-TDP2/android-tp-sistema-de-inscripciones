@@ -113,10 +113,10 @@ public class FinalsAdapter extends RecyclerView.Adapter<FinalsAdapter.ViewHolder
             {
                 this.subsrcibe.setVisibility(View.VISIBLE);
                 if( subscribed ) {
-                    ShapeBackgroundColorChanger.changeColor(subsrcibe, R.color.actionButtonDelete);
+                    ShapeBackgroundColorChanger.changeBackground(subsrcibe, R.drawable.button_round_red);
                     this.subsrcibe.setText(R.string.unsubscribe);
                 } else {
-                    ShapeBackgroundColorChanger.changeColor(subsrcibe, R.color.actionButtonColor);
+                    ShapeBackgroundColorChanger.changeBackground(subsrcibe, R.drawable.button_round_blue);
                     this.subsrcibe.setText(R.string.inscribirse_btn_text);
                 }
             }

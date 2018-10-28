@@ -123,14 +123,14 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
 
         public void setNotSubscribed(boolean enabled)
         {
-            int color = R.color.disbaledBackground;
+            int background = R.drawable.button_round_grey;
             int text = R.string.inscripto;
             if( enabled )
             {
-                color = R.color.actionButtonColor;
+                background = R.drawable.button_round_blue;
                 text = R.string.inscribirse_btn_text;
             }
-            ShapeBackgroundColorChanger.changeColor(subscribe, color);
+            ShapeBackgroundColorChanger.changeBackground(subscribe, background);
             subscribe.setText(text);
         }
 

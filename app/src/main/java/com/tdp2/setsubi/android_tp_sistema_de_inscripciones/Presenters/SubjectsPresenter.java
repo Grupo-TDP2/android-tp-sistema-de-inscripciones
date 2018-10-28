@@ -45,7 +45,7 @@ public class SubjectsPresenter implements SubjectsActivity.ClassesActivityPresen
         AppModel.getInstance().setSelecteClass(classes.get(position));
         switch (AppModel.getInstance().getRoute())
         {
-            case FINALS:
+            case FREE_FINALS:
                 view.goToFinals();
                 break;
             default:
