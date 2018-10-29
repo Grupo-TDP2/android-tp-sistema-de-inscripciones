@@ -3,14 +3,19 @@ package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.ApprovedSubject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.MainActivityPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.SoonToast;
@@ -20,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
 {
 
     private MainActivityPresenter presenter;
-
+    private DrawerLayout drawerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         ToolBarHelper.onCreate(this);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
         ToolBarHelper.setTitle(this, R.string.fiuba_inscripciones);
-
+        initNavMenu();
         presenter = new MainActivityPresenter(this);
 
         Button academicOfferButton = this.findViewById(R.id.academicOfferButton);
@@ -43,6 +48,33 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         findViewById(R.id.myExamsButton).setOnClickListener(new MyExamsHandler());
         findViewById(R.id.priorityButton).setOnClickListener(new SoonClickHandler());
         findViewById(R.id.myDataButton).setOnClickListener(new SoonClickHandler());
+    }
+    private void initNavMenu()
+    {
+        drawerLayout = findViewById(R.id.drawer_layout);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem)
+                    {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        // close drawer when item is tapped
+                        switch (menuItem.getItemId())
+                        {
+                            case R.id.nav_approved_subjects:
+                                startActivity(new Intent(MainActivity.this, ApprovedSubjectActivity.class));
+                        }
+                        drawerLayout.closeDrawers();
+
+                        // Add code here to update the UI based on the item selected
+                        // For example, swap UI fragments here
+
+                        return true;
+                    }
+                });
     }
 
     @Override
@@ -125,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
 
     @Override
     public boolean onSupportNavigateUp() {
-        SoonToast.show(this);
+        drawerLayout.openDrawer(GravityCompat.START, true);
         return true;
     }
 

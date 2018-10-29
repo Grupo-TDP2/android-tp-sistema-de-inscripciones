@@ -12,6 +12,8 @@ public class Final
     private boolean isSubscribed;
     private boolean supportsLibre;
     private boolean approvedCourseOfFinal;
+    private boolean finalGiven = false;
+    private Integer finalCalification = null;
     private String catedraName;
     private Date finalDate;
     private Sede sede;
@@ -35,6 +37,27 @@ public class Final
         this.subject = subject;
         this.supportsLibre = supportsLibre;
         this.approvedCourseOfFinal = approvedCourseOfFinal;
+    }
+
+    public void setFinalGiven(boolean given, Integer finalCalification)
+    {
+        this.finalGiven = given;
+        this.finalCalification = finalCalification;
+    }
+
+    public boolean isFinalGiven()
+    {
+        return finalGiven;
+    }
+
+    public boolean passedFinal()
+    {
+        return isFinalGiven() && finalCalification != null;
+    }
+
+    public Integer getFinalCalification()
+    {
+        return finalCalification;
     }
 
     public boolean isCanSubscribe()
