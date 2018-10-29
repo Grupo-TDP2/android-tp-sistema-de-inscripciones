@@ -59,5 +59,12 @@
     <string name="see_finals">Ver Finales</string>
     <string name="my_courses">Mis Cursos</string>
     <string name="error_while_loading_my_courses">Los cursos no se puedieron cargar</string>
+    <string name="nota_label">Nota:</string>
+    <string name="disapproved">Desaprobado</string>
+    <string name="approved">Aprobado(%d)</string>
+    <string name="approved_subjects">Materias Aprobadas</string>
+    <string name="error_approved_subjects">No se pudieron obtener las materia aprobadas por un error</string>
+    <string name="menu">Menú</string>
+    <string name="no_approved_subjects">No hay materia aprobadas</string>
 
 </resources>
