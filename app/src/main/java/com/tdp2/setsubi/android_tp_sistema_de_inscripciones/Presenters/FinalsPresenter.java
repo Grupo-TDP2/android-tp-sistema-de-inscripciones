@@ -1,6 +1,5 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters;
 
-import android.os.Debug;
 import android.util.Log;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.FinalsActivity;
@@ -11,21 +10,20 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.GetFinalsForsSubjectAsyncTask;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.GetFinalsOfCourseAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.SubscribeToFinalAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.UnsubscribeFromFinalAsyncTask;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 
-public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTask.ForeGroundListener {
+public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTask.ForeGroundListener
+{
     private FinalsActivity activity;
     private List<Final> finals = new ArrayList<>();
     private int interactingPosition = -1;
@@ -36,10 +34,19 @@ public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTa
     }
 
     @Override
-    public void loadFinals() {
+    public void loadFinals()
+    {
         AppModel model = AppModel.getInstance();
-        new GetFinalsForsSubjectAsyncTask(this)
-                .execute(model.getStudent(), model.getSelectedCareer(), model.getSelecteSubject());
+        if( model.getRoute() == AppModel.SubjectRoute.FINALS_OF_COURSE )
+        {
+            new GetFinalsOfCourseAsyncTask(this)
+                    .execute(model.getStudent(), model.getSelectedCareer(),
+                            model.getSelectedSubject(), model.getSelectedCourse());
+        } else
+        {
+            new GetFinalsForsSubjectAsyncTask(this)
+                    .execute(model.getStudent(), model.getSelectedCareer(), model.getSelectedSubject());
+        }
     }
 
     @Override
@@ -49,7 +56,7 @@ public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTa
 
     @Override
     public String getSubjectName() {
-        Subject subject = AppModel.getInstance().getSelecteSubject();
+        Subject subject = AppModel.getInstance().getSelectedSubject();
         return String.format(Locale.getDefault(), "%02d.%02d %s", subject.getDepartmentCode(), subject.getCode(), subject.getName());
     }
 
@@ -76,7 +83,8 @@ public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTa
         if( error == ServiceResponse.ServiceStatusCode.NO_CONNECTION )
         {
             activity.showToast(R.string.connectivityFailed);
-        } else if( serviceAsyncTask instanceof GetFinalsForsSubjectAsyncTask )
+        } else if( serviceAsyncTask instanceof GetFinalsForsSubjectAsyncTask
+                || serviceAsyncTask instanceof GetFinalsOfCourseAsyncTask )
         {
             activity.showToast(R.string.error_while_loading_finals);
         } else if( serviceAsyncTask instanceof UnsubscribeFromFinalAsyncTask )
@@ -93,7 +101,8 @@ public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTa
     @Override
     public void onSuccess(ServiceAsyncTask serviceAsyncTask, Object data) {
         activity.stopLoading();
-        if( serviceAsyncTask instanceof GetFinalsForsSubjectAsyncTask )
+        if( serviceAsyncTask instanceof GetFinalsForsSubjectAsyncTask
+                || serviceAsyncTask instanceof GetFinalsOfCourseAsyncTask )
         {
             finals.clear();
             finals.addAll(filterPossible((List<Final>)data));
@@ -128,10 +137,9 @@ public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTa
         while (iterator.hasNext())
         {
             Final next = iterator.next();
-            if( (!next.isSupportsLibre() && !next.isApprovedCourseOfFinal())
-                    || next.hasAlreadyPassedDate())
+            if( !next.isSupportsLibre() || next.hasAlreadyPassedDate())
             {
-                Log.d("FINAL","Filtered a final because it can't be enroled by student");
+                Log.d("FINAL","Filtered a final because it can't be enroled or its not free");
                 iterator.remove();
             }
         }

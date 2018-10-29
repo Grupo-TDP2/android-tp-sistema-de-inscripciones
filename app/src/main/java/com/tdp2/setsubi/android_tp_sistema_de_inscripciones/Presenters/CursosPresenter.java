@@ -12,7 +12,6 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.GetCoursesAsyn
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -44,7 +43,7 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
 
     @Override
     public String getCourseName() {
-        Subject subject = AppModel.getInstance().getSelecteSubject();
+        Subject subject = AppModel.getInstance().getSelectedSubject();
         return String.format(Locale.getDefault(), "%02d.%02d %s", subject.getDepartmentCode(), subject.getCode(), subject.getName());
     }
 
@@ -52,7 +51,7 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
     public void loadData()
     {
         AppModel appModel = AppModel.getInstance();
-        new GetCoursesAsyncTask(this).execute(appModel.getStudent(), appModel.getSelectedCareer(), appModel.getSelecteSubject());
+        new GetCoursesAsyncTask(this).execute(appModel.getStudent(), appModel.getSelectedCareer(), appModel.getSelectedSubject());
     }
 
     @Override
@@ -70,7 +69,7 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
             {
                 isSubscribing = true;
                 AppModel model = AppModel.getInstance();
-                new EnrolToClassAsyncTask(this).execute(model.getStudent(), model.getSelectedCareer(), model.getSelecteSubject(), course);
+                new EnrolToClassAsyncTask(this).execute(model.getStudent(), model.getSelectedCareer(), model.getSelectedSubject(), course);
             } else if ( isSubscribing)
             {
                 activity.showStillSubscribing();

@@ -21,6 +21,10 @@ public class AppModel
     private SubjectRoute route = SubjectRoute.COURSES;
     private Course selectedCourse = null;
 
+    public Course getSelectedCourse() {
+        return selectedCourse;
+    }
+
     public enum SubjectRoute
     {
         COURSES, FINALS_OF_COURSE, FREE_FINALS
@@ -84,11 +88,11 @@ public class AppModel
         return selectedDepartment;
     }
 
-    public void setSelecteClass(Subject selecteClass) {
+    public void setSelectedSubject(Subject selecteClass) {
         this.selecteClass = selecteClass;
     }
 
-    public Subject getSelecteSubject()
+    public Subject getSelectedSubject()
     {
         return selecteClass;
     }
