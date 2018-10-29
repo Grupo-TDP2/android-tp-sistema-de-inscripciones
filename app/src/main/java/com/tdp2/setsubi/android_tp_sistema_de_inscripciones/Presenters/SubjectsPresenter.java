@@ -42,7 +42,7 @@ public class SubjectsPresenter implements SubjectsActivity.ClassesActivityPresen
     @Override
     public void onClicked(int position)
     {
-        AppModel.getInstance().setSelecteClass(classes.get(position));
+        AppModel.getInstance().setSelectedSubject(classes.get(position));
         switch (AppModel.getInstance().getRoute())
         {
             case FREE_FINALS:

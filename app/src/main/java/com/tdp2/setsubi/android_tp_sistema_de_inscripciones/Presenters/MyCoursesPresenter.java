@@ -116,6 +116,7 @@ public class MyCoursesPresenter implements ServiceAsyncTask.ForeGroundListener, 
     public void onSeeFinals(int position)
     {
         AppModel.getInstance().selectedCareer(coursesList.get(position).getCareer());
+        AppModel.getInstance().setSelectedSubject(coursesList.get(position).getSubject());
         AppModel.getInstance().setSelectedCourse(coursesList.get(position).getCourse());
         AppModel.getInstance().setRoute(AppModel.SubjectRoute.FINALS_OF_COURSE);
         view.goToFinals();

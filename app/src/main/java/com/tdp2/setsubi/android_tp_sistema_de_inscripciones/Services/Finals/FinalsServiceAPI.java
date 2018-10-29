@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Career;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Final;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Student;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
@@ -49,6 +50,11 @@ public class FinalsServiceAPI implements FinalsServiceInterface
             }
         }
         return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.SUCCESS, finals);
+    }
+
+    @Override
+    public ServiceResponse<List<Final>> getFinalsForCourse(Student student, Career career, Subject subject, Course course) {
+        return getFinals(student.getAuthorization(), career.getId(), subject.getId(), course.getId());
     }
 
     private ServiceResponse<List<Final>> getFinals(String token, int career, int subject, int course)

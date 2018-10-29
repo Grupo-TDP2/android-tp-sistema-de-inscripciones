@@ -68,7 +68,7 @@ public class JsonFinalTransformer extends JsonTransformer<Final>
 
             if( catedra == null ) return null;
             Final fina = new Final(id, isSubscribed, supportsLibre, approvedCourse,
-                    AppModel.getInstance().getSelecteSubject(),
+                    AppModel.getInstance().getSelectedSubject(),
                     catedra,
                     finalDate, sede, aula);
             if( subscriptionId != -1 ) fina.setSubscriptionId(subscriptionId);

@@ -65,7 +65,7 @@
        android:fontFamily="@font/raleway"
        android:paddingBottom="25dp"
        android:paddingTop="25dp"
-       android:text="Inscribirse a Examen Final"
+       android:text="Inscribirse a Examen Libre"
        android:textSize="15dp"
        android:textStyle="bold"
        app:layout_constraintBottom_toTopOf="@+id/myCoursesButton"
