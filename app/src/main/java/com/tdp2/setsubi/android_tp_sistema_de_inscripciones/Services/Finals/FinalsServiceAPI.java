@@ -79,12 +79,12 @@ public class FinalsServiceAPI implements FinalsServiceInterface
     }
 
     @Override
-    public ServiceResponse<Integer> subscribe(Student student, Final fina)
+    public ServiceResponse<Integer> subscribe(Student student, Final fina, boolean regular)
     {
         JsonObject exam = new JsonObject();
         JsonObject container = new JsonObject();
         exam.addProperty("exam_id", fina.getId());
-        exam.addProperty("condition", getCondition(fina.isSupportsLibre()));
+        exam.addProperty("condition", getCondition(regular));
         container.add("student_exam", exam);
         return new RequestPerformer<>(getFinalInscriptionURI().build().toString(),
                 new RequestBuilder(RequestMethod.POST)
@@ -94,8 +94,8 @@ public class FinalsServiceAPI implements FinalsServiceInterface
                 new JsonSubscibeFinal()).perform();
     }
 
-    private String getCondition(boolean supportsLibre) {
-        if( supportsLibre )
+    private String getCondition(boolean regular) {
+        if( !regular )
         {
             return "free";
         }

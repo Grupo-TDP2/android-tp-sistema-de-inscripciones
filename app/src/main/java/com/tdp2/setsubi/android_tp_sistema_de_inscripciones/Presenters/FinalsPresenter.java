@@ -27,6 +27,7 @@ public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTa
     private FinalsActivity activity;
     private List<Final> finals = new ArrayList<>();
     private int interactingPosition = -1;
+    private boolean finalWasRegular = false;
 
     public FinalsPresenter(FinalsActivity activity)
     {
@@ -61,7 +62,7 @@ public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTa
     }
 
     @Override
-    public void clickedButton(int position)
+    public void clickedButton(int position, boolean regular)
     {
         if( interactingPosition != -1 ) return;
         interactingPosition = position;
@@ -72,7 +73,8 @@ public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTa
             new UnsubscribeFromFinalAsyncTask(this).execute(student, fina);
         } else
         {
-            new SubscribeToFinalAsyncTask(this).execute(student, fina);
+            finalWasRegular = regular;
+            new SubscribeToFinalAsyncTask(this).execute(student, fina, regular);
         }
     }
 
@@ -123,7 +125,7 @@ public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTa
             fina.setSubscribed(!fina.isSubscribed());
             if( serviceAsyncTask instanceof SubscribeToFinalAsyncTask )
             {
-                fina.setSubscriptionId((Integer)data);
+                fina.setSubscription((Integer)data, finalWasRegular); //TODO READ CONDITION
             }
             activity.notifyFinalChange(interactingPosition);
             activity.showToast(fina.isSubscribed() ? R.string.subscribed_final_success : R.string.unsubribed_final_success);
@@ -137,9 +139,9 @@ public class FinalsPresenter implements FinalsActivity.Presenter, ServiceAsyncTa
         while (iterator.hasNext())
         {
             Final next = iterator.next();
-            if( !next.isSupportsLibre() || next.hasAlreadyPassedDate())
+            if( next.hasAlreadyPassedDate() )
             {
-                Log.d("FINAL","Filtered a final because it can't be enroled or its not free");
+                Log.d("FINAL","Filtered a final because it can't be enroled");
                 iterator.remove();
             }
         }

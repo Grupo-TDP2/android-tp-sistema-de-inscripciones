@@ -9,6 +9,7 @@ public class Final
 {
     private int id;
     private int subscriptionId = -1;
+    private boolean freeSubscription = false;
     private boolean isSubscribed;
     private boolean supportsLibre;
     private boolean approvedCourseOfFinal;
@@ -126,8 +127,14 @@ public class Final
         return finalDate.compareTo(fina.finalDate);
     }
 
-    public void setSubscriptionId(Integer id) {
+    public void setSubscription(Integer id, boolean freeSubscription) {
         this.subscriptionId = id;
+        this.freeSubscription = freeSubscription;
+    }
+
+    public boolean isFreeSubscription()
+    {
+        return freeSubscription;
     }
 
     public int getSubscriptionId(){

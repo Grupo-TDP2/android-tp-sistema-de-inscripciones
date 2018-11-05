@@ -17,7 +17,7 @@ public class JsonFinalTransformer extends JsonTransformer<Final>
         if( object.isJsonObject() )
         {
             int id, aula, subscriptionId = -1;
-            boolean supportsLibre = false, isSubscribed, approvedCourse;
+            boolean supportsLibre = false, isSubscribed, approvedCourse, freeSubscription = false;
             Date finalDate;
             Sede sede;
             String catedra;
@@ -48,6 +48,10 @@ public class JsonFinalTransformer extends JsonTransformer<Final>
                 {
                     subscriptionId = JsonUtils.getInt(registration, JsonKeys.ID);
                 }
+                if( JsonUtils.isString(registration, JsonKeys.CONDITION) )
+                {
+                    freeSubscription = isFreeSubscription(JsonUtils.getString(registration, JsonKeys.CONDITION));
+                }
             }
             if( JsonUtils.isInt(finalObject, JsonKeys.ID) )
             {
@@ -71,10 +75,15 @@ public class JsonFinalTransformer extends JsonTransformer<Final>
                     AppModel.getInstance().getSelectedSubject(),
                     catedra,
                     finalDate, sede, aula);
-            if( subscriptionId != -1 ) fina.setSubscriptionId(subscriptionId);
+            if( subscriptionId != -1 ) fina.setSubscription(subscriptionId, freeSubscription);
             return fina;
         }
         return null;
+    }
+
+    private boolean isFreeSubscription(String string)
+    {
+        return string.toLowerCase().equals("free");
     }
 
     private String getCatedra(JsonObject course)

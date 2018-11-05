@@ -15,11 +15,12 @@ public class SubscribeToFinalAsyncTask extends ServiceAsyncTask<Object, Void, In
     @Override
     protected ServiceResponse<Integer> doRun(Object[] ts)
     {
-        if( ts.length == 2 && ts[0] instanceof Student &&
-                ts[1] instanceof Final )
+        if( ts.length == 3 && ts[0] instanceof Student &&
+                ts[1] instanceof Final
+                && ts[2] instanceof Boolean )
         {
             return new FinalsServiceAPI()
-                    .subscribe((Student) ts[0], (Final) ts[1]);
+                    .subscribe((Student) ts[0], (Final) ts[1], (boolean)ts[2]);
         }
         return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.CONFLICT);
     }
