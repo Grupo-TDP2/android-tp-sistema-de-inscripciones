@@ -7,8 +7,8 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.Cursos.ServiceCoursesAPI;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
 
-public class UnsubscribeToCourse extends ServiceAsyncTask<Object, Void, Boolean> {
-    public UnsubscribeToCourse(ForeGroundListener listener) {
+public class UnsubscribeToCourseAsyncTask extends ServiceAsyncTask<Object, Void, Boolean> {
+    public UnsubscribeToCourseAsyncTask(ForeGroundListener listener) {
         super(listener);
     }
 

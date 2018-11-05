@@ -29,7 +29,7 @@ public class ServiceCoursesAPI implements ServiceCourses
 {
     private Uri.Builder getCareersPath()
     {
-        return  APIUriBuilder.getURIBuiled().appendPath("course_of_studies"); //TODO
+        return  APIUriBuilder.getURIBuiled().appendPath("course_of_studies");
     }
 
     private Uri.Builder getSubjetsPath(int careerId)
