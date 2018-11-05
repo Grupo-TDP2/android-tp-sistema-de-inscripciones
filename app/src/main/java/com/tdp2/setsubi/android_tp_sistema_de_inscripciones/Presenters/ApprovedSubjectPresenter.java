@@ -1,6 +1,7 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.LoadingView;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.ApprovedSubject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Department;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.ApprovedSubject;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.ApprovedSubject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 
 import java.text.SimpleDateFormat;
