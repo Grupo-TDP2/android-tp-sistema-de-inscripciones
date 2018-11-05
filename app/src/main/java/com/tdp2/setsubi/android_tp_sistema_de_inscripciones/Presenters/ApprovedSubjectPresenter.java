@@ -1,10 +1,15 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters;
 
+import android.content.Context;
+
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.LoadingView;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.ApprovedSubject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Department;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.GetApprovedSubject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
 
 import java.util.ArrayList;
@@ -13,6 +18,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ApprovedSubjectPresenter implements ServiceAsyncTask.ForeGroundListener, Comparator<ApprovedSubject> {
 
@@ -21,31 +27,37 @@ public class ApprovedSubjectPresenter implements ServiceAsyncTask.ForeGroundList
         void dataSetChanged();
         void showNoSubjects();
         void showError(int resourceId);
+        void setSpinnerOptions(List<String> options);
+        Context getContext();
     }
 
     private View view;
     private List<ApprovedSubject> subjects;
+    private List<Department> departments;
+    private List<ApprovedSubject> filtered;
 
     public ApprovedSubjectPresenter(View view)
     {
         this.view = view;
         subjects = new ArrayList<>();
+        departments = new ArrayList<>();
+        filtered = new ArrayList<>();
     }
 
     public List<ApprovedSubject> getSubjects() {
-        return subjects;
+        return filtered;
     }
 
     public void loadSubjects()
     {
-        //TODO ASYNC TASK
-        List<ApprovedSubject> approvedSubjects = new ArrayList<>();
+        /*List<ApprovedSubject> approvedSubjects = new ArrayList<>();
         approvedSubjects.add(new ApprovedSubject(new Subject(1,12,"Organizacion de datos", 6,
                 new Department(1,"Infromatica",75)), new Date(), 5));
 
         approvedSubjects.add(new ApprovedSubject(new Subject(1,15,"Organizacion del Computador", 6,
                 new Department(1,"Infromatica",75)), new Date(), 8));
-        onSuccess(null, approvedSubjects);
+        onSuccess(null, approvedSubjects);*/
+        new GetApprovedSubject(this).execute(AppModel.getInstance().getStudent());
     }
 
     @Override
@@ -62,11 +74,74 @@ public class ApprovedSubjectPresenter implements ServiceAsyncTask.ForeGroundList
         subjects.clear();
         subjects.addAll((List<ApprovedSubject>)data);
         Collections.sort(subjects, this);
+        createDepartments(subjects);
+        filtered.addAll(subjects);
         view.dataSetChanged();
+        view.setSpinnerOptions(getDepartmentFilters());
         if( subjects.size() == 0 )
         {
             view.showNoSubjects();
         }
+    }
+
+    public List<String> getDepartmentFilters()
+    {
+        List<String> strings = new ArrayList<>();
+        strings.add(view.getContext().getString(R.string.all_departments));
+        for( Department department : departments )
+        {
+            strings.add(String.format(Locale.getDefault(),"%02d - %s", department.getCode(), department.getName()));
+        }
+        return strings;
+    }
+
+    public void onFilterSelected(int position)
+    {
+        filtered.clear();
+        if( position > 0 )
+        {
+            position -= 1;
+            Department selected = departments.get(position);
+            for( ApprovedSubject subject : subjects )
+            {
+                if( subject.getSubject().getDepartment().getId() == selected.getId() )
+                {
+                    filtered.add(subject);
+                }
+            }
+        } else
+        {
+            filtered.addAll(subjects);
+        }
+        view.dataSetChanged();
+    }
+
+    private void createDepartments(List<ApprovedSubject> subjects)
+    {
+        departments.clear();
+        for(ApprovedSubject subject : subjects )
+        {
+            Department approvedDepartment = subject.getSubject().getDepartment();
+            boolean add = true;
+            for( Department department : departments )
+            {
+                if( department.getId() == approvedDepartment.getId() )
+                {
+                    add = false;
+                    break;
+                }
+            }
+            if( add )
+            {
+                departments.add(approvedDepartment);
+            }
+        }
+        Collections.sort(departments, new Comparator<Department>() {
+            @Override
+            public int compare(Department o1, Department o2) {
+                return o1.getCode() - o2.getCode();
+            }
+        });
     }
 
     @Override
