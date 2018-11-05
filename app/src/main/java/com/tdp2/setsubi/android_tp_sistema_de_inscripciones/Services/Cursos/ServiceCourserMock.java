@@ -150,6 +150,11 @@ public class ServiceCourserMock implements ServiceCourses
     }
 
     @Override
+    public ServiceResponse<Boolean> unsubscribeTo(Student student, Career career, Subject subject, Course course) {
+        return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.SUCCESS, true);
+    }
+
+    @Override
     public ServiceResponse<List<MyCourse>> getCourses(Student student) {
         return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.ERROR);
     }

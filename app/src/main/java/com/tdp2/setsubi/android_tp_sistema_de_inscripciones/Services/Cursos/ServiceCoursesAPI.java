@@ -13,6 +13,7 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonCaree
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonCourseTransformer;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonEnrolmentTransformer;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonSubjectTransformer;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonSuccess;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.MyCourseTransformer;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.APIUriBuilder;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.Requests.ContentType;
@@ -87,6 +88,18 @@ public class ServiceCoursesAPI implements ServiceCourses
                     .addRequestProperty(RequestProperty.CONTENT_TYPE.getKey(), ContentType.JSON.getValue()),
                      new JsonEnrolmentTransformer())
                 .perform();
+    }
+
+    @Override
+    public ServiceResponse<Boolean> unsubscribeTo(Student student, Career career, Subject subject, Course course)
+    {
+        String path = getEnrolmetsPath(career.getId(), subject.getId(), course.getId())
+                .appendPath(String.valueOf(course.getEnrollId())).toString();
+        return  new RequestPerformer<>(path,
+                new RequestBuilder(RequestMethod.DELETE)
+                        .addRequestProperty(RequestProperty.AUTHORIZATION.getKey(), student.getAuthorization())
+                        .addRequestProperty(RequestProperty.CONTENT_TYPE.getKey(), ContentType.JSON.getValue()),
+                new JsonSuccess()).perform();
     }
 
     @Override

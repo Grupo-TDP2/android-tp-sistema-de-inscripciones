@@ -17,5 +17,6 @@ public interface ServiceCourses
     ServiceResponse<List<Subject>> getSubjects(Student student, Career career);
     ServiceResponse<List<Course>> getCourses(Student student, Career career, Subject subject);
     ServiceResponse<EnrolmentResponse> subscribeTo(Student student, Career career, Subject subject, Course course);
+    ServiceResponse<Boolean> unsubscribeTo(Student student, Career career, Subject subject, Course course);
     ServiceResponse<List<MyCourse>> getCourses(Student student);
 }
