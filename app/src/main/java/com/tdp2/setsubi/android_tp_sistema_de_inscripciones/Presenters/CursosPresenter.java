@@ -134,7 +134,7 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
             int index = getCursoIndex(response.getCourseId());
             if( index != -1 )
             {
-                subscribeTo(index);
+                subscribeTo(index, response.getEnrolmentId());
             }
         }
     }
@@ -164,10 +164,10 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
         return false;
     }
 
-    private void subscribeTo(int index)
+    private void subscribeTo(int index, int enrolmentId)
     {
         Course course = courses.get(index);
-        course.setSubscribed(true);
+        course.setSubscribed(enrolmentId);
         if( course.getCupos() != 0 )
         {
             course.setCupos(course.getCupos() - 1);

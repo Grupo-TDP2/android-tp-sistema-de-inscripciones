@@ -12,20 +12,25 @@ public class JsonEnrolmentTransformer extends JsonTransformer<EnrolmentResponse>
     {
         if( object.isJsonObject() )
         {
-            int id;
+            int courseId, enrollId;
             JsonObject jsonObject = object.getAsJsonObject();
+            if( JsonUtils.isInt(jsonObject, JsonKeys.ID) )
+            {
+                enrollId = JsonUtils.getInt(jsonObject, JsonKeys.ID);
+            } else return null;
+
             if( jsonObject.has(JsonKeys.COURSE) && jsonObject.get(JsonKeys.COURSE).isJsonObject() )
             {
                 JsonObject course = jsonObject.getAsJsonObject(JsonKeys.COURSE);
                 if( JsonUtils.isInt(course, JsonKeys.ID) )
                 {
-                    id = JsonUtils.getInt(course, JsonKeys.ID);
+                    courseId = JsonUtils.getInt(course, JsonKeys.ID);
                 } else return null;
             } else return null;
 
             if( JsonUtils.isString(jsonObject, JsonKeys.TYPE) )
             {
-                return new EnrolmentResponse(id, getType(JsonUtils.getString(jsonObject, JsonKeys.TYPE)));
+                return new EnrolmentResponse(courseId, enrollId, getType(JsonUtils.getString(jsonObject, JsonKeys.TYPE)));
             }
         }
         return null;

@@ -41,7 +41,7 @@ public class JsonTransformHelper
 
     private static Sede parseSede(String string)
     {
-        switch (string.toLowerCase())
+        switch (string.toUpperCase())
         {
             case "LH":
                 return Sede.LAS_HERAS;
