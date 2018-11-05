@@ -2,22 +2,15 @@ package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.LoadingView;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.MyCoursesAdapter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Career;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CoursePeriod;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CourseTime;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CursoTimeBand;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Department;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.MyCourse;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Sede;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.GetMyCoursesTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.DayOfWeek;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.UnsubscribeToCourseAsyncTask;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -31,10 +24,12 @@ public class MyCoursesPresenter implements ServiceAsyncTask.ForeGroundListener, 
         void goToFinals();
         void onRemoved(int position);
         void onLoadedCourses();
+        void showSuccess(int unsubscribed_course_success);
     }
 
     private View view;
     private List<MyCourse> coursesList;
+    private Integer index = null;
 
     public MyCoursesPresenter(View view)
     {
@@ -48,8 +43,7 @@ public class MyCoursesPresenter implements ServiceAsyncTask.ForeGroundListener, 
 
     public void loadData()
     {
-        //TODO CALL ASYNC DATA
-        List<MyCourse> courses = Arrays.asList(
+        /*List<MyCourse> courses = Arrays.asList(
                 new MyCourse(new Career(1, "Ingenieria en Infromatica"),
                         new Subject(1,12,"Algoritmos y Programacion II", 6,
                                 new Department(2,"Computacion",75)),
@@ -60,7 +54,7 @@ public class MyCoursesPresenter implements ServiceAsyncTask.ForeGroundListener, 
                                         new CursoTimeBand(DayOfWeek.TUESDAY, 301,
                                                 new CourseTime(17,0), new CourseTime(19,0),
                                                 CursoTimeBand.CursoTimeType.TEORICO, false)),
-                                0,true, true ),
+                                0,1, true ),
                         new CoursePeriod(2018, CoursePeriod.Period.FIRST),
                         false),
                 new MyCourse(new Career(1, "Ingenieria en Infromatica"),
@@ -73,29 +67,47 @@ public class MyCoursesPresenter implements ServiceAsyncTask.ForeGroundListener, 
                                         new CursoTimeBand(DayOfWeek.MONDAY, 301,
                                         new CourseTime(17,0), new CourseTime(19,0),
                                         CursoTimeBand.CursoTimeType.TEORICO, false)),
-                                0,true, false ),
+                                0,2, false ),
                         new CoursePeriod(2018, CoursePeriod.Period.SECOND),
                         true));
-        onSuccess(null, courses);
+        onSuccess(null, courses);*/
+        new GetMyCoursesTask(this).execute(AppModel.getInstance().getStudent());
     }
 
     @Override
     public void onError(ServiceAsyncTask serviceAsyncTask, ServiceResponse.ServiceStatusCode error)
     {
         view.stopLoading();
-        view.showErrorLoading(error == ServiceResponse.ServiceStatusCode.NO_CONNECTION ? R.string.connectivityFailed : R.string.error_while_loading_my_courses);
+        int errorMessage = R.string.connectivityFailed;
+        if( error == ServiceResponse.ServiceStatusCode.NO_CONNECTION ) {
+            if (serviceAsyncTask instanceof GetMyCoursesTask) {
+                errorMessage = R.string.error_while_loading_my_courses;
+            } else {
+                errorMessage = R.string.error_unsubscribe_course_out_of_period;
+            }
+        }
+        view.showErrorLoading(errorMessage);
     }
 
     @Override
     public void onSuccess(ServiceAsyncTask serviceAsyncTask, Object data)
     {
         view.stopLoading();
-        List<MyCourse> courses = (List<MyCourse>)data;
-        coursesList.clear();
-        coursesList.addAll(courses);
-        Collections.sort(coursesList, this);
-        view.onLoadedCourses();
-        checkCoursesSize();
+        if( serviceAsyncTask instanceof GetMyCoursesTask )
+        {
+            List<MyCourse> courses = (List<MyCourse>)data;
+            coursesList.clear();
+            coursesList.addAll(courses);
+            Collections.sort(coursesList, this);
+            view.onLoadedCourses();
+            checkCoursesSize();
+        } else if( serviceAsyncTask instanceof UnsubscribeToCourseAsyncTask && index != null )
+        {
+            coursesList.remove((int)index);
+            view.onRemoved(index);
+            checkCoursesSize();
+            view.showSuccess(R.string.unsubscribed_course_success);
+        }
     }
 
     @Override
@@ -105,11 +117,10 @@ public class MyCoursesPresenter implements ServiceAsyncTask.ForeGroundListener, 
     }
 
     @Override
-    public void onUnsubscribe(int position) {
-        //TODO ASYNC TASK
-        coursesList.remove(position);
-        view.onRemoved(position);
-        checkCoursesSize();
+    public void onUnsubscribe(int position)
+    {
+        MyCourse course = coursesList.get(position);
+        new UnsubscribeToCourseAsyncTask(this).execute(AppModel.getInstance(),course.getCareer(), course.getSubject(), course.getCourse());
     }
 
     @Override

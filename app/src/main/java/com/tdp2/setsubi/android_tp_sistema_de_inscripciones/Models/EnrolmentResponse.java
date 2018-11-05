@@ -10,10 +10,12 @@ public class EnrolmentResponse
 
     private int courseId;
     private EnrolmentType enrolmentType;
+    private int enrolmentId;
 
-    public EnrolmentResponse(int courseId, EnrolmentType enrolmentType)
+    public EnrolmentResponse(int courseId, int enrolmentId, EnrolmentType enrolmentType)
     {
         this.courseId = courseId;
+        this.enrolmentId = enrolmentId;
         this.enrolmentType = enrolmentType;
     }
 
@@ -23,5 +25,9 @@ public class EnrolmentResponse
 
     public int getCourseId() {
         return courseId;
+    }
+
+    public int getEnrolmentId() {
+        return enrolmentId;
     }
 }

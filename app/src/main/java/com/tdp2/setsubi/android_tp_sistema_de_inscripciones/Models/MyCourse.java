@@ -48,9 +48,14 @@ public class MyCourse
         return course.isSubscribed();
     }
 
-    public void setSubscribed(boolean isSubscribed)
+    public void setSubscribed(int enrollId)
     {
-        course.setSubscribed(isSubscribed);
+        course.setSubscribed(enrollId);
+    }
+
+    public Integer getEnrollId()
+    {
+        return course.getEnrollId();
     }
 
     public boolean isEnabledToEnroll() {

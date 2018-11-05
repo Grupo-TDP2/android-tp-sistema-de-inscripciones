@@ -1,5 +1,6 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class JsonUtils
@@ -44,5 +45,4 @@ public class JsonUtils
     {
         return object.has(key) && object.get(key).isJsonObject();
     }
-
 }

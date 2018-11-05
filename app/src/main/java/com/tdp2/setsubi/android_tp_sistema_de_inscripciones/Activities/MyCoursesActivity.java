@@ -71,6 +71,11 @@ public class MyCoursesActivity extends AppCompatActivity implements MyCoursesPre
     }
 
     @Override
+    public void showSuccess(int stringResource) {
+        Toast.makeText(this,stringResource, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void startLoading() {
         if( snackbar == null )
         {
