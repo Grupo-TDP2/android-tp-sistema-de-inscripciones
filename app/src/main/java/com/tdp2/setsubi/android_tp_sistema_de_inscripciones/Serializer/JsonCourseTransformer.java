@@ -65,9 +65,9 @@ public class JsonCourseTransformer extends JsonTransformer<Course>
 
             Integer enrolmentId = null;
             boolean enabledToEnroll = false;
-            if( jsonObject.has(JsonKeys.ENABLED_TO_ENROL) )
+            if( jsonObject.has(JsonKeys.ENROLMENT) )
             {
-                JsonElement enrolment = jsonObject.get(JsonKeys.ENABLED_TO_ENROL);
+                JsonElement enrolment = jsonObject.get(JsonKeys.ENROLMENT);
                 if( enrolment != null && enrolment.isJsonObject() )
                 {
                     JsonObject enrolmentObj = enrolment.getAsJsonObject();

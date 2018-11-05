@@ -54,7 +54,7 @@ public class Course
         return enrollId != null;
     }
 
-    public void setSubscribed(int enrollId)
+    public void setSubscribed(Integer enrollId)
     {
         this.enrollId = enrollId;
     }

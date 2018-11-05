@@ -6,10 +6,12 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.EnrolmentResponse;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.EnrolToClassAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.GetCoursesAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.UnsubscribeToCourseAsyncTask;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +27,7 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
     private boolean canSubscribe = true;
     private CursosActivity activity;
     private boolean isSubscribing = false;
+    private Integer unsubscribeIndex = null;
 
     public CursosPresenter(CursosActivity activity)
     {
@@ -55,22 +58,31 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
     }
 
     @Override
-    public void onSubscribe(int cursoId)
+    public void onCourseButtonClick(int cursoId)
     {
         int index = getCursoIndex(cursoId);
         if( index != -1 )
         {
             Course course = courses.get(index);
-
-            if( course.isSubscribed() )
+            if( !course.isEnabledToEnroll() )
             {
-                activity.showAlreadySubscribed();
-            } else if (!isSubscribing)
+                if( course.isSubscribed() )
+                {
+                    activity.showAlreadySubscribed();
+                }
+            } else if( !isSubscribing )
             {
                 isSubscribing = true;
                 AppModel model = AppModel.getInstance();
-                new EnrolToClassAsyncTask(this).execute(model.getStudent(), model.getSelectedCareer(), model.getSelectedSubject(), course);
-            } else if ( isSubscribing)
+                if( course.isSubscribed() )
+                {
+                    unsubscribeIndex = index;
+                    new UnsubscribeToCourseAsyncTask(this).execute(model.getStudent(),model.getSelectedCareer(),model.getSelectedSubject(), course);
+                } else
+                {
+                    new EnrolToClassAsyncTask(this).execute(model.getStudent(), model.getSelectedCareer(), model.getSelectedSubject(), course);
+                }
+            } else
             {
                 activity.showStillSubscribing();
             }
@@ -100,6 +112,13 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
         {
             isSubscribing = false;
             activity.onFailedToEnroll();
+        } else if( serviceAsyncTask instanceof UnsubscribeToCourseAsyncTask)
+        {
+            unsubscribeIndex = null;
+            if( error != ServiceResponse.ServiceStatusCode.NO_CONNECTION )
+                activity.showMessage(R.string.error_unsubscribe_course_out_of_period);
+            else
+                activity.onFailedtoConnectivity();
         } else {
             activity.onFailedtoConnectivity();
         }
@@ -136,6 +155,11 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
             {
                 subscribeTo(index, response.getEnrolmentId());
             }
+        } else
+        {
+            isSubscribing = false;
+            activity.showMessage(R.string.unsubscribed_course_success);
+            unsubscribeTo(unsubscribeIndex);
         }
     }
 
@@ -173,6 +197,15 @@ public class CursosPresenter implements CursosActivity.CursosLogic, CursoAdapter
             course.setCupos(course.getCupos() - 1);
         }
         adapter.setCanSubscribe(false);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void unsubscribeTo(int index)
+    {
+        Course course = courses.get(index);
+        course.setSubscribed(null);
+        course.setCupos(course.getCupos() + 1);
+        adapter.setCanSubscribe(true);
         adapter.notifyDataSetChanged();
     }
 
