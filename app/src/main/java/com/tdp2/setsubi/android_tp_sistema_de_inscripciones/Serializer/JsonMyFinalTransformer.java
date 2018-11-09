@@ -84,7 +84,7 @@ public class JsonMyFinalTransformer extends JsonTransformer<Final>
                 if( finalDate == null || catedra == null || subject == null ) return null;
             } else return null;
 
-            Final fina = new Final(id, true, supportsLibre, approvedCourse,
+            Final fina = new Final(id, supportsLibre, approvedCourse,
                 subject,
                 catedra,
                 finalDate, sede, aula);

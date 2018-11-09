@@ -42,4 +42,5 @@ class JsonKeys
     static final String ENABLED_TO_ENROL = "able_to_enrol?";
     static final String TEACHING_POSITION = "teaching_position";
     public static final String REGISTRATION = "registration";
+    public static final String DATE_START_WEEK = "date_start_week";
 }

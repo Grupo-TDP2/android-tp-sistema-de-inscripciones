@@ -1,5 +1,7 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models;
 
+import android.util.Log;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,7 +12,6 @@ public class Final
     private int id;
     private int subscriptionId = -1;
     private boolean freeSubscription = false;
-    private boolean isSubscribed;
     private boolean supportsLibre;
     private boolean approvedCourseOfFinal;
     private boolean finalGiven = false;
@@ -26,11 +27,10 @@ public class Final
 
     private Subject subject;
 
-    public Final(int id, boolean isSubscribed, boolean supportsLibre, boolean approvedCourseOfFinal,
+    public Final(int id, boolean supportsLibre, boolean approvedCourseOfFinal,
                  Subject subject, String catedraName, Date date, Sede sede, int aula)
     {
         this.id = id;
-        this.isSubscribed = isSubscribed;
         this.catedraName = catedraName;
         this.finalDate = date;
         this.sede = sede;
@@ -63,11 +63,12 @@ public class Final
 
     public boolean isCanSubscribe()
     {
-        return !isSubscribed && isAtTimeToSubscribe();
+        return !isSubscribed() && isAtTimeToSubscribe()
+                && (isSupportsLibre() || isApprovedCourseOfFinal());
     }
 
     public boolean isCanUnsubscribe() {
-        return isSubscribed && isAtTimeToSubscribe();
+        return isSubscribed() && isAtTimeToSubscribe();
     }
 
     private boolean isAtTimeToSubscribe()
@@ -83,8 +84,9 @@ public class Final
     }
 
     public boolean isSubscribed() {
-        return isSubscribed;
+        return subscriptionId != -1;
     }
+
 
     public String getCatedraName() {
         return catedraName;
@@ -118,10 +120,6 @@ public class Final
         return sdf.format(finalDate);
     }
 
-    public void setSubscribed(boolean subscribed) {
-        isSubscribed = subscribed;
-    }
-
     public int compare(Final fina)
     {
         return finalDate.compareTo(fina.finalDate);
@@ -149,5 +147,9 @@ public class Final
     {
         Date currentTime = Calendar.getInstance().getTime();
         return finalDate.getTime() - currentTime.getTime() <= 0;
+    }
+
+    public void unsubscribe() {
+        subscriptionId = -1;
     }
 }

@@ -2,10 +2,10 @@ package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -16,7 +16,6 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Sede;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.ShapeBackgroundColorChanger;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,10 +29,18 @@ public class FinalsAdapter extends RecyclerView.Adapter<FinalsAdapter.ViewHolder
     private static final int REGULAR = 0, FREE = 1;
     private Listener listener;
     private List<Final> finals;
+    private boolean interactionEnabled = true;
+
     public FinalsAdapter(List<Final> finals, Listener listener)
     {
         this.finals = finals;
         this.listener = listener;
+    }
+
+    public void setInteractionEnabled(boolean enabled)
+    {
+        this.interactionEnabled = enabled;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -51,9 +58,12 @@ public class FinalsAdapter extends RecyclerView.Adapter<FinalsAdapter.ViewHolder
         holder.setTime(exam.getTime());
         holder.setSede(exam.getSede());
         holder.setAula(exam.getAula());
-        //TODO IF SUBSCRIBED SHOW THAT CONDITION
-        holder.setCondicion(exam.isSubscribed(), exam.isApprovedCourseOfFinal(), exam.isSupportsLibre());
-        holder.setButtons(exam.isSubscribed(), exam.isCanSubscribe(), exam.isCanUnsubscribe());
+        holder.setCondicion(exam.isSubscribed(),
+                exam.isApprovedCourseOfFinal(), exam.isSupportsLibre(),
+                exam.isFreeSubscription());
+        holder.setButtons(exam.isSubscribed(),
+                exam.isCanSubscribe(),
+                exam.isCanUnsubscribe());
     }
 
     @Override
@@ -91,21 +101,32 @@ public class FinalsAdapter extends RecyclerView.Adapter<FinalsAdapter.ViewHolder
             });
         }
 
-        void setCondicion(boolean isSubscribed, boolean regular, boolean libre)
+        void setCondicion(boolean isSubscribed,
+                          boolean canGiveRegular, boolean canGiveFree,
+                          boolean subscribedFree)
         {
-            if( !isSubscribed && regular && libre )
+            if( !isSubscribed && canGiveRegular && canGiveFree )
             {
-                conditionSpinner.setVisibility(View.VISIBLE);
                 condicion.setVisibility(View.GONE);
+                conditionSpinner.setEnabled(true);
+                conditionSpinner.setVisibility(View.VISIBLE);
             } else if( isSubscribed )
             {
-
+                if( subscribedFree ) conditionSpinner.setSelection(FREE);
+                conditionSpinner.setEnabled(false);
+                condicion.setText(!subscribedFree ? R.string.regular : R.string.libre);
+                conditionSpinner.setVisibility(View.GONE);
+                condicion.setVisibility(View.VISIBLE);
+            } else if( !canGiveRegular && !canGiveFree )
+            {
+                condicion.setText(R.string.cant_subscribe_final);
+                conditionSpinner.setVisibility(View.GONE);
+                condicion.setVisibility(View.VISIBLE);
             } else
             {
-                if( libre ) conditionSpinner.setSelection(FREE);
-                //TODO IF SUBSCRIBED SET THAT CONDITION
+                if( canGiveFree ) conditionSpinner.setSelection(FREE);
+                condicion.setText(canGiveRegular ? R.string.regular : R.string.libre);
                 conditionSpinner.setVisibility(View.GONE);
-                condicion.setText(regular ? R.string.regular : R.string.libre);
                 condicion.setVisibility(View.VISIBLE);
             }
 
@@ -132,19 +153,26 @@ public class FinalsAdapter extends RecyclerView.Adapter<FinalsAdapter.ViewHolder
 
         void setButtons(boolean subscribed, boolean canSubscribe, boolean canUnsubscribe)
         {
-            if( (subscribed && ! canUnsubscribe) || (!subscribed && !canSubscribe) )
+            if( (subscribed && !canUnsubscribe) || (!subscribed && !canSubscribe) )
             {
                 this.subsrcibe.setVisibility(View.GONE);
             } else
             {
                 this.subsrcibe.setVisibility(View.VISIBLE);
-                if( subscribed ) {
-                    ShapeBackgroundColorChanger.changeBackground(subsrcibe, R.drawable.button_round_red);
-                    this.subsrcibe.setText(R.string.unsubscribe);
-                } else {
-                    ShapeBackgroundColorChanger.changeBackground(subsrcibe, R.drawable.button_round_blue);
-                    this.subsrcibe.setText(R.string.inscribirse_btn_text);
+                int background, text;
+                if( subscribed )
+                {
+                    background = R.drawable.button_round_red;
+                   text = R.string.unsubscribe;
+                } else
+                {
+                    background = R.drawable.button_round_blue;
+                    text = R.string.inscribirse_btn_text;
                 }
+                if( !interactionEnabled ) background = R.drawable.button_round_grey;
+                ShapeBackgroundColorChanger.changeBackground(subsrcibe,background);
+                this.subsrcibe.setText(text);
+                this.subsrcibe.setEnabled(interactionEnabled);
             }
         }
     }

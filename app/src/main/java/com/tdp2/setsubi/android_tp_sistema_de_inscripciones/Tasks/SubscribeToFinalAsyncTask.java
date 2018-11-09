@@ -1,11 +1,12 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Final;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.FinalSubscriptionResult;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Student;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.Finals.FinalsServiceAPI;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
 
-public class SubscribeToFinalAsyncTask extends ServiceAsyncTask<Object, Void, Integer>
+public class SubscribeToFinalAsyncTask extends ServiceAsyncTask<Object, Void, FinalSubscriptionResult>
 {
     public SubscribeToFinalAsyncTask(ForeGroundListener listener)
     {
@@ -13,7 +14,7 @@ public class SubscribeToFinalAsyncTask extends ServiceAsyncTask<Object, Void, In
     }
 
     @Override
-    protected ServiceResponse<Integer> doRun(Object[] ts)
+    protected ServiceResponse<FinalSubscriptionResult> doRun(Object[] ts)
     {
         if( ts.length == 3 && ts[0] instanceof Student &&
                 ts[1] instanceof Final

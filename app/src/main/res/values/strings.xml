@@ -68,5 +68,7 @@
     <string name="no_approved_subjects">No hay materia aprobadas</string>
     <string name="error_unsubscribe_course_out_of_period">No puede desinscribirse por que no esta en la primer semana de cursada</string>
     <string name="unsubscribed_course_success">Se desinscribio correctamente</string>
+    <string name="error_when_loading_finals_period">No se pudo verificar el periodo de finales</string>
+    <string name="cant_subscribe_final">No puede inscribirse a este final</string>
 
 </resources>
