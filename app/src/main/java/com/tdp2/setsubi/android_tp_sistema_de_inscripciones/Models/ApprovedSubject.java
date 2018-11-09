@@ -1,4 +1,4 @@
-package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters;
+package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 

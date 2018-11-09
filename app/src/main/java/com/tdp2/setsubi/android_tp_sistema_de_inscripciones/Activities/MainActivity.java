@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 
 
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.ApprovedSubject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.MainActivityPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.SoonToast;

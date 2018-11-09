@@ -43,4 +43,7 @@ class JsonKeys
     static final String TEACHING_POSITION = "teaching_position";
     public static final String REGISTRATION = "registration";
     public static final String DATE_START_WEEK = "date_start_week";
+    public static final String FINAL_QUALIFICATION = "final_qualification";
+    public static final String UPDATED_AT = "updated_at";
+
 }

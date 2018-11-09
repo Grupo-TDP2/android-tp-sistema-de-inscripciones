@@ -70,5 +70,7 @@
     <string name="unsubscribed_course_success">Se desinscribio correctamente</string>
     <string name="error_when_loading_finals_period">No se pudo verificar el periodo de finales</string>
     <string name="cant_subscribe_final">No puede inscribirse a este final</string>
+    <string name="all_departments">Todos los departamentos</string>
+
 
 </resources>
