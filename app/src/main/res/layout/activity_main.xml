@@ -59,22 +59,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/academicOfferButton"
         app:layout_constraintVertical_bias="0.252" />
-   <Button
-       android:id="@+id/newFinalExamButton"
-       style="@style/Widget.AppCompat.Button.Colored"
-       android:layout_width="320dp"
-       android:layout_height="wrap_content"
-       android:layout_marginTop="8dp"
-       android:fontFamily="@font/raleway"
-       android:paddingBottom="25dp"
-       android:paddingTop="25dp"
-       android:text="Inscribirse a Examen Libre"
-       android:textSize="15dp"
-       android:textStyle="bold"
-       app:layout_constraintBottom_toTopOf="@+id/myCoursesButton"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toBottomOf="@+id/newCourseButton" />
+
+    <Button
+        android:id="@+id/newFinalExamButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/raleway"
+        android:paddingBottom="25dp"
+        android:paddingTop="25dp"
+        android:text="Inscribirse a Examen"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/myCoursesButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newCourseButton" />
 
     <Button
         android:id="@+id/myCoursesButton"
