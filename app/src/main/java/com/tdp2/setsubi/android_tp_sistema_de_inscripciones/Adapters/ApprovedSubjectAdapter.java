@@ -49,9 +49,10 @@ public class ApprovedSubjectAdapter extends RecyclerView.Adapter<ApprovedSubject
 
     class ViewHolder extends RecyclerView.ViewHolder
     {
-        TextView subject, date, calification;
+        TextView subject, date, calification, code;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
+            code = itemView.findViewById(R.id.subject_code);
             subject = itemView.findViewById(R.id.subject_value);
             date = itemView.findViewById(R.id.date_value);
             calification = itemView.findViewById(R.id.nota_value);
@@ -66,9 +67,11 @@ public class ApprovedSubjectAdapter extends RecyclerView.Adapter<ApprovedSubject
             this.calification.setText(String.valueOf(calification));
         }
 
-        void setSubject(Subject subject) {
-            this.subject.setText(String.format(Locale.getDefault(),
-                    "%02d.%02d %s", subject.getDepartmentCode(), subject.getCode(), subject.getName()));
+        void setSubject(Subject subject)
+        {
+            this.code.setText(String.format(Locale.getDefault(),
+                    "%02d.%02d", subject.getDepartmentCode(), subject.getCode()));
+            this.subject.setText(subject.getName());
         }
     }
 }

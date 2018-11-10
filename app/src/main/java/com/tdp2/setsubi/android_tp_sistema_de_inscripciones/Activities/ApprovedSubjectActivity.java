@@ -46,8 +46,6 @@ public class ApprovedSubjectActivity extends AppCompatActivity implements Approv
         noFinals.setText(R.string.no_approved_subjects);
         recyclerView = findViewById(R.id.finals);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),
-                DividerItemDecoration.VERTICAL));
         adapter = new ApprovedSubjectAdapter(presenter.getSubjects());
         recyclerView.setAdapter(adapter);
         spinner = findViewById(R.id.spinner);
