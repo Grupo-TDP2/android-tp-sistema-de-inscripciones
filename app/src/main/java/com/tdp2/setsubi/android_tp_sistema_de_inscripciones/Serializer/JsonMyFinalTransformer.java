@@ -28,6 +28,7 @@ public class JsonMyFinalTransformer extends JsonTransformer<Final>
             Subject subject = null;
             Date finalDate = null;
             Sede sede;
+            Integer calification = null;
             JsonObject finalObject = object.getAsJsonObject();
             if(JsonUtils.isString(finalObject, JsonKeys.CONDITION))
             {
@@ -84,11 +85,16 @@ public class JsonMyFinalTransformer extends JsonTransformer<Final>
                 if( finalDate == null || catedra == null || subject == null ) return null;
             } else return null;
 
+            if( JsonUtils.isInt(finalObject, JsonKeys.QUALIFICATION) )
+            {
+                calification = JsonUtils.getInt(finalObject, JsonKeys.QUALIFICATION);
+            }
             Final fina = new Final(id, supportsLibre, approvedCourse,
                 subject,
                 catedra,
                 finalDate, sede, aula);
             fina.setSubscription(subscriptionId, isLibre);
+            fina.setFinalGiven(calification != null, calification );
             return fina;
         }
         return null;
