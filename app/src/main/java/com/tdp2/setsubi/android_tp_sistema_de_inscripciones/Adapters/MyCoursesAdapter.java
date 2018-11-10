@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CoursePeriod;
@@ -70,14 +71,18 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
 
     class ViewHolder extends RecyclerView.ViewHolder
     {
-        private TextView catedra, sede, period, subject;
+        private TextView catedra, sede, period, subject, subjectCode;
         private RecyclerView timeBands;
+        private ImageButton openData;
         private Button unsubscribe, seeFinals;
-
+        private boolean opened = false;
+        private View dataBlock;
         ViewHolder(@NonNull View itemView)
         {
             super(itemView);
+            dataBlock = itemView.findViewById(R.id.course_data_block);
             catedra = itemView.findViewById(R.id.catedra_value);
+            subjectCode = itemView.findViewById(R.id.subjcet_code);
             sede = itemView.findViewById(R.id.sede_value);
             period = itemView.findViewById(R.id.period_value);
             subject = itemView.findViewById(R.id.subject_value);
@@ -85,6 +90,19 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
             timeBands.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
             unsubscribe = itemView.findViewById(R.id.unsubscribe_button);
             seeFinals = itemView.findViewById(R.id.see_finals_button);
+            openData = itemView.findViewById(R.id.open_course_button);
+            openData.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    opened = !opened;
+                    if( opened )
+                    {
+                        dataBlock.setVisibility(View.VISIBLE);
+                    } else {
+                        dataBlock.setVisibility(View.GONE);
+                    }
+                }
+            });
             unsubscribe.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -101,8 +119,8 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
 
         void setSubject(Subject subject)
         {
-            this.subject.setText(String.format(Locale.getDefault(),
-                    "%02d.%02d %s", subject.getDepartmentCode(), subject.getCode(), subject.getName()));
+            this.subjectCode.setText(String.format(Locale.getDefault(),"%02d.%02d", subject.getDepartmentCode(), subject.getCode()));
+            this.subject.setText(subject.getName());
         }
 
         void setPeriod(int year, CoursePeriod.Period period) {

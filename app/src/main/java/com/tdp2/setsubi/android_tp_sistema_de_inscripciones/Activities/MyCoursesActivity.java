@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -34,6 +35,8 @@ public class MyCoursesActivity extends AppCompatActivity implements MyCoursesPre
         ToolBarHelper.setTitle(this, R.string.my_courses);
         RecyclerView view = findViewById(R.id.my_courses_list);
         view.setLayoutManager(new LinearLayoutManager(this));
+        view.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
         adapter = new MyCoursesAdapter(presenter.getCoursesList(), presenter);
         view.setAdapter(adapter);
         presenter.loadData();

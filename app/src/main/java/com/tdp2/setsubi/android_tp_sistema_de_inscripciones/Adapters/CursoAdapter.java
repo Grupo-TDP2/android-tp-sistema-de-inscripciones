@@ -57,9 +57,6 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
         holder.setCupo(course.getCupos());
         holder.setTimes(course.getCursoTimeBands());
         holder.setSede(course.getSede());
-        Log.d("COURSE","COURSE: " + course.getCatedra() + " can subscribe? "
-                + canSubscribe + " is Enabled to enroll? "
-                + course.isEnabledToEnroll() + ", is Subscribed " + course.isSubscribed() );
         holder.enableSubscription( (canSubscribe && course.isEnabledToEnroll()), course.isSubscribed());
         holder.setSubscribeListener(listener, course.getId());
     }
