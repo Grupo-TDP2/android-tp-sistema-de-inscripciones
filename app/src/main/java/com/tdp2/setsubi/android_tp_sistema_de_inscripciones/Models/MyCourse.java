@@ -1,5 +1,7 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MyCourse
@@ -8,13 +10,11 @@ public class MyCourse
     private CoursePeriod coursePeriod;
     private Subject subject;
     private Career career;
-    private boolean canSeeFinals;
 
-    public MyCourse(Career career, Subject subject, Course course, CoursePeriod period, boolean canSeeFinals)
+    public MyCourse(Career career, Subject subject, Course course, CoursePeriod period)
     {
         this.course = course;
         this.coursePeriod = period;
-        this.canSeeFinals = canSeeFinals;
         this.subject = subject;
         this.career = career;
     }
@@ -72,10 +72,6 @@ public class MyCourse
         return coursePeriod.getPeriod();
     }
 
-    public boolean isCanSeeFinals() {
-        return canSeeFinals;
-    }
-
     public Subject getSubject() {
         return subject;
     }
@@ -86,5 +82,24 @@ public class MyCourse
 
     public Career getCareer() {
         return career;
+    }
+
+    public boolean inUnsubscribePeriod() {
+        return inFirstWeek(coursePeriod.getStartDate());
+    }
+
+    private boolean inFirstWeek(Date startDate)
+    {
+        Calendar c=Calendar.getInstance();
+        c.setTime(new Date());
+        int year1=c.get(Calendar.YEAR);
+        int week1=c.get(Calendar.WEEK_OF_YEAR);
+
+        Calendar c2  =Calendar.getInstance();
+        c2.setTimeInMillis(startDate.getTime());
+        int year2=c2.get(Calendar.YEAR);
+        int week2=c2.get(Calendar.WEEK_OF_YEAR);
+
+        return year1 == year2 && week1 == week2;
     }
 }

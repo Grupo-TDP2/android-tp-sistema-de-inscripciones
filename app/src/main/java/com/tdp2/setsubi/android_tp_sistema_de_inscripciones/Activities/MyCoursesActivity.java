@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,7 +21,7 @@ public class MyCoursesActivity extends AppCompatActivity implements MyCoursesPre
 {
     private TextView noCourses;
     private MyCoursesPresenter presenter;
-    private RecyclerView.Adapter adapter;
+    private MyCoursesAdapter adapter;
     private Snackbar snackbar = null;
 
     @Override
@@ -73,6 +74,11 @@ public class MyCoursesActivity extends AppCompatActivity implements MyCoursesPre
     @Override
     public void showSuccess(int stringResource) {
         Toast.makeText(this,stringResource, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setCanSeeFinals(boolean canSeeFinals) {
+        adapter.setInFinalsPeriod(canSeeFinals);
     }
 
     @Override

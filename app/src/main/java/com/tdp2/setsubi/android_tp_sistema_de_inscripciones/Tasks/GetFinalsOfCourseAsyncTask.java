@@ -23,7 +23,7 @@ public class GetFinalsOfCourseAsyncTask extends ServiceAsyncTask<Object, Void, L
                 && ts[0] instanceof Student && ts[1] instanceof Career
                 && ts[2] instanceof Subject && ts[3] instanceof Course)
         {
-            new FinalsServiceAPI().getFinalsForCourse((Student) ts[0], (Career) ts[1], (Subject) ts[2], (Course) ts[3]);
+            return new FinalsServiceAPI().getFinalsForCourse((Student) ts[0], (Career) ts[1], (Subject) ts[2], (Course) ts[3]);
         }
         return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.PARAMETER_ERROR);
     }

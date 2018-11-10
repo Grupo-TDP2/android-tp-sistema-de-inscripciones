@@ -1,12 +1,15 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CoursePeriod;
@@ -29,11 +32,18 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
 
     private Listener listener;
     private List<MyCourse> courses;
+    private boolean inFinalsPeriod = false;
 
     public MyCoursesAdapter(List<MyCourse> courseList, Listener listener)
     {
         this.courses = courseList;
         this.listener = listener;
+    }
+
+    public void setInFinalsPeriod(boolean inFinalsPeriod)
+    {
+        this.inFinalsPeriod = inFinalsPeriod;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -53,7 +63,7 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
         holder.setTimes(course.getCursoTimeBands());
         holder.setCatedra(course.getCatedra());
         holder.setSede(course.getSede());
-        holder.setButtons(course.isEnabledToEnroll(), course.isCanSeeFinals());
+        holder.setButtons(course.inUnsubscribePeriod(), inFinalsPeriod);
     }
 
     @Override
@@ -63,21 +73,44 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
 
     class ViewHolder extends RecyclerView.ViewHolder
     {
-        private TextView catedra, sede, period, subject;
+        private TextView catedra, sede, period, subject, subjectCode;
         private RecyclerView timeBands;
+        private ImageView openData;
         private Button unsubscribe, seeFinals;
-
+        private boolean opened = false;
+        private View dataBlock;
+        private View titleBlock;
         ViewHolder(@NonNull View itemView)
         {
             super(itemView);
+            dataBlock = itemView.findViewById(R.id.course_data_block);
             catedra = itemView.findViewById(R.id.catedra_value);
+            subjectCode = itemView.findViewById(R.id.subjcet_code);
             sede = itemView.findViewById(R.id.sede_value);
             period = itemView.findViewById(R.id.period_value);
             subject = itemView.findViewById(R.id.subject_value);
             timeBands = itemView.findViewById(R.id.course_time_band);
             timeBands.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
+            timeBands.addItemDecoration(new DividerItemDecoration(itemView.getContext(),
+                    DividerItemDecoration.VERTICAL));
             unsubscribe = itemView.findViewById(R.id.unsubscribe_button);
             seeFinals = itemView.findViewById(R.id.see_finals_button);
+            openData = itemView.findViewById(R.id.open_course_button);
+            titleBlock = itemView.findViewById(R.id.card_title);
+            titleBlock.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    opened = !opened;
+                    if( opened )
+                    {
+                        openData.setRotation(180);
+                        dataBlock.setVisibility(View.VISIBLE);
+                    } else {
+                        openData.setRotation(0);
+                        dataBlock.setVisibility(View.GONE);
+                    }
+                }
+            });
             unsubscribe.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -94,8 +127,8 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
 
         void setSubject(Subject subject)
         {
-            this.subject.setText(String.format(Locale.getDefault(),
-                    "%02d.%02d %s", subject.getDepartmentCode(), subject.getCode(), subject.getName()));
+            this.subjectCode.setText(String.format(Locale.getDefault(),"%02d.%02d", subject.getDepartmentCode(), subject.getCode()));
+            this.subject.setText(subject.getName());
         }
 
         void setPeriod(int year, CoursePeriod.Period period) {
