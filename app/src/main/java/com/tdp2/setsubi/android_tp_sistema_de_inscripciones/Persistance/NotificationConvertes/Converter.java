@@ -1,10 +1,10 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Persistance.NotificationConvertes;
 
+import android.arch.persistence.room.TypeConverter;
+
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Notification;
 
 import java.util.Date;
-
-import androidx.room.TypeConverter;
 
 public class Converter
 {

@@ -15,14 +15,15 @@ import android.view.View;
 import android.widget.Button;
 
 
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.MainActivityPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.NotificationHelper;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.SoonToast;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.ToolBarHelper;
 
 public class MainActivity extends AppCompatActivity implements MainActivityPresenter.View
 {
-
     private MainActivityPresenter presenter;
     private DrawerLayout drawerLayout;
     @Override
@@ -48,6 +49,23 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         findViewById(R.id.priorityButton).setOnClickListener(new SoonClickHandler());
         findViewById(R.id.myDataButton).setOnClickListener(new SoonClickHandler());
     }
+
+    private NotificationHelper helper;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        helper = new NotificationHelper(ToolBarHelper.getNotificationView(this));
+        AppModel.getInstance().setVisibility(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        helper.destroy();
+        AppModel.getInstance().setVisibility(false);
+    }
+
     private void initNavMenu()
     {
         drawerLayout = findViewById(R.id.drawer_layout);

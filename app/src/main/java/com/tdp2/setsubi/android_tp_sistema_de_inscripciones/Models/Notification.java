@@ -1,10 +1,12 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.util.Date;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+
 
 @Entity
 public class Notification
@@ -16,7 +18,7 @@ public class Notification
     }
 
     @PrimaryKey(autoGenerate = true)
-    private int uid = 0;
+    private int uid;
     @ColumnInfo(name="title")
     private String title;
     @ColumnInfo(name="body")
@@ -28,13 +30,13 @@ public class Notification
     @ColumnInfo(name="seen")
     private boolean seen;
 
-    public Notification(int uid, String title, String body, Type type, Date date, boolean seen)
+    public Notification(int uid, String title, String body, Type type, Date receivedDate, boolean seen)
     {
         this.uid = uid;
         this.title = title;
         this.body = body;
         this.type = type;
-        this.receivedDate = date;
+        this.receivedDate = receivedDate;
         this.seen = seen;
     }
 
@@ -56,6 +58,10 @@ public class Notification
 
     public boolean isSeen() {
         return seen;
+    }
+
+    public int getUid(){
+        return uid;
     }
 
     public void setUid(int uid) {

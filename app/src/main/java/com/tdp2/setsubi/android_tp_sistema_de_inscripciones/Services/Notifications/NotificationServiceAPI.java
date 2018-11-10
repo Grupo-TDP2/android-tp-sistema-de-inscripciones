@@ -1,5 +1,6 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.Notifications;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,29 +22,28 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResp
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.room.Room;
 
-public class NotifcationServiceAPI implements NotificationsService
+public class NotificationServiceAPI implements NotificationsService
 {
-    private static NotifcationServiceAPI instance = null;
-    public static NotifcationServiceAPI getInstance()
+    private static NotificationServiceAPI instance = null;
+    public static NotificationServiceAPI getInstance()
     {
         if( instance == null )
         {
-            instance = new NotifcationServiceAPI();
+            instance = new NotificationServiceAPI();
         }
         return instance;
     }
 
     private List<NotificationsService.NotificationListener> listeners = new ArrayList<>();
-    private NotifcationServiceAPI(){}
-    private NotificationPersistance.AppDatabase database = null;
-    private NotificationPersistance.AppDatabase getDatabase(Context context)
+    private NotificationServiceAPI(){}
+    private NotificationPersistance database = null;
+    private NotificationPersistance getDatabase(Context context)
     {
         if( database == null )
         {
             database = Room.databaseBuilder(context,
-                    NotificationPersistance.AppDatabase.class, "notification-db").build();
+                    NotificationPersistance.class, "notification-db").build();
         }
         return database;
     }
@@ -66,14 +66,21 @@ public class NotifcationServiceAPI implements NotificationsService
     @Override
     public void onReceivedNotification(Context context, Notification notification)
     {
-        NotificationPersistance.AppDatabase database = getDatabase(context);
+        NotificationPersistance database = getDatabase(context);
         database.userDao().insert(notification);
         notifyAllNewNotification(database.userDao().getAll());
     }
 
     @Override
-    public List<Notification> getAllNotifications() {
-        return  database.userDao().getAll();
+    public List<Notification> getAllNotifications(Context context)
+    {
+        getDatabase(context).userDao().deletAll();
+        return  getDatabase(context).userDao().getAll();
+    }
+
+    @Override
+    public void setSeen(Context context, int id, boolean seen) {
+        getDatabase(context).userDao().setSeen(id,seen);
     }
 
     public void addListener(NotificationListener listener)

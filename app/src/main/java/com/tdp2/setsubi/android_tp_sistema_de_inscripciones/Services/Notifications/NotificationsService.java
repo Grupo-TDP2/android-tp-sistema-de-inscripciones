@@ -17,5 +17,6 @@ public interface NotificationsService
 
     ServiceResponse<Boolean> sendToken(Student student, String token);
     void onReceivedNotification(Context context, Notification notification);
-    List<Notification> getAllNotifications();
+    List<Notification> getAllNotifications(Context context);
+    void setSeen(Context context, int id, boolean seen);
 }

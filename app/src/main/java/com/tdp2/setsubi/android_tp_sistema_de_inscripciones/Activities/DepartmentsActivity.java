@@ -11,9 +11,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.TextRecyclerViewAdapter;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.DepartmentsPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.LoadingSnackbar;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.NotificationHelper;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.ToolBarHelper;
 
 import java.util.ArrayList;
@@ -26,6 +28,22 @@ public class DepartmentsActivity extends AppCompatActivity
         ArrayList<String> getDepartments();
         void onSelectedDepartment(int position);
         void loadData();
+    }
+
+    private NotificationHelper helper;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        helper = new NotificationHelper(ToolBarHelper.getNotificationView(this));
+        AppModel.getInstance().setVisibility(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        helper.destroy();
+        AppModel.getInstance().setVisibility(false);
     }
 
     private TextRecyclerViewAdapter adapter;
