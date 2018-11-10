@@ -19,7 +19,7 @@ public class MyFirebaseInstanceId extends FirebaseInstanceIdService implements S
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         if(AppModel.getInstance().getStudent() != null)
         {
-            ServiceResponse<Boolean> token = new NotifcationServiceAPI()
+            ServiceResponse<Boolean> token = NotifcationServiceAPI.getInstance()
                     .sendToken(AppModel.getInstance().getStudent(),refreshedToken);
             if( token.getStatusCode() == ServiceResponse.ServiceStatusCode.SUCCESS)
             {
