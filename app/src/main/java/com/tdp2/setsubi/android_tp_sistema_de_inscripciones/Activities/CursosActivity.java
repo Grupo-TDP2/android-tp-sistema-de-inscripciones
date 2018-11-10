@@ -89,6 +89,10 @@ public class CursosActivity extends AppCompatActivity implements LoadingView
         Toast.makeText(this, R.string.failed_enrolment, Toast.LENGTH_SHORT).show();
     }
 
+    public void showMessage(int stringResource) {
+        Toast.makeText(this, stringResource, Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void startLoading() {
         stopLoading();

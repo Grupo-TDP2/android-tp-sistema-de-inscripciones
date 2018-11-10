@@ -4,12 +4,16 @@ import android.net.Uri;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.ActionPeriod;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Career;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Final;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.FinalSubscriptionResult;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Student;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonArrayTransformer;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonFinalTransformer;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonFinalsPeriod;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonMyFinalTransformer;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonSubscibeFinal;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Serializer.JsonUnsubscibeFinal;
@@ -51,6 +55,11 @@ public class FinalsServiceAPI implements FinalsServiceInterface
         return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.SUCCESS, finals);
     }
 
+    @Override
+    public ServiceResponse<List<Final>> getFinalsForCourse(Student student, Career career, Subject subject, Course course) {
+        return getFinals(student.getAuthorization(), career.getId(), subject.getId(), course.getId());
+    }
+
     private ServiceResponse<List<Final>> getFinals(String token, int career, int subject, int course)
     {
         return new RequestPerformer<>(APIUriBuilder.getURIBuiled()
@@ -73,12 +82,12 @@ public class FinalsServiceAPI implements FinalsServiceInterface
     }
 
     @Override
-    public ServiceResponse<Integer> subscribe(Student student, Final fina)
+    public ServiceResponse<FinalSubscriptionResult> subscribe(Student student, Final fina, boolean regular)
     {
         JsonObject exam = new JsonObject();
         JsonObject container = new JsonObject();
         exam.addProperty("exam_id", fina.getId());
-        exam.addProperty("condition", getCondition(fina.isSupportsLibre()));
+        exam.addProperty("condition", getCondition(regular));
         container.add("student_exam", exam);
         return new RequestPerformer<>(getFinalInscriptionURI().build().toString(),
                 new RequestBuilder(RequestMethod.POST)
@@ -88,8 +97,8 @@ public class FinalsServiceAPI implements FinalsServiceInterface
                 new JsonSubscibeFinal()).perform();
     }
 
-    private String getCondition(boolean supportsLibre) {
-        if( supportsLibre )
+    private String getCondition(boolean regular) {
+        if( !regular )
         {
             return "free";
         }
@@ -104,5 +113,13 @@ public class FinalsServiceAPI implements FinalsServiceInterface
                 new RequestBuilder(RequestMethod.DELETE)
                         .addRequestProperty(RequestProperty.AUTHORIZATION, student.getAuthorization()),
                 new JsonUnsubscibeFinal()).perform();
+    }
+
+    @Override
+    public ServiceResponse<ActionPeriod> getFinalsSubscriptionPeriod(Student student) {
+        return new RequestPerformer<>(APIUriBuilder.getURIBuiled().appendPath("final_exam_weeks").toString(),
+                new RequestBuilder(RequestMethod.GET)
+                        .addRequestProperty(RequestProperty.AUTHORIZATION, student.getAuthorization()),
+                new JsonFinalsPeriod()).perform();
     }
 }

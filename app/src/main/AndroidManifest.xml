@@ -33,6 +33,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".Activities.MyFinalsActivity" />
         <activity android:name=".Activities.FinalsActivity" />
+        <activity android:name=".Activities.MyCoursesActivity" />
+        <activity android:name=".Activities.ApprovedSubjectActivity" />
 
         <service
             android:name=".AndroidServices.MyFirebaseInstanceId">

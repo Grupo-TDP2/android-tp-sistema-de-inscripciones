@@ -92,4 +92,8 @@ public class FinalsActivity extends AppCompatActivity implements LoadingView
     public void showNoFinalsAvailable() {
         findViewById(R.id.noFinals).setVisibility(View.VISIBLE);
     }
+
+    public void setSubscriptionEnabled(boolean subscriptionEnabled) {
+        adapter.setInteractionEnabled(subscriptionEnabled);
+    }
 }

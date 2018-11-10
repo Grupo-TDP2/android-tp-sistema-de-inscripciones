@@ -41,7 +41,7 @@ public class JsonTransformHelper
 
     private static Sede parseSede(String string)
     {
-        switch (string.toLowerCase())
+        switch (string.toUpperCase())
         {
             case "LH":
                 return Sede.LAS_HERAS;
@@ -70,6 +70,12 @@ public class JsonTransformHelper
         String toParse = jsonDate.replace('T',' ').replace("Z","");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
         return formatter.parse(toParse);
+    }
+
+    public static Date getDate(String jsonDate, String patter) throws ParseException
+    {
+        SimpleDateFormat formatter = new SimpleDateFormat(patter, Locale.getDefault());
+        return formatter.parse(jsonDate);
     }
 
     public static String getCatedra(JsonObject course)

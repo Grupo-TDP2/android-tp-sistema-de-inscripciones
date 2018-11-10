@@ -117,7 +117,7 @@ public class MyFinalsPresenter implements MyFinalsActivity.Presenter,
         while (iterator.hasNext())
         {
             Final next = iterator.next();
-            if( next.hasAlreadyPassedDate() )
+            if( next.hasAlreadyPassedDate() && !next.isFinalGiven())
             {
                 Log.d("FINAL","Filtered a final because it can't be enroled by student");
                 iterator.remove();
