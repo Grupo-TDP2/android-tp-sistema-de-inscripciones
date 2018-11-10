@@ -44,7 +44,10 @@ public class MyFinalsAdapter extends RecyclerView.Adapter<MyFinalsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Final finales = finals.get(position);
-        holder.setButtonLogic(finales.isCanUnsubscribe(), finales.isFinalGiven(), finales.passedFinal(), finales.getFinalCalification());
+        holder.setButtonLogic(finales.isCanUnsubscribe(),
+                finales.isFinalGiven(),
+                finales.passedFinal(),
+                finales.getFinalCalification());
         holder.setCatedra(finales.getCatedraName());
         holder.setDate(finales.getDate());
         holder.setTime(finales.getTime());
@@ -104,6 +107,7 @@ public class MyFinalsAdapter extends RecyclerView.Adapter<MyFinalsAdapter.ViewHo
             }
             unsubsribe.setText(text);
             unsubsribe.setVisibility(visibility ? View.VISIBLE : View.GONE);
+            unsubsribe.setEnabled(unsubscribeVisibility);
             ShapeBackgroundColorChanger.changeBackground(unsubsribe, background);
         }
 
