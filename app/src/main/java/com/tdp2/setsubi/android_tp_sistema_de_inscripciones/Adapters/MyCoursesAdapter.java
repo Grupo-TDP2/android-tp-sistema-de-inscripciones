@@ -29,11 +29,18 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
 
     private Listener listener;
     private List<MyCourse> courses;
+    private boolean inFinalsPeriod = false;
 
     public MyCoursesAdapter(List<MyCourse> courseList, Listener listener)
     {
         this.courses = courseList;
         this.listener = listener;
+    }
+
+    public void setInFinalsPeriod(boolean inFinalsPeriod)
+    {
+        this.inFinalsPeriod = inFinalsPeriod;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -53,7 +60,7 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
         holder.setTimes(course.getCursoTimeBands());
         holder.setCatedra(course.getCatedra());
         holder.setSede(course.getSede());
-        holder.setButtons(course.isEnabledToEnroll(), course.isCanSeeFinals());
+        holder.setButtons(course.inUnsubscribePeriod(), inFinalsPeriod);
     }
 
     @Override

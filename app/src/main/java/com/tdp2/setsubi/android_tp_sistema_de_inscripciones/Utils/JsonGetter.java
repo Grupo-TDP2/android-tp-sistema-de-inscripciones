@@ -1,5 +1,6 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -43,6 +44,15 @@ public class JsonGetter
         {
             return new NullGetter();
         }
+    }
+
+    public JsonArray getJsonArray(String key)
+    {
+        if( actualObject.has(key) && actualObject.get(key).isJsonArray() )
+        {
+            return actualObject.getAsJsonArray(key);
+        }
+        return null;
     }
 
     public JsonElement getValue(String key)

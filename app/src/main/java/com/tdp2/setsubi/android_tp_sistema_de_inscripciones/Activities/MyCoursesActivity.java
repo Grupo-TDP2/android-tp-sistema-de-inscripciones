@@ -20,7 +20,7 @@ public class MyCoursesActivity extends AppCompatActivity implements MyCoursesPre
 {
     private TextView noCourses;
     private MyCoursesPresenter presenter;
-    private RecyclerView.Adapter adapter;
+    private MyCoursesAdapter adapter;
     private Snackbar snackbar = null;
 
     @Override
@@ -73,6 +73,11 @@ public class MyCoursesActivity extends AppCompatActivity implements MyCoursesPre
     @Override
     public void showSuccess(int stringResource) {
         Toast.makeText(this,stringResource, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setCanSeeFinals(boolean canSeeFinals) {
+        adapter.setInFinalsPeriod(canSeeFinals);
     }
 
     @Override

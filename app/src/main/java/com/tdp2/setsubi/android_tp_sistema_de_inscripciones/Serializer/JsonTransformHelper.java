@@ -72,6 +72,12 @@ public class JsonTransformHelper
         return formatter.parse(toParse);
     }
 
+    public static Date getDate(String jsonDate, String patter) throws ParseException
+    {
+        SimpleDateFormat formatter = new SimpleDateFormat(patter, Locale.getDefault());
+        return formatter.parse(jsonDate);
+    }
+
     public static String getCatedra(JsonObject course)
     {
         if( isString(course, NAME) )
