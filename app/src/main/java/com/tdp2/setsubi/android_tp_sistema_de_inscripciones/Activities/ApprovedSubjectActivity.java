@@ -63,7 +63,11 @@ public class ApprovedSubjectActivity extends AppCompatActivity implements Approv
             }
         });
         presenter.loadSubjects();
+    }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        return ToolBarHelper.onClickedHome(this);
     }
 
     @Override
