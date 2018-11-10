@@ -67,9 +67,9 @@ public class MyCoursesPresenter implements ServiceAsyncTask.ForeGroundListener, 
     {
         view.stopLoading();
         int errorMessage = R.string.connectivityFailed;
-        if( error == ServiceResponse.ServiceStatusCode.NO_CONNECTION )
+        if( error != ServiceResponse.ServiceStatusCode.NO_CONNECTION )
         {
-            if (serviceAsyncTask instanceof GetMyCoursesTask)
+            if (serviceAsyncTask instanceof GetMyCoursesTask )
             {
                 loadedOne();
                 errorMessage = R.string.error_while_loading_my_courses;
@@ -121,7 +121,7 @@ public class MyCoursesPresenter implements ServiceAsyncTask.ForeGroundListener, 
     public void onUnsubscribe(int position)
     {
         MyCourse course = coursesList.get(position);
-        new UnsubscribeToCourseAsyncTask(this).execute(AppModel.getInstance(),course.getCareer(), course.getSubject(), course.getCourse());
+        new UnsubscribeToCourseAsyncTask(this).execute(AppModel.getInstance().getStudent(),course.getCareer(), course.getSubject(), course.getCourse());
     }
 
     @Override

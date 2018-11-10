@@ -78,13 +78,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/open_course_button"
                     android:layout_width="50dp"
                     android:layout_height="35dp"
                     android:layout_gravity="center_vertical"
                     android:background="@android:color/transparent"
-                    android:padding="10dp"
+                    android:padding="5dp"
                     android:tint="@color/colorPrimary"
                     android:tintMode="src_in"
                     app:srcCompat="@drawable/ic_down_arrow" />
@@ -184,21 +184,12 @@
                     app:layout_constraintStart_toEndOf="@+id/textView19" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:background="#919191" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/buttons_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:orientation="horizontal"
@@ -230,7 +221,7 @@
                 android:layout_marginStart="8dp"
                 android:background="@android:color/transparent"
                 android:text="@string/unsubscribe"
-                android:textColor="@color/actionButtonDelete"
+                android:textColor="@color/actionButtonColor"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:visibility="visible"

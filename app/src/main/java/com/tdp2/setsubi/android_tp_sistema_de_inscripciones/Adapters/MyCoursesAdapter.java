@@ -1,6 +1,7 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CoursePeriod;
@@ -73,10 +75,11 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
     {
         private TextView catedra, sede, period, subject, subjectCode;
         private RecyclerView timeBands;
-        private ImageButton openData;
+        private ImageView openData;
         private Button unsubscribe, seeFinals;
         private boolean opened = false;
         private View dataBlock;
+        private View titleBlock;
         ViewHolder(@NonNull View itemView)
         {
             super(itemView);
@@ -88,17 +91,22 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
             subject = itemView.findViewById(R.id.subject_value);
             timeBands = itemView.findViewById(R.id.course_time_band);
             timeBands.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
+            timeBands.addItemDecoration(new DividerItemDecoration(itemView.getContext(),
+                    DividerItemDecoration.VERTICAL));
             unsubscribe = itemView.findViewById(R.id.unsubscribe_button);
             seeFinals = itemView.findViewById(R.id.see_finals_button);
             openData = itemView.findViewById(R.id.open_course_button);
-            openData.setOnClickListener(new View.OnClickListener() {
+            titleBlock = itemView.findViewById(R.id.card_title);
+            titleBlock.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     opened = !opened;
                     if( opened )
                     {
+                        openData.setRotation(180);
                         dataBlock.setVisibility(View.VISIBLE);
                     } else {
+                        openData.setRotation(0);
                         dataBlock.setVisibility(View.GONE);
                     }
                 }

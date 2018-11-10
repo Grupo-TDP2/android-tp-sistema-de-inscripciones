@@ -97,8 +97,8 @@ public class MyCourse
 
         Calendar c2  =Calendar.getInstance();
         c2.setTimeInMillis(startDate.getTime());
-        int year2=c.get(Calendar.YEAR);
-        int week2=c.get(Calendar.WEEK_OF_YEAR);
+        int year2=c2.get(Calendar.YEAR);
+        int week2=c2.get(Calendar.WEEK_OF_YEAR);
 
         return year1 == year2 && week1 == week2;
     }
