@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.MyFinalsAdapter;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Final;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.MyFinalsPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
@@ -29,6 +30,18 @@ public class MyFinalsActivity extends AppCompatActivity implements LoadingView
     private MyFinalsAdapter adapter;
     private Presenter presenter;
     private Snackbar snackbar = null;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppModel.getInstance().setVisibility(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AppModel.getInstance().setVisibility(false);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

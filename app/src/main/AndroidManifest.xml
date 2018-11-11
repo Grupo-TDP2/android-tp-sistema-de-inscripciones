@@ -35,6 +35,7 @@
         <activity android:name=".Activities.FinalsActivity" />
         <activity android:name=".Activities.MyCoursesActivity" />
         <activity android:name=".Activities.ApprovedSubjectActivity" />
+        <activity android:name=".Activities.NotificationsActivity" />
 
         <service
             android:name=".AndroidServices.MyFirebaseInstanceId">

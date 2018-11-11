@@ -129,9 +129,9 @@
                     android:layout_weight="1"
                     android:text="TextView"
                     android:textSize="18sp"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView15"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/notification_date"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView15" />
+                    app:layout_constraintStart_toEndOf="@+id/notification_date" />
             </LinearLayout>
 
             <LinearLayout

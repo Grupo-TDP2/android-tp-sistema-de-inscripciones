@@ -2,7 +2,6 @@ package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities;
 
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -12,9 +11,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.TextRecyclerViewAdapter;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.CareersActivityPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.LoadingSnackbar;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.NotificationHelper;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.ToolBarHelper;
 
 public class CareersActivity extends AppCompatActivity implements
@@ -25,6 +26,21 @@ public class CareersActivity extends AppCompatActivity implements
     private RecyclerView.LayoutManager recyclerViewLayoutManager;
     private TextRecyclerViewAdapter recyclerViewAdapter;
     private Snackbar snackbar;
+    private NotificationHelper helper;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        helper = new NotificationHelper(ToolBarHelper.getNotificationView(this));
+        AppModel.getInstance().setVisibility(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        helper.destroy();
+        AppModel.getInstance().setVisibility(false);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

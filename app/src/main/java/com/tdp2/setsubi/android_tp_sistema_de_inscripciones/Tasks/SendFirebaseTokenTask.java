@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Student;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.Notifications.NotifcationServiceAPI;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.Notifications.NotificationServiceAPI;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
 
 public class SendFirebaseTokenTask extends ServiceAsyncTask<Object,Void,Boolean> {
@@ -24,7 +24,7 @@ public class SendFirebaseTokenTask extends ServiceAsyncTask<Object,Void,Boolean>
             {
                 return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.ERROR);
             }
-            return new NotifcationServiceAPI().sendToken((Student)ts[0],token);
+            return NotificationServiceAPI.getInstance().sendToken((Student)ts[0],token);
         }
         return new ServiceResponse<>(ServiceResponse.ServiceStatusCode.PARAMETER_ERROR);
     }

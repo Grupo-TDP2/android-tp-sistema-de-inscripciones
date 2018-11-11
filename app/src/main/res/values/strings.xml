@@ -65,12 +65,15 @@
     <string name="approved_subjects">Materias Aprobadas</string>
     <string name="error_approved_subjects">No se pudieron obtener las materia aprobadas por un error</string>
     <string name="menu">Menú</string>
-    <string name="no_approved_subjects">No hay materia aprobadas</string>
+    <string name="no_approved_subjects">Todavía no tiene materias aprobadas</string>
     <string name="error_unsubscribe_course_out_of_period">No puede desinscribirse por que no esta en la primer semana de cursada</string>
     <string name="unsubscribed_course_success">Se desinscribio correctamente</string>
     <string name="error_when_loading_finals_period">No se pudo verificar el periodo de finales</string>
     <string name="cant_subscribe_final">No puede inscribirse a este final</string>
     <string name="all_departments">Todos los departamentos</string>
+    <string name="default_notification_channel_id">com.tdp.setsubi.android_tp_sistema_de_inscripcion.noticationChannel</string>
+    <string name="no_notifications">No tiene notificaciones</string>
+    <string name="notifications">Notificaciones</string>
 
 
 </resources>

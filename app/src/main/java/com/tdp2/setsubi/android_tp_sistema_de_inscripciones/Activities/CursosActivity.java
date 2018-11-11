@@ -10,10 +10,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.CursoAdapter;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.EnrolmentResponse;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.CursosPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.LoadingSnackbar;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.NotificationHelper;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.ToolBarHelper;
 
 public class CursosActivity extends AppCompatActivity implements LoadingView
@@ -21,6 +23,21 @@ public class CursosActivity extends AppCompatActivity implements LoadingView
     private CursosLogic presenter;
     private Snackbar snackbar;
     private TextView noHay;
+    private NotificationHelper helper;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        helper = new NotificationHelper(ToolBarHelper.getNotificationView(this));
+        AppModel.getInstance().setVisibility(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        helper.destroy();
+        AppModel.getInstance().setVisibility(false);
+    }
 
     public void showNoCoursesAvailable()
     {

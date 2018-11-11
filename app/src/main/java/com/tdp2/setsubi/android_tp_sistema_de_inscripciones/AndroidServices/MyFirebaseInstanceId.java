@@ -5,7 +5,7 @@ import android.util.Log;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
-import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.Notifications.NotifcationServiceAPI;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.Notifications.NotificationServiceAPI;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
 
@@ -19,7 +19,7 @@ public class MyFirebaseInstanceId extends FirebaseInstanceIdService implements S
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         if(AppModel.getInstance().getStudent() != null)
         {
-            ServiceResponse<Boolean> token = new NotifcationServiceAPI()
+            ServiceResponse<Boolean> token = NotificationServiceAPI.getInstance()
                     .sendToken(AppModel.getInstance().getStudent(),refreshedToken);
             if( token.getStatusCode() == ServiceResponse.ServiceStatusCode.SUCCESS)
             {

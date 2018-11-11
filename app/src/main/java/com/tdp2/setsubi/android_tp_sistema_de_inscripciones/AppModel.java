@@ -20,7 +20,18 @@ public class AppModel
     private Subject selecteClass;
     private SubjectRoute route = SubjectRoute.COURSES;
     private Course selectedCourse = null;
+    private boolean appVisible = false;
 
+    public void setVisibility(boolean visibility)
+    {
+        this.appVisible = visibility;
+    }
+
+    public boolean isAppVisible()
+    {
+        return appVisible;
+    }
+    
     public Course getSelectedCourse() {
         return selectedCourse;
     }

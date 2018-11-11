@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.LoginPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.LoadingSnackbar;
@@ -30,6 +31,18 @@ public class LoginActivity extends AppCompatActivity implements LoadingView
     private TextInputEditText userName;
     private TextInputLayout usernameLayout;
     private Snackbar snackbar = null;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppModel.getInstance().setVisibility(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AppModel.getInstance().setVisibility(false);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

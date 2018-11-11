@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.MainActivity;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities.NotificationsActivity;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 
 public class ToolBarHelper
@@ -19,11 +21,9 @@ public class ToolBarHelper
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home_white);
-        myToolbar.findViewById(R.id.notification).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              SoonToast.show(activity);
-            }
+        myToolbar.findViewById(R.id.notification).setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), NotificationsActivity.class);
+            v.getContext().startActivity(intent);
         });
     }
 
@@ -45,5 +45,10 @@ public class ToolBarHelper
     {
         TextView textView = appCompatActivity.findViewById(R.id.toolbar_title);
         textView.setText(string);
+    }
+
+    public static ImageView getNotificationView(AppCompatActivity appCompatActivity)
+    {
+        return appCompatActivity.findViewById(R.id.my_toolbar).findViewById(R.id.notification);
     }
 }

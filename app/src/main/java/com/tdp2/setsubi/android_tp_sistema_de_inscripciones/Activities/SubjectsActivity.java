@@ -11,11 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.TextRecyclerViewAdapter;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.SubjectsPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.NotificationHelper;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.ToolBarHelper;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -33,6 +33,21 @@ public class SubjectsActivity extends AppCompatActivity
     private ClassesActivityPresenter presenter;
     private TextRecyclerViewAdapter adapter;
     private TextView notAvailable;
+    private NotificationHelper helper;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        helper = new NotificationHelper(ToolBarHelper.getNotificationView(this));
+        AppModel.getInstance().setVisibility(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        helper.destroy();
+        AppModel.getInstance().setVisibility(false);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
