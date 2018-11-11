@@ -74,7 +74,6 @@ public class NotificationServiceAPI implements NotificationsService
     @Override
     public List<Notification> getAllNotifications(Context context)
     {
-        getDatabase(context).userDao().deletAll();
         return  getDatabase(context).userDao().getAll();
     }
 
