@@ -38,7 +38,7 @@ public class AppModel
 
     public enum SubjectRoute
     {
-        COURSES, FINALS_OF_COURSE, FREE_FINALS
+        COURSES, FINALS_OF_COURSE, FINALS_SUBSCRIPTION
     }
 
     public static AppModel getInstance()
