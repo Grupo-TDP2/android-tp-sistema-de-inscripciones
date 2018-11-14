@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Final;
@@ -45,7 +44,10 @@ public class MyFinalsAdapter extends RecyclerView.Adapter<MyFinalsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Final finales = finals.get(position);
-        holder.setUnsubscribeVisibility(finales.isCanUnsubscribe());
+        holder.setButtonLogic(finales.isCanUnsubscribe(),
+                finales.isFinalGiven(),
+                finales.passedFinal(),
+                finales.getFinalCalification());
         holder.setCatedra(finales.getCatedraName());
         holder.setDate(finales.getDate());
         holder.setTime(finales.getTime());
@@ -70,7 +72,6 @@ public class MyFinalsAdapter extends RecyclerView.Adapter<MyFinalsAdapter.ViewHo
         {
             super(itemView);
             unsubsribe = itemView.findViewById(R.id.button_unsubscribe);
-            ShapeBackgroundColorChanger.changeColor(unsubsribe, R.color.actionButtonDelete);
             catedra = itemView.findViewById(R.id.catedra_value);
             subject = itemView.findViewById(R.id.subject_value);
             date = itemView.findViewById(R.id.date_value);
@@ -90,8 +91,24 @@ public class MyFinalsAdapter extends RecyclerView.Adapter<MyFinalsAdapter.ViewHo
             condicion.setText(regular ? R.string.regular : R.string.libre);
         }
 
-        void setUnsubscribeVisibility(boolean unsubscribeVisibility) {
-           unsubsribe.setVisibility(unsubscribeVisibility ? View.VISIBLE : View.GONE);
+        void setButtonLogic(boolean unsubscribeVisibility, boolean finalGiven, boolean finalPassed, Integer calification)
+        {
+            boolean visibility = finalGiven;
+            int background = R.drawable.button_round_grey;
+            String text = unsubsribe.getContext().getString(R.string.disapproved);
+            if( unsubscribeVisibility )
+            {
+                visibility = true;
+                background = R.drawable.button_round_red;
+                text = unsubsribe.getContext().getString(R.string.unsubscribe);
+            } else if( finalPassed )
+            {
+                text = unsubsribe.getContext().getString(R.string.approved, calification);
+            }
+            unsubsribe.setText(text);
+            unsubsribe.setVisibility(visibility ? View.VISIBLE : View.GONE);
+            unsubsribe.setEnabled(unsubscribeVisibility);
+            ShapeBackgroundColorChanger.changeBackground(unsubsribe, background);
         }
 
         void setCatedra(String catedra)

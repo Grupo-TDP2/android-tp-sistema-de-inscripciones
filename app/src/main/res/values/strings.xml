@@ -56,5 +56,24 @@
     <string name="no_hay_finales">No se encontraron finales</string>
     <string name="error_when_subscribing">No se pudo realizar la inscripción</string>
     <string name="subscribed_final_success">Se realizó la subscripción correctamente</string>
+    <string name="see_finals">Ver Finales</string>
+    <string name="my_courses">Mis Cursos</string>
+    <string name="error_while_loading_my_courses">Los cursos no se puedieron cargar</string>
+    <string name="nota_label">Nota:</string>
+    <string name="disapproved">Desaprobado</string>
+    <string name="approved">Aprobado(%d)</string>
+    <string name="approved_subjects">Materias Aprobadas</string>
+    <string name="error_approved_subjects">No se pudieron obtener las materia aprobadas por un error</string>
+    <string name="menu">Menú</string>
+    <string name="no_approved_subjects">Todavía no tiene materias aprobadas</string>
+    <string name="error_unsubscribe_course_out_of_period">No puede desinscribirse por que no esta en la primer semana de cursada</string>
+    <string name="unsubscribed_course_success">Se desinscribio correctamente</string>
+    <string name="error_when_loading_finals_period">No se pudo verificar el periodo de finales</string>
+    <string name="cant_subscribe_final">No puede inscribirse a este final</string>
+    <string name="all_departments">Todos los departamentos</string>
+    <string name="default_notification_channel_id">com.tdp.setsubi.android_tp_sistema_de_inscripcion.noticationChannel</string>
+    <string name="no_notifications">No tiene notificaciones</string>
+    <string name="notifications">Notificaciones</string>
+
 
 </resources>

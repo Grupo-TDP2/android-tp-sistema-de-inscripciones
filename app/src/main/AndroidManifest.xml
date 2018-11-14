@@ -33,10 +33,32 @@
             android:screenOrientation="portrait" />
         <activity android:name=".Activities.MyFinalsActivity" />
         <activity android:name=".Activities.FinalsActivity" />
+        <activity android:name=".Activities.MyCoursesActivity" />
+        <activity android:name=".Activities.ApprovedSubjectActivity" />
+        <activity android:name=".Activities.NotificationsActivity" />
 
+        <service
+            android:name=".AndroidServices.MyFirebaseInstanceId">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name=".AndroidServices.MyFirebaseMessageService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_edit_white_140dp" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+
 
     </application>
 

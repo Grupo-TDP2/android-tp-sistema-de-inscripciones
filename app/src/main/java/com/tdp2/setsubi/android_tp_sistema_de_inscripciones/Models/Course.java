@@ -9,18 +9,19 @@ public class Course
     private String catedra;
     private Sede sede;
     private List<CursoTimeBand> cursoTimeBands;
-    private boolean isSubscribed;
+    private Integer enrollId;
     private boolean enabledToEnroll;
     private int cupos;
 
-    public Course(int id, String catedra, Sede sede, List<CursoTimeBand> schedules, int cupo, boolean isSubscribed, boolean enabledToEnroll)
+    public Course(int id, String catedra, Sede sede, List<CursoTimeBand> schedules,
+                  int cupo, Integer enrollId, boolean enabledToEnroll)
     {
         this.id = id;
         this.catedra = catedra;
         this.sede = sede;
         this.cursoTimeBands = schedules;
         this.cupos = cupo;
-        this.isSubscribed = isSubscribed;
+        this.enrollId = enrollId;
         this.enabledToEnroll = enabledToEnroll;
     }
 
@@ -50,15 +51,20 @@ public class Course
 
     public boolean isSubscribed()
     {
-        return isSubscribed;
+        return enrollId != null;
     }
 
-    public void setSubscribed(boolean isSubscribed)
+    public void setSubscribed(Integer enrollId)
     {
-        this.isSubscribed = isSubscribed;
+        this.enrollId = enrollId;
     }
 
     public boolean isEnabledToEnroll() {
         return enabledToEnroll;
+    }
+
+    public Integer getEnrollId()
+    {
+        return enrollId;
     }
 }

@@ -48,7 +48,7 @@ public class FinalJsonTest
     @BeforeClass
     public static void initSubject()
     {
-        AppModel.getInstance().setSelecteClass(new Subject(1,15,"Tets",20,
+        AppModel.getInstance().setSelectedSubject(new Subject(1,15,"Tets",20,
                 new Department(1,"DTest", 45)));
     }
 

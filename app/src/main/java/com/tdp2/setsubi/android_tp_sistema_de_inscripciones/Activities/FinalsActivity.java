@@ -11,10 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.FinalsAdapter;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Final;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.FinalsPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.LoadingSnackbar;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.NotificationHelper;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.ToolBarHelper;
 
 import java.util.List;
@@ -31,6 +33,21 @@ public class FinalsActivity extends AppCompatActivity implements LoadingView
     private Presenter presenter;
     private RecyclerView recyclerView;
     private Snackbar snackbar = null;
+    private NotificationHelper helper;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        helper = new NotificationHelper(ToolBarHelper.getNotificationView(this));
+        AppModel.getInstance().setVisibility(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        helper.destroy();
+        AppModel.getInstance().setVisibility(false);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -91,5 +108,9 @@ public class FinalsActivity extends AppCompatActivity implements LoadingView
 
     public void showNoFinalsAvailable() {
         findViewById(R.id.noFinals).setVisibility(View.VISIBLE);
+    }
+
+    public void setSubscriptionEnabled(boolean subscriptionEnabled) {
+        adapter.setInteractionEnabled(subscriptionEnabled);
     }
 }

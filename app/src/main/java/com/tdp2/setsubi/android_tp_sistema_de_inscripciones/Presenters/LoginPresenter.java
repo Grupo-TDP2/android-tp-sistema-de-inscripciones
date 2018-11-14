@@ -9,6 +9,7 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Persistance.UserCred
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.LoginAsyncTask;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.SendFirebaseTokenTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.TextValidator;
 
@@ -71,26 +72,38 @@ public class LoginPresenter implements LoginActivity.Presenter, ServiceAsyncTask
     @Override
     public void onError(ServiceAsyncTask serviceAsyncTask, ServiceResponse.ServiceStatusCode error)
     {
-        doingLogin = false;
-        activity.stopLoading();
-        int message = error ==  ServiceResponse.ServiceStatusCode.NO_CONNECTION ?
-                R.string.connectivityFailed : R.string.failed_login;
-        activity.showFailedLogin(message);
+        if( serviceAsyncTask instanceof LoginAsyncTask )
+        {
+            doingLogin = false;
+            activity.stopLoading();
+            int message = error ==  ServiceResponse.ServiceStatusCode.NO_CONNECTION ?
+                    R.string.connectivityFailed : R.string.failed_login;
+            activity.showFailedLogin(message);
+        } else {
+            activity.goToMainScreen();
+        }
     }
 
     @Override
     public void onSuccess(ServiceAsyncTask serviceAsyncTask, Object data)
     {
-        doingLogin = false;
-        credentials.saveUserCredentials(mailUsed, passwordUsed);
-        activity.stopLoading();
-        AppModel.getInstance().setStudent((Student)data);
-        activity.goToMainScreen();
+        if( serviceAsyncTask instanceof LoginAsyncTask )
+        {
+            doingLogin = false;
+            credentials.saveUserCredentials(mailUsed, passwordUsed);
+            activity.stopLoading();
+            AppModel.getInstance().setStudent((Student)data);
+            new SendFirebaseTokenTask(this).execute(data);
+        } else
+        {
+            activity.goToMainScreen();
+        }
     }
 
     @Override
     public void onStartingAsyncTask(ServiceAsyncTask serviceAsyncTask)
     {
-        activity.startLoading();
+
+        if( serviceAsyncTask instanceof LoginAsyncTask )activity.startLoading();
     }
 }

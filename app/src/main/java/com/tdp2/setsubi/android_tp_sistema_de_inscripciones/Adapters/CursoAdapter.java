@@ -18,7 +18,6 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.ShapeBackgroundColorChanger;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHolder>
 {
@@ -28,7 +27,7 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
 
     public interface SubscribeListener
     {
-        void onSubscribe(int cursoId);
+        void onCourseButtonClick(int cursoId);
     }
 
     public CursoAdapter(List<Course> courses, boolean canSubscribe, SubscribeListener listener)
@@ -58,8 +57,7 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
         holder.setCupo(course.getCupos());
         holder.setTimes(course.getCursoTimeBands());
         holder.setSede(course.getSede());
-        holder.enableSubscription((canSubscribe && course.isEnabledToEnroll()) || course.isSubscribed());
-        holder.setNotSubscribed(!course.isSubscribed());
+        holder.enableSubscription( (canSubscribe && course.isEnabledToEnroll()), course.isSubscribed());
         holder.setSubscribeListener(listener, course.getId());
     }
 
@@ -116,21 +114,27 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
             noTimesText.setVisibility(noTimesVisibility);
         }
 
-        public void enableSubscription(boolean canSubscribe)
+        public void enableSubscription(boolean canSubscribe, boolean isSubscribed)
         {
-            subscribe.setVisibility(canSubscribe ? View.VISIBLE : View.INVISIBLE);
+            boolean visible = canSubscribe || isSubscribed;
+            setNotSubscribed(canSubscribe, isSubscribed);
+            subscribe.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
         }
 
-        public void setNotSubscribed(boolean enabled)
+        public void setNotSubscribed(boolean canSubscribe, boolean isSubscribed)
         {
-            int color = R.color.disbaledBackground;
+            int background = R.drawable.button_round_grey;
             int text = R.string.inscripto;
-            if( enabled )
+            if( canSubscribe && !isSubscribed )
             {
-                color = R.color.actionButtonColor;
+                background = R.drawable.button_round_blue;
                 text = R.string.inscribirse_btn_text;
+            } else if( canSubscribe )
+            {
+                background = R.drawable.button_round_red;
+                text = R.string.unsubscribe;
             }
-            ShapeBackgroundColorChanger.changeColor(subscribe, color);
+            ShapeBackgroundColorChanger.changeBackground(subscribe, background);
             subscribe.setText(text);
         }
 
@@ -139,7 +143,7 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
             this.subscribe.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    subscribeListener.onSubscribe(id);
+                    subscribeListener.onCourseButtonClick(id);
                 }
             });
         }

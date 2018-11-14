@@ -63,13 +63,18 @@ public class JsonCourseTransformer extends JsonTransformer<Course>
                 sede = getSede(jsonObject.get(LESSON_SCHEDULES));
             } else return null;
 
-            boolean isSubscribed = false, enabledToEnroll = false;
-            if( jsonObject.has(INSCRIBED) && jsonObject.get(INSCRIBED).isJsonPrimitive() )
+            Integer enrolmentId = null;
+            boolean enabledToEnroll = false;
+            if( jsonObject.has(JsonKeys.ENROLMENT) )
             {
-                JsonPrimitive primitive = jsonObject.getAsJsonPrimitive(INSCRIBED);
-                if( primitive.isBoolean() )
+                JsonElement enrolment = jsonObject.get(JsonKeys.ENROLMENT);
+                if( enrolment != null && enrolment.isJsonObject() )
                 {
-                    isSubscribed = primitive.getAsBoolean();
+                    JsonObject enrolmentObj = enrolment.getAsJsonObject();
+                    if( JsonUtils.isInt(enrolmentObj, JsonKeys.ID) )
+                    {
+                        enrolmentId = JsonUtils.getInt(enrolmentObj, JsonKeys.ID);
+                    }
                 }
             }
 
@@ -77,7 +82,7 @@ public class JsonCourseTransformer extends JsonTransformer<Course>
             {
                 enabledToEnroll = JsonUtils.getBool(jsonObject, JsonKeys.ENABLED_TO_ENROL);
             }
-            return new Course(id, name, sede, times, vacancies, isSubscribed, enabledToEnroll);
+            return new Course(id, name, sede, times, vacancies, enrolmentId, enabledToEnroll);
         }
         return null;
     }

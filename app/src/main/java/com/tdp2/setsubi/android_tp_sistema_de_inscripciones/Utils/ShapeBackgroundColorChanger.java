@@ -22,4 +22,15 @@ public class ShapeBackgroundColorChanger
             ((ColorDrawable)background).setColor(ContextCompat.getColor(context, colorId));
         }
     }
+
+    public static void changeBackground(View view, int background)
+    {
+        int left, top, right, bottom;
+        left = view.getPaddingLeft();
+        top = view.getPaddingTop();
+        right = view.getPaddingRight();
+        bottom = view.getPaddingBottom();
+        view.setBackgroundResource(background);
+        view.setPadding(left,top,right,bottom);
+    }
 }
