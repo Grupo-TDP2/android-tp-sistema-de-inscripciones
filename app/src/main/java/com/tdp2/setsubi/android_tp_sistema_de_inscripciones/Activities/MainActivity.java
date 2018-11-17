@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         findViewById(R.id.myCoursesButton).setOnClickListener(new MyCoursesHandler());
         findViewById(R.id.myExamsButton).setOnClickListener(new MyExamsHandler());
         findViewById(R.id.priorityButton).setOnClickListener(new SoonClickHandler());
-        findViewById(R.id.myDataButton).setOnClickListener(new SoonClickHandler());
+        findViewById(R.id.myDataButton).setOnClickListener(new MyDataHandler());
     }
 
     private NotificationHelper helper;
@@ -107,6 +107,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
                 break;
             case "myCourses":
                 navigationIntent = new Intent(MainActivity.this, MyCoursesActivity.class);
+                break;
+            case "myData":
+                navigationIntent = new Intent(MainActivity.this, MyDataActivtiy.class);
                 break;
         }
         if( navigationIntent != null )
@@ -169,6 +172,14 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         @Override
         public void onClick(View v) {
             presenter.navigateTo("myCourses");
+        }
+    }
+
+    protected class MyDataHandler implements View.OnClickListener
+    {
+        @Override
+        public void onClick(View v) {
+            presenter.navigateTo("myData");
         }
     }
 
