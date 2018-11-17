@@ -51,7 +51,7 @@ public class AppModel
     }
 
     private AppModel() {
-        student = new Student(4,"Juan","Perez","");
+        student = new Student(4,"leandro.masello@example.com","Juan","Perez","");
     }
 
     public void login(Student student)
