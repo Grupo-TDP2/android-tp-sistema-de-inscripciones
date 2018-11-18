@@ -1,6 +1,7 @@
 package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters;
 
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -73,63 +75,80 @@ public class FinalsAdapter extends RecyclerView.Adapter<FinalsAdapter.ViewHolder
 
     class ViewHolder extends RecyclerView.ViewHolder
     {
-        private TextView catedra, time, date, sede, condicion;
+        private TextView catedra, time, date, sede;
         private Button subsrcibe;
         private Spinner conditionSpinner;
+        private View finalTitleView, sedeContainer, catedraContainer;
+        private ImageView arrow;
+        private boolean opened = false;
 
         ViewHolder(@NonNull View itemView)
         {
             super(itemView);
+            finalTitleView = itemView.findViewById(R.id.header_container);
             catedra = itemView.findViewById(R.id.catedra_value);
             time = itemView.findViewById(R.id.time_value);
             date = itemView.findViewById(R.id.date_value);
             sede = itemView.findViewById(R.id.sede_value);
-            condicion = itemView.findViewById(R.id.condicion_value);
             subsrcibe = itemView.findViewById(R.id.subsribe_button_final);
             conditionSpinner = itemView.findViewById(R.id.condition_spinner);
+            sedeContainer = itemView.findViewById(R.id.sede_container);
+            catedraContainer = itemView.findViewById(R.id.catedra_container);
+            arrow = itemView.findViewById(R.id.final_arrow);
+            finalTitleView.setOnClickListener(v -> {
+                int visibilit = View.VISIBLE;
+                if( opened )
+                {
+                    visibilit = View.GONE;
+                    arrow.setRotation(0);
+                    opened = false;
+                } else
+                {
+                    arrow.setRotation(180);
+                    opened = true;
+                }
+                sedeContainer.setVisibility(visibilit);
+                catedraContainer.setVisibility(visibilit);
+            });
             List<String> options = Arrays.asList(itemView.getContext().getString(R.string.regular),
                     itemView.getContext().getString(R.string.libre));
             conditionSpinner.setAdapter(new ArrayAdapter<>(itemView.getContext(),
                     android.support.design.R.layout.support_simple_spinner_dropdown_item,
                     options));
             conditionSpinner.setSelection(REGULAR);
-            subsrcibe.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.clickedButton(getAdapterPosition(), conditionSpinner.getSelectedItemPosition() == REGULAR);
-                }
-            });
+            subsrcibe.setOnClickListener(v -> listener.clickedButton(getAdapterPosition(), conditionSpinner.getSelectedItemPosition() == REGULAR));
         }
 
         void setCondicion(boolean isSubscribed,
                           boolean canGiveRegular, boolean canGiveFree,
                           boolean subscribedFree)
         {
+            int backgroundColor = R.color.colorAccent;
+            boolean showSubscribeButton = true;
             if( !isSubscribed && canGiveRegular && canGiveFree )
             {
-                condicion.setVisibility(View.GONE);
+                subsrcibe.setText(R.string.inscribirse_btn_text);
                 conditionSpinner.setEnabled(true);
                 conditionSpinner.setVisibility(View.VISIBLE);
             } else if( isSubscribed )
             {
                 if( subscribedFree ) conditionSpinner.setSelection(FREE);
                 conditionSpinner.setEnabled(false);
-                condicion.setText(!subscribedFree ? R.string.regular : R.string.libre);
+                subsrcibe.setText(!subscribedFree ? R.string.unsubscribe_regular : R.string.unsubscribe_libre);
                 conditionSpinner.setVisibility(View.GONE);
-                condicion.setVisibility(View.VISIBLE);
             } else if( !canGiveRegular && !canGiveFree )
             {
-                condicion.setText(R.string.cant_subscribe_final);
+                backgroundColor = R.color.disbaledBackground;
+                showSubscribeButton = false;
                 conditionSpinner.setVisibility(View.GONE);
-                condicion.setVisibility(View.VISIBLE);
             } else
             {
                 if( canGiveFree ) conditionSpinner.setSelection(FREE);
-                condicion.setText(canGiveRegular ? R.string.regular : R.string.libre);
+                subsrcibe.setText(canGiveRegular ? R.string.subscribe_regular : R.string.subscribe_libre);
                 conditionSpinner.setVisibility(View.GONE);
-                condicion.setVisibility(View.VISIBLE);
             }
-
+            subsrcibe.setVisibility(showSubscribeButton ? View.VISIBLE : View.GONE);
+            finalTitleView.setBackgroundColor(ContextCompat.getColor(subsrcibe.getContext(), backgroundColor));
         }
         void setCatedra(String catedra) {
             this.catedra.setText(catedra);
@@ -159,20 +178,6 @@ public class FinalsAdapter extends RecyclerView.Adapter<FinalsAdapter.ViewHolder
             } else
             {
                 this.subsrcibe.setVisibility(View.VISIBLE);
-                int background, text;
-                if( subscribed )
-                {
-                    background = R.drawable.button_round_red;
-                   text = R.string.unsubscribe;
-                } else
-                {
-                    background = R.drawable.button_round_blue;
-                    text = R.string.inscribirse_btn_text;
-                }
-                if( !interactionEnabled ) background = R.drawable.button_round_grey;
-                ShapeBackgroundColorChanger.changeBackground(subsrcibe,background);
-                this.subsrcibe.setText(text);
-                this.subsrcibe.setEnabled(interactionEnabled);
             }
         }
     }
