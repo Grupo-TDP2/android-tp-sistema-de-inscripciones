@@ -49,7 +49,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/name"
-            android:imeOptions="actionNext" />
+            android:imeOptions="actionNext"
+            android:inputType="text" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -70,7 +71,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/surname"
-            android:imeOptions="actionNext" />
+            android:imeOptions="actionNext"
+            android:inputType="text" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -91,7 +93,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/usuario"
-            android:imeOptions="actionNext" />
+            android:imeOptions="actionDone"
+            android:inputType="textEmailAddress" />
     </android.support.design.widget.TextInputLayout>
 
     <ImageView

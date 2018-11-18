@@ -137,17 +137,17 @@ public class MyDataEditionActivity extends AppCompatActivity implements MyDataEd
 
     public String getName()
     {
-        return nameText.getEditableText().toString();
+        return nameText.getEditableText().toString().trim();
     }
 
     public String getSurname()
     {
-        return surnameText.getEditableText().toString();
+        return surnameText.getEditableText().toString().trim();
     }
 
     public String getEmail()
     {
-        return emailText.getEditableText().toString();
+        return emailText.getEditableText().toString().trim();
     }
 
     @Override
