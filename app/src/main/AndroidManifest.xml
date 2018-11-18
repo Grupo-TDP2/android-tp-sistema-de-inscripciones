@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tdp2.setsubi.android_tp_sistema_de_inscripciones">
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -37,6 +38,9 @@
         <activity android:name=".Activities.ApprovedSubjectActivity" />
         <activity android:name=".Activities.NotificationsActivity" />
         <activity android:name=".Activities.PollActivity" />
+        <activity android:name=".Activities.MyDataActivtiy" />
+        <activity android:name=".Activities.MyDataEditionActivity" />
+
 
         <service
             android:name=".AndroidServices.MyFirebaseInstanceId">
