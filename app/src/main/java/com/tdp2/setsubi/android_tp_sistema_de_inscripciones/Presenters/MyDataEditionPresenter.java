@@ -11,6 +11,7 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.EditUserAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.TextValidator;
 
 public class MyDataEditionPresenter implements ServiceAsyncTask.ForeGroundListener
 {
@@ -102,7 +103,7 @@ public class MyDataEditionPresenter implements ServiceAsyncTask.ForeGroundListen
             canEdit = false;
         }
 
-        if( email.length() == 0 )
+        if( !TextValidator.isEmail(email) )
         {
             view.showEmailError();
             canEdit = false;
