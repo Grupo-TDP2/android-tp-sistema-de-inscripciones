@@ -7,6 +7,7 @@ import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.MyCourse;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Poll;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Services.ServiceResponse;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.SavePollAsyncTask;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Tasks.ServiceAsyncTask;
 
 public class PollPresenter implements ServiceAsyncTask.ForeGroundListener
@@ -98,7 +99,13 @@ public class PollPresenter implements ServiceAsyncTask.ForeGroundListener
                 ((Poll.InterstingPoll)poll).setInteresting(view.getInteresting());
                 break;
             case FREE_TEXT:
-                ((Poll.FreeTextPoll)poll).setText(view.getText());
+                String text = view.getText();
+                if( text.length() == 0 )
+                {
+                    view.showError(R.string.complete_text);
+                    return;
+                }
+                ((Poll.FreeTextPoll)poll).setText(text);
                 break;
             case DIFICULTY:
                 ((Poll.DificultyPoll)poll).setDificulty(view.getDificulty());
@@ -109,8 +116,11 @@ public class PollPresenter implements ServiceAsyncTask.ForeGroundListener
         }
         if( view.getStep() + 1 == AppModel.getInstance().getActualPoll().size() )
         {
-
-            //TODO ASYNC TASK
+            AppModel appModel = AppModel.getInstance();
+            new SavePollAsyncTask(this).execute(appModel.getStudent(),
+                    appModel.getSelectedMyCourse(),
+                    ((Poll.CalificationPoll)appModel.getActualPoll().get(0)).getCalification(),
+                    ((Poll.FreeTextPoll)poll).getText());
         } else
         {
             view.goToNextWith(view.getStep()+1);
@@ -132,6 +142,7 @@ public class PollPresenter implements ServiceAsyncTask.ForeGroundListener
     @Override
     public void onSuccess(ServiceAsyncTask serviceAsyncTask, Object data) {
         view.stopLoading();
+        view.showError(R.string.poll_success);
         view.goBackToMain();
     }
 

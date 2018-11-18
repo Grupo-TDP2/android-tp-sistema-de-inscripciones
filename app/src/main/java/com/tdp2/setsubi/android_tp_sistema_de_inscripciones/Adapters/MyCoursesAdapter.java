@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CoursePeriod;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CursoTimeBand;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.MyCourse;
@@ -64,7 +65,8 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
         holder.setTimes(course.getCursoTimeBands());
         holder.setCatedra(course.getCatedra());
         holder.setSede(course.getSede());
-        holder.setButtons(course.inUnsubscribePeriod(), inFinalsPeriod);
+        holder.setButtons(course.inUnsubscribePeriod(), inFinalsPeriod,
+                course.getCourse().getStatus() == Course.Status.APPROVED);
     }
 
     @Override
@@ -153,7 +155,8 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
             this.sede.setText(text);
         }
 
-        void setButtons(boolean enabledToEnroll, boolean canSeeFinals) {
+        void setButtons(boolean enabledToEnroll, boolean canSeeFinals, boolean canDoPoll)
+        {
             if( enabledToEnroll )
             {
                 unsubscribe.setVisibility(View.VISIBLE);
@@ -166,6 +169,14 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
             } else
             {
                 seeFinals.setVisibility(View.GONE);
+            }
+
+            if( canDoPoll )
+            {
+                doPoll.setVisibility(View.VISIBLE);
+            } else
+            {
+                doPoll.setVisibility(View.GONE);
             }
         }
     }

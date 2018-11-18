@@ -76,6 +76,8 @@
     <string name="notifications">Notificaciones</string>
     <string name="poll">Encuesta</string>
     <string name="poll_not_sent">No se pudo enviar la encuesta</string>
+    <string name="complete_text">Debe dejar un comentario</string>
+    <string name="poll_success">Se envió la encuesta correctamente</string>
 
 
 </resources>

@@ -126,17 +126,17 @@ public class PollActivity extends AppCompatActivity implements PollPresenter.Vie
         switch (calification.getCheckedRadioButtonId())
         {
             case R.id.excellent:
-                return 10;
-            case R.id.very_good:
-                return 8;
-            case R.id.good:
-                return 7;
-            case R.id.normal:
                 return 5;
-            case R.id.bad:
+            case R.id.very_good:
+                return 4;
+            case R.id.good:
                 return 3;
-            case R.id.very_bad:
+            case R.id.normal:
+                return 2;
+            case R.id.bad:
                 return 1;
+            case R.id.very_bad:
+                return 0;
         }
         return -1;
     }
@@ -233,22 +233,22 @@ public class PollActivity extends AppCompatActivity implements PollPresenter.Vie
     {
         switch (calification)
         {
-            case 10:
+            case 5:
                 this.calification.check(R.id.excellent);
                 break;
-            case 8:
+            case 4:
                 this.calification.check(R.id.very_good);
                 break;
-            case 7:
+            case 3:
                 this.calification.check(R.id.good);
                 break;
-            case 5:
+            case 2:
                 this.calification.check(R.id.normal);
                 break;
-            case 3:
+            case 1:
                 this.calification.check(R.id.bad);
                 break;
-            case 1:
+            case 0:
                 this.calification.check(R.id.very_bad);
                 break;
         }

@@ -53,7 +53,7 @@ public class Poll
             super(question, PollType.CALIFICATION);
         }
 
-        private int calification = 10;
+        private int calification = 5;
 
         public int getCalification()
         {
