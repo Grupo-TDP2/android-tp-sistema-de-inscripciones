@@ -29,6 +29,7 @@ public class MyCoursesPresenter implements ServiceAsyncTask.ForeGroundListener, 
         void onLoadedCourses();
         void showSuccess(int unsubscribed_course_success);
         void setCanSeeFinals(boolean canSeeFinals);
+        void gotToPoll();
     }
 
     private View view;
@@ -159,6 +160,13 @@ public class MyCoursesPresenter implements ServiceAsyncTask.ForeGroundListener, 
             return -1;
         }
         return 1;
+    }
+
+    public void onSeePoll(int i)
+    {
+        AppModel.getInstance().startNewPoll();
+        AppModel.getInstance().setSelectedMyCourse(coursesList.get(i));
+        view.gotToPoll();
     }
 
     private int comparePeriod(CoursePeriod.Period period1, CoursePeriod.Period period2)

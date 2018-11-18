@@ -2,6 +2,9 @@ package com.tdp2.setsubi.android_tp_sistema_de_inscripciones;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Career;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.MyCourse;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Poll;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.PollCreator;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Subject;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Department;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Student;
@@ -21,6 +24,8 @@ public class AppModel
     private SubjectRoute route = SubjectRoute.COURSES;
     private Course selectedCourse = null;
     private boolean appVisible = false;
+    private List<Poll> actualPoll = null;
+    private MyCourse selectedMyCourse = null;
 
     public void setVisibility(boolean visibility)
     {
@@ -34,6 +39,25 @@ public class AppModel
     
     public Course getSelectedCourse() {
         return selectedCourse;
+    }
+
+    public void startNewPoll()
+    {
+        actualPoll = PollCreator.createNewPoll();
+    }
+
+    public List<Poll> getActualPoll()
+    {
+        return actualPoll;
+    }
+
+    public MyCourse getSelectedMyCourse() {
+        return selectedMyCourse;
+    }
+
+    public void setSelectedMyCourse(MyCourse course)
+    {
+        this.selectedMyCourse = course;
     }
 
     public enum SubjectRoute

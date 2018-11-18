@@ -28,6 +28,7 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
     {
         void onUnsubscribe(int position);
         void onSeeFinals(int position);
+        void onSeePoll(int position);
     }
 
     private Listener listener;
@@ -76,7 +77,7 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
         private TextView catedra, sede, period, subject, subjectCode;
         private RecyclerView timeBands;
         private ImageView openData;
-        private Button unsubscribe, seeFinals;
+        private Button unsubscribe, seeFinals, doPoll;
         private boolean opened = false;
         private View dataBlock;
         private View titleBlock;
@@ -96,33 +97,22 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
             unsubscribe = itemView.findViewById(R.id.unsubscribe_button);
             seeFinals = itemView.findViewById(R.id.see_finals_button);
             openData = itemView.findViewById(R.id.open_course_button);
+            doPoll = itemView.findViewById(R.id.poll_button);
             titleBlock = itemView.findViewById(R.id.card_title);
-            titleBlock.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    opened = !opened;
-                    if( opened )
-                    {
-                        openData.setRotation(180);
-                        dataBlock.setVisibility(View.VISIBLE);
-                    } else {
-                        openData.setRotation(0);
-                        dataBlock.setVisibility(View.GONE);
-                    }
+            titleBlock.setOnClickListener(v -> {
+                opened = !opened;
+                if( opened )
+                {
+                    openData.setRotation(180);
+                    dataBlock.setVisibility(View.VISIBLE);
+                } else {
+                    openData.setRotation(0);
+                    dataBlock.setVisibility(View.GONE);
                 }
             });
-            unsubscribe.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onUnsubscribe(getAdapterPosition());
-                }
-            });
-            seeFinals.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onSeeFinals(getAdapterPosition());
-                }
-            });
+            unsubscribe.setOnClickListener(v -> listener.onUnsubscribe(getAdapterPosition()));
+            seeFinals.setOnClickListener(v -> listener.onSeeFinals(getAdapterPosition()));
+            doPoll.setOnClickListener(v -> listener.onSeePoll(getAdapterPosition()));
         }
 
         void setSubject(Subject subject)
