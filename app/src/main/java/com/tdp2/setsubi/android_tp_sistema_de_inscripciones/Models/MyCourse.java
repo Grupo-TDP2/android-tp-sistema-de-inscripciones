@@ -10,6 +10,15 @@ public class MyCourse
     private CoursePeriod coursePeriod;
     private Subject subject;
     private Career career;
+    private boolean alreadyAnsweredPoll = false;
+
+    public boolean isAlreadyAnsweredPoll() {
+        return alreadyAnsweredPoll;
+    }
+
+    public void setAlreadyAnsweredPoll(boolean alreadyAnsweredPoll) {
+        this.alreadyAnsweredPoll = alreadyAnsweredPoll;
+    }
 
     public MyCourse(Career career, Subject subject, Course course, CoursePeriod period)
     {

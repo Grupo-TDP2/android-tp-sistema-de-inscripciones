@@ -37,8 +37,10 @@
         <activity android:name=".Activities.MyCoursesActivity" />
         <activity android:name=".Activities.ApprovedSubjectActivity" />
         <activity android:name=".Activities.NotificationsActivity" />
+        <activity android:name=".Activities.PollActivity" />
         <activity android:name=".Activities.MyDataActivtiy" />
         <activity android:name=".Activities.MyDataEditionActivity" />
+
 
         <service
             android:name=".AndroidServices.MyFirebaseInstanceId">

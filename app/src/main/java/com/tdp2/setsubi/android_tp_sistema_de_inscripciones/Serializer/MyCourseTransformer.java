@@ -47,11 +47,12 @@ public class MyCourseTransformer extends JsonTransformer<MyCourse>
             Integer courseId = courseGetter.asInt(JsonKeys.ID), cupo = courseGetter.asInt(JsonKeys.VACANCIES);
             String catedra = JsonTransformHelper.getCatedra(courseGetter.getActualObject());
             Sede sede = Sede.PASEO_COLON;
-
+            String status = parentGetter.asString(JsonKeys.STATUS);
+            Course.Status courseStaus = getStatusFrom(status);
             List<CursoTimeBand> courseTimes = getCourses(courseGetter.getJsonArray(JsonKeys.LESSON_SCHEDULES));
 
             boolean enabledToEnrol = courseGetter.asBoolean(JsonKeys.ENABLED_TO_ENROL);
-            if( AnyNullCheck.any(courseId, cupo, catedra, sede, enabledToEnrol, courseTimes) ) return null;
+            if( AnyNullCheck.any(courseId, cupo, catedra, sede, enabledToEnrol, courseTimes, courseStaus) ) return null;
 
             Integer year = schoolTermGetter.asInt(JsonKeys.YEAR);
             CoursePeriod.Period period = ((JsonFiubaGetter)schoolTermGetter).getPeriod(JsonKeys.TERM);
@@ -75,12 +76,27 @@ public class MyCourseTransformer extends JsonTransformer<MyCourse>
             String departmentCode = departmentGetter.asString(JsonKeys.CODE);
             if( AnyNullCheck.any(departmentCode, departmentId, name) ) return null;
             Department department = new Department(departmentId, name, Integer.parseInt(departmentCode));
-
+            Course course = new Course(courseId,catedra,sede, courseTimes, cupo, enrolmentId, enabledToEnrol);
+            course.setStatus(courseStaus);
             return new MyCourse(new Career(1,""),
                     new Subject(subjectId, subjectCode, subjectName,  subjectCredits,
                             department),
-                    new Course(courseId,catedra,sede, courseTimes, cupo, enrolmentId, enabledToEnrol),
+                    course,
                     new CoursePeriod(year, period, start, endDate));
+        }
+        return null;
+    }
+
+    private Course.Status getStatusFrom(String status) {
+        if(status == null) return null;
+        switch (status.toLowerCase())
+        {
+            case "approved":
+                return Course.Status.APPROVED;
+            case "disapproved":
+                return Course.Status.DISAPPROVED;
+            case "not_evaluated":
+                return Course.Status.NOT_EVALUATED;
         }
         return null;
     }
