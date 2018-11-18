@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Final;
@@ -44,8 +45,8 @@ public class MyFinalsAdapter extends RecyclerView.Adapter<MyFinalsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Final finales = finals.get(position);
-        holder.setButtonLogic(finales.isCanUnsubscribe(),
-                finales.isFinalGiven(),
+        holder.setButtonLogic(finales.isCanUnsubscribe());
+        holder.setCalification( finales.isFinalGiven(),
                 finales.passedFinal(),
                 finales.getFinalCalification());
         holder.setCatedra(finales.getCatedraName());
@@ -66,7 +67,10 @@ public class MyFinalsAdapter extends RecyclerView.Adapter<MyFinalsAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder
     {
         private Button unsubsribe;
-        private TextView catedra,date,time,sede, subject, condicion;
+        private View qualificationContainer, headerContainer, dataContainer, actionContainer;
+        private ImageView qualificationBackground, arrow;
+        private TextView catedra,date,time,sede, subject,
+                condicion, qualification, subjectCode;
 
         ViewHolder(@NonNull View itemView)
         {
@@ -74,15 +78,30 @@ public class MyFinalsAdapter extends RecyclerView.Adapter<MyFinalsAdapter.ViewHo
             unsubsribe = itemView.findViewById(R.id.button_unsubscribe);
             catedra = itemView.findViewById(R.id.catedra_value);
             subject = itemView.findViewById(R.id.subject_value);
+            subjectCode = itemView.findViewById(R.id.subject_code);
             date = itemView.findViewById(R.id.date_value);
             time = itemView.findViewById(R.id.time_value);
             sede = itemView.findViewById(R.id.sede_value);
             condicion = itemView.findViewById(R.id.condicion_value);
-            unsubsribe.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onUnsubscribe(getAdapterPosition());
+            arrow = itemView.findViewById(R.id.arrow);
+            qualification = itemView.findViewById(R.id.qualification_note);
+            actionContainer = itemView.findViewById(R.id.actions_my_final);
+            qualificationBackground = itemView.findViewById(R.id.qualification_background);
+            qualificationContainer = itemView.findViewById(R.id.qualification_container);
+            dataContainer = itemView.findViewById(R.id.data_my_final);
+            headerContainer = itemView.findViewById(R.id.header_my_final);
+            unsubsribe.setOnClickListener(v -> listener.onUnsubscribe(getAdapterPosition()));
+            headerContainer.setOnClickListener(v -> {
+                int visible = View.VISIBLE;
+                if( arrow.getRotation() == 0 )
+                {
+                    arrow.setRotation(180);
+                } else
+                {
+                    visible = View.GONE;
+                    arrow.setRotation(0);
                 }
+                dataContainer.setVisibility(visible);
             });
         }
 
@@ -91,24 +110,30 @@ public class MyFinalsAdapter extends RecyclerView.Adapter<MyFinalsAdapter.ViewHo
             condicion.setText(regular ? R.string.regular : R.string.libre);
         }
 
-        void setButtonLogic(boolean unsubscribeVisibility, boolean finalGiven, boolean finalPassed, Integer calification)
+        void setCalification(boolean finalGive, boolean finalPassed, Integer calification)
         {
-            boolean visibility = finalGiven;
-            int background = R.drawable.button_round_grey;
-            String text = unsubsribe.getContext().getString(R.string.disapproved);
-            if( unsubscribeVisibility )
+            if( finalGive )
             {
-                visibility = true;
-                background = R.drawable.button_round_red;
-                text = unsubsribe.getContext().getString(R.string.unsubscribe);
-            } else if( finalPassed )
-            {
-                text = unsubsribe.getContext().getString(R.string.approved, calification);
+                qualificationContainer.setVisibility(View.VISIBLE);
+                int background = R.drawable.button_round_red;
+                if( finalPassed )
+                {
+                    background = R.drawable.button_round_blue;
+                } else
+                {
+                    calification = 2;
+                }
+                qualification.setText(String.valueOf(calification));
+                qualificationBackground.setImageResource(background);
+            } else {
+                qualificationContainer.setVisibility(View.GONE);
             }
-            unsubsribe.setText(text);
-            unsubsribe.setVisibility(visibility ? View.VISIBLE : View.GONE);
+        }
+
+        void setButtonLogic(boolean unsubscribeVisibility)
+        {
+            actionContainer.setVisibility(unsubscribeVisibility ? View.VISIBLE : View.GONE);
             unsubsribe.setEnabled(unsubscribeVisibility);
-            ShapeBackgroundColorChanger.changeBackground(unsubsribe, background);
         }
 
         void setCatedra(String catedra)
@@ -132,8 +157,10 @@ public class MyFinalsAdapter extends RecyclerView.Adapter<MyFinalsAdapter.ViewHo
 
         }
 
-        void setSubject(int departmentCode, int code, String name) {
-            this.subject.setText(String.format(Locale.getDefault(), "%02d.%02d %s",departmentCode, code, name));
+        void setSubject(int departmentCode, int code, String name)
+        {
+            this.subjectCode.setText(String.format(Locale.getDefault(), "%02d.%02d",departmentCode, code));
+            this.subject.setText(name);
         }
     }
 }
