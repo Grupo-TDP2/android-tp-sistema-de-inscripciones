@@ -53,7 +53,7 @@ public class Final
 
     public boolean passedFinal()
     {
-        return isFinalGiven() && finalCalification != null && finalCalification >=4;
+        return isFinalGiven() && finalCalification != null && finalCalification >= 4;
     }
 
     public Integer getFinalCalification()

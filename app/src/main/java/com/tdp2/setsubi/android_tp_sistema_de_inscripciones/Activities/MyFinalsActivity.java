@@ -54,8 +54,6 @@ public class MyFinalsActivity extends AppCompatActivity implements LoadingView
         presenter = new MyFinalsPresenter(this);
         recyclerView = findViewById(R.id.finals);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),
-                DividerItemDecoration.VERTICAL));
         adapter = new MyFinalsAdapter(presenter.getDataSet(), presenter);
         recyclerView.setAdapter(adapter);
         presenter.loadMyFinals();
