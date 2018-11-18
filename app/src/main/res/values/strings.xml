@@ -74,6 +74,14 @@
     <string name="default_notification_channel_id">com.tdp.setsubi.android_tp_sistema_de_inscripcion.noticationChannel</string>
     <string name="no_notifications">No tiene notificaciones</string>
     <string name="notifications">Notificaciones</string>
+    <string name="name">Nombre</string>
+    <string name="surname">Apellido</string>
+    <string name="my_data">Mis Datos</string>
+    <string name="empty_surname_error">Ingrese un apellido</string>
+    <string name="empty_name_error">Ingrese un nombre</string>
+    <string name="succes_edition">Se editaron los datos exitosamente</string>
+    <string name="edition_failed">No se pudieron editar los datos</string>
+    <string name="gallery_disabled">No se puede acceder a la galería</string>
 
 
 </resources>
