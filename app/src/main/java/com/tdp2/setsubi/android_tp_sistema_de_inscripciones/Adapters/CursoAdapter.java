@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
@@ -75,6 +76,8 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
         private TextView noTimesText;
         private Button subscribe;
         private RecyclerView recyclerView;
+        private View titleContainer, dataBlock;
+        private ImageView arrowTitle;
 
         public CursoViewHolder(@NonNull View itemView)
         {
@@ -84,11 +87,25 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
             cupo = itemView.findViewById(R.id.cupo_size);
             subscribe = itemView.findViewById(R.id.subscribe_button);
             noTimesText = itemView.findViewById(R.id.noHayHorarios);
+            titleContainer = itemView.findViewById(R.id.title_container);
+            dataBlock = itemView.findViewById(R.id.data_block);
+            arrowTitle = itemView.findViewById(R.id.arrow_title);
             recyclerView = itemView.findViewById(R.id.horarios_container);
             recyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
             recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),
                     DividerItemDecoration.VERTICAL));
             recyclerView.setNestedScrollingEnabled(false);
+            titleContainer.setOnClickListener(v -> {
+                if( arrowTitle.getRotation() == 0 )
+                {
+                    arrowTitle.setRotation(180);
+                    dataBlock.setVisibility(View.VISIBLE);
+                } else
+                {
+                    arrowTitle.setRotation(0);
+                    dataBlock.setVisibility(View.GONE);
+                }
+            });
         }
 
         public void setCatedra(String catedra)
@@ -118,34 +135,25 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.CursoViewHol
         {
             boolean visible = canSubscribe || isSubscribed;
             setNotSubscribed(canSubscribe, isSubscribed);
-            subscribe.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+            subscribe.setVisibility(visible ? View.VISIBLE : View.GONE);
         }
 
         public void setNotSubscribed(boolean canSubscribe, boolean isSubscribed)
         {
-            int background = R.drawable.button_round_grey;
             int text = R.string.inscripto;
             if( canSubscribe && !isSubscribed )
             {
-                background = R.drawable.button_round_blue;
                 text = R.string.inscribirse_btn_text;
             } else if( canSubscribe )
             {
-                background = R.drawable.button_round_red;
                 text = R.string.unsubscribe;
             }
-            ShapeBackgroundColorChanger.changeBackground(subscribe, background);
             subscribe.setText(text);
         }
 
         public void setSubscribeListener(final SubscribeListener subscribeListener,final int id)
         {
-            this.subscribe.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    subscribeListener.onCourseButtonClick(id);
-                }
-            });
+            this.subscribe.setOnClickListener(v -> subscribeListener.onCourseButtonClick(id));
         }
     }
 }
