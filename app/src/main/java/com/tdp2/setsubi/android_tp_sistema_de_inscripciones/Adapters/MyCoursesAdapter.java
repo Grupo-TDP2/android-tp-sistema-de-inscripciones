@@ -66,7 +66,7 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
         holder.setCatedra(course.getCatedra());
         holder.setSede(course.getSede());
         holder.setButtons(course.inUnsubscribePeriod(), inFinalsPeriod,
-                course.getCourse().getStatus() == Course.Status.APPROVED);
+                course.getCourse().getStatus() == Course.Status.APPROVED && !course.isAlreadyAnsweredPoll());
     }
 
     @Override
