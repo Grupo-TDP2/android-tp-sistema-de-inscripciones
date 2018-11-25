@@ -50,4 +50,5 @@ public class JsonKeys
     public static final String PRIORITY = "priority";
     public static final String SCHOOL_DOCUMENT_NUMBER = "school_document_number";
     public static final String FIRST_NAME = "first_name";
+    public static final String POLL = "poll";
 }

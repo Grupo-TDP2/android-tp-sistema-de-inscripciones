@@ -78,11 +78,14 @@ public class MyCourseTransformer extends JsonTransformer<MyCourse>
             Department department = new Department(departmentId, name, Integer.parseInt(departmentCode));
             Course course = new Course(courseId,catedra,sede, courseTimes, cupo, enrolmentId, enabledToEnrol);
             course.setStatus(courseStaus);
-            return new MyCourse(new Career(1,""),
+            boolean answeredPoll = courseGetter.atObject(JsonKeys.POLL).getActualObject() != null;
+            MyCourse myCourse =  new MyCourse(new Career(1,""),
                     new Subject(subjectId, subjectCode, subjectName,  subjectCredits,
                             department),
                     course,
                     new CoursePeriod(year, period, start, endDate));
+            myCourse.setAlreadyAnsweredPoll(answeredPoll);
+            return myCourse;
         }
         return null;
     }
