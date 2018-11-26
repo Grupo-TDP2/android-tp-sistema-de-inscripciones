@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Adapters.MyCoursesAdapter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Poll;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.MyCoursesPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.LoadingSnackbar;
@@ -95,6 +96,12 @@ public class MyCoursesActivity extends AppCompatActivity implements MyCoursesPre
     @Override
     public void setCanSeeFinals(boolean canSeeFinals) {
         adapter.setInFinalsPeriod(canSeeFinals);
+    }
+
+    @Override
+    public void gotToPoll()
+    {
+        startActivity( new Intent(this, PollActivity.class));
     }
 
     @Override

@@ -5,6 +5,12 @@ import java.util.List;
 
 public class Course
 {
+    public enum Status
+    {
+        APPROVED,
+        DISAPPROVED,
+        NOT_EVALUATED
+    }
     private int id;
     private String catedra;
     private Sede sede;
@@ -12,6 +18,7 @@ public class Course
     private Integer enrollId;
     private boolean enabledToEnroll;
     private int cupos;
+    private Status status = Status.NOT_EVALUATED;
 
     public Course(int id, String catedra, Sede sede, List<CursoTimeBand> schedules,
                   int cupo, Integer enrollId, boolean enabledToEnroll)
@@ -23,6 +30,14 @@ public class Course
         this.cupos = cupo;
         this.enrollId = enrollId;
         this.enabledToEnroll = enabledToEnroll;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public int getId() {

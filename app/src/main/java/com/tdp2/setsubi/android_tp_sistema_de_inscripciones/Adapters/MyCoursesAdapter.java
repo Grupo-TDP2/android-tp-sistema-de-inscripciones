@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.Course;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CoursePeriod;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.CursoTimeBand;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Models.MyCourse;
@@ -28,6 +29,7 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
     {
         void onUnsubscribe(int position);
         void onSeeFinals(int position);
+        void onSeePoll(int position);
     }
 
     private Listener listener;
@@ -63,7 +65,8 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
         holder.setTimes(course.getCursoTimeBands());
         holder.setCatedra(course.getCatedra());
         holder.setSede(course.getSede());
-        holder.setButtons(course.inUnsubscribePeriod(), inFinalsPeriod);
+        holder.setButtons(course.inUnsubscribePeriod(), inFinalsPeriod,
+                course.getCourse().getStatus() == Course.Status.APPROVED && !course.isAlreadyAnsweredPoll());
     }
 
     @Override
@@ -76,7 +79,7 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
         private TextView catedra, sede, period, subject, subjectCode;
         private RecyclerView timeBands;
         private ImageView openData;
-        private Button unsubscribe, seeFinals;
+        private Button unsubscribe, seeFinals, doPoll;
         private boolean opened = false;
         private View dataBlock;
         private View titleBlock;
@@ -96,33 +99,22 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
             unsubscribe = itemView.findViewById(R.id.unsubscribe_button);
             seeFinals = itemView.findViewById(R.id.see_finals_button);
             openData = itemView.findViewById(R.id.open_course_button);
+            doPoll = itemView.findViewById(R.id.poll_button);
             titleBlock = itemView.findViewById(R.id.card_title);
-            titleBlock.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    opened = !opened;
-                    if( opened )
-                    {
-                        openData.setRotation(180);
-                        dataBlock.setVisibility(View.VISIBLE);
-                    } else {
-                        openData.setRotation(0);
-                        dataBlock.setVisibility(View.GONE);
-                    }
+            titleBlock.setOnClickListener(v -> {
+                opened = !opened;
+                if( opened )
+                {
+                    openData.setRotation(180);
+                    dataBlock.setVisibility(View.VISIBLE);
+                } else {
+                    openData.setRotation(0);
+                    dataBlock.setVisibility(View.GONE);
                 }
             });
-            unsubscribe.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onUnsubscribe(getAdapterPosition());
-                }
-            });
-            seeFinals.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onSeeFinals(getAdapterPosition());
-                }
-            });
+            unsubscribe.setOnClickListener(v -> listener.onUnsubscribe(getAdapterPosition()));
+            seeFinals.setOnClickListener(v -> listener.onSeeFinals(getAdapterPosition()));
+            doPoll.setOnClickListener(v -> listener.onSeePoll(getAdapterPosition()));
         }
 
         void setSubject(Subject subject)
@@ -163,7 +155,8 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
             this.sede.setText(text);
         }
 
-        void setButtons(boolean enabledToEnroll, boolean canSeeFinals) {
+        void setButtons(boolean enabledToEnroll, boolean canSeeFinals, boolean canDoPoll)
+        {
             if( enabledToEnroll )
             {
                 unsubscribe.setVisibility(View.VISIBLE);
@@ -176,6 +169,14 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.View
             } else
             {
                 seeFinals.setVisibility(View.GONE);
+            }
+
+            if( canDoPoll )
+            {
+                doPoll.setVisibility(View.VISIBLE);
+            } else
+            {
+                doPoll.setVisibility(View.GONE);
             }
         }
     }

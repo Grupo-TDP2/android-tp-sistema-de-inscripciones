@@ -3,6 +3,8 @@ package com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -10,12 +12,16 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.support.v7.widget.LinearLayoutCompat;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 
 
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.AppModel;
+import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Dialogs.PriorityDialog;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Presenters.MainActivityPresenter;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.R;
 import com.tdp2.setsubi.android_tp_sistema_de_inscripciones.Utils.NotificationHelper;
@@ -46,8 +52,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         findViewById(R.id.newFinalExamButton).setOnClickListener(new FinalsExamsHandler());
         findViewById(R.id.myCoursesButton).setOnClickListener(new MyCoursesHandler());
         findViewById(R.id.myExamsButton).setOnClickListener(new MyExamsHandler());
-        findViewById(R.id.priorityButton).setOnClickListener(new SoonClickHandler());
-        findViewById(R.id.myDataButton).setOnClickListener(new SoonClickHandler());
+        findViewById(R.id.priorityButton).setOnClickListener(new PriorityHandler());
+        findViewById(R.id.myDataButton).setOnClickListener(new MyDataHandler());
     }
 
     private NotificationHelper helper;
@@ -108,6 +114,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
             case "myCourses":
                 navigationIntent = new Intent(MainActivity.this, MyCoursesActivity.class);
                 break;
+            case "myData":
+                navigationIntent = new Intent(MainActivity.this, MyDataActivtiy.class);
+                break;
         }
         if( navigationIntent != null )
         {
@@ -164,11 +173,31 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         }
     }
 
+    protected class PriorityHandler implements View.OnClickListener
+    {
+        @Override
+        public void onClick(View v) {
+            PriorityDialog cdd = new PriorityDialog(MainActivity.this);
+            cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            cdd.show();
+            Window window = cdd.getWindow();
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+    }
+
     protected class MyCoursesHandler implements View.OnClickListener
     {
         @Override
         public void onClick(View v) {
             presenter.navigateTo("myCourses");
+        }
+    }
+
+    protected class MyDataHandler implements View.OnClickListener
+    {
+        @Override
+        public void onClick(View v) {
+            presenter.navigateTo("myData");
         }
     }
 

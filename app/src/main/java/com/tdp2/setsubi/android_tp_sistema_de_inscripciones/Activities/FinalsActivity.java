@@ -56,14 +56,12 @@ public class FinalsActivity extends AppCompatActivity implements LoadingView
         setContentView(R.layout.activity_finals_of_subject);
         ToolBarHelper.onCreate(this);
         ToolBarHelper.setTitle(this, R.string.finals_title);
-        TextView title = findViewById(R.id.finals_subject);
+        TextView title = findViewById(R.id.subject_name);
         presenter = new FinalsPresenter(this);
         title.setText(presenter.getSubjectName());
 
         recyclerView = findViewById(R.id.finals);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),
-                DividerItemDecoration.VERTICAL));
 
         adapter = new FinalsAdapter(presenter.getFinals(), presenter);
         recyclerView.setAdapter(adapter);
